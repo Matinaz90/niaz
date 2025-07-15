@@ -1,0 +1,18 @@
+➕ افزودن محصول  
+📦 محصولات من  
+💬 پیام‌ها  
+❤️ علاقه‌مندی‌ها   in the right bar at top of the product filter
+
+
+
+
+
+“From now on, please help me with more detailed explanations.”
+
+“I want you to only give advice, no code.”
+
+“Remember I’m building a React app and prefer React-specific tips.”
+
+“Please be more casual/professional.”
+
+“Keep track of my project as we go, don’t reset context.”

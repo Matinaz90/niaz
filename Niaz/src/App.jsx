@@ -1,0 +1,36 @@
+import { useState, useEffect } from "react";
+import './App.css'
+import Top_bar_left from './1_topbar/1_top_bar_left'
+import Top_bar_middle from './1_topbar/2_top_bar_middle'
+import Top_bar_right from './1_topbar/3_top_bar_right'
+
+function App() {
+
+  const [width, setWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+      const resize = () => {
+      setWidth(window.innerWidth);
+      };
+
+      window.addEventListener("resize", resize);
+      return () => {
+      window.removeEventListener("resize", resize);
+      };
+  }, []);
+
+  return (
+    <>
+    <div className='tobbar_countainer'   style={{
+      gridTemplateColumns: `250px 1fr ${width * 0.3 + 38}px 1fr 250px`
+    }}>
+
+        <Top_bar_left></Top_bar_left><div></div><Top_bar_middle></Top_bar_middle><div></div><Top_bar_right></Top_bar_right>
+        </div>
+      <div></div>
+      <div></div>
+    </>
+  )
+}
+
+export default App

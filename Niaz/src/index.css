@@ -1,0 +1,28 @@
+:root{
+    --main-webiste-color: hsl(23, 99%, 50%);
+    --main-webiste-color-hover: hsl(23, 99%, 50%);
+    --layer3-bg-color: hsl(0, 0%, 0%);
+    --layer2-bg-color: hsl(0, 0%, 5%);
+    --layer1-importan-color: hsl(0, 0%, 10%);
+    --border-color: hsl(0, 0%, 30%);
+    --hover-color:hsl(0, 0%, 10%);
+
+    --boeder-blue-color: hsl(212, 100%, 50%);
+
+    --text: hsl(0, 0%, 95%);
+    --text_muded_between: hsl(0, 0%, 85%);
+    --text-muted: hsl(0, 0%, 75%);
+
+    --dark-white-sensor: hsl(0, 0%, 88%);
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: var(--layer3-bg-color);
+  -webkit-user-select: none; /* Chrome, Safari, Opera */
+-moz-user-select: none;    /* Firefox */
+-ms-user-select: none;     /* Internet Explorer/Edge */
+user-select: none;  
+}
