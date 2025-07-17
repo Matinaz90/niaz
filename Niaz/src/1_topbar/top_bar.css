@@ -140,8 +140,9 @@ max-width: 600px;
     line-height: 1.5;
     display: grid;
     grid-template-rows: 1fr;
+    display: none;
 }
-
-.city-checkbox {
+.city-label {
   color: white;
+  display: none;
 }
