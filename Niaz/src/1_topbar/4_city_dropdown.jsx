@@ -14,7 +14,6 @@ function CityDropdown() {
         localStorage.setItem("city2local", JSON.stringify(city2local));
     }, [city2local]);
 
-    const getOrCreateUniqueID = () => crypto.randomUUID();
 
     const locations = {
         "همدان": ["همه ی شهرهای همدان", "ملایر", "نهاوند", "لالجین", "تویسرکان", "سرکان", "اسد آباد", "کبودرآهنگ", "فرسفج", "سامن"],
@@ -52,61 +51,78 @@ function CityDropdown() {
 
     const city2 = (cityname) => {
         if (prelocationDropdown.includes(cityname)) {
-            document.querySelectorAll(`.city-${cityname}`).forEach(el => {
-                el.style.display = "none";
-            });
-            const updated = prelocationDropdown.filter(item => item !== cityname);
-            setprelocation2Dropdown(updated);
+            document.querySelectorAll(`.city-${cityname}`).forEach(el => el.style.display = "none");
+            setprelocation2Dropdown(prelocationDropdown.filter(item => item !== cityname));
         } else {
-            document.querySelectorAll(`.city-${cityname}`).forEach(el => {
-                el.style.display = "block";
-            });
+            document.querySelectorAll(`.city-${cityname}`).forEach(el => el.style.display = "block");
             setprelocation2Dropdown([...prelocationDropdown, cityname]);
         }
     };
 
     const openCity = () => {
+        const mainBlock = document.getElementById('maincityBlock');
         if (locationDropdown) {
-            document.getElementById('maincityBlock').style.display = "none";
+            mainBlock.style.display = "none";
             setlocationDropdown(false);
+            prelocationDropdown.forEach(cityName => document.querySelectorAll(`.city-${cityName}`).forEach(el => el.style.display = "none"));
+            setprelocation2Dropdown([]);
         } else {
-            document.getElementById('maincityBlock').style.display = "block";
+            mainBlock.style.display = "block";
             setlocationDropdown(true);
         }
     };
 
     const addLocalHistory = (cityname) => {
-        if (city2local.includes(cityname)) {
-            const filtered = city2local.filter(c => c !== cityname);
-            setcity2local(filtered);
+        if (cityname.includes('همه ی شهرهای')) {
+            const region = cityname.replace(/^همه ی شهرهای\s*/, '');
+            const subCities = locations[region] || [];
+            if (city2local.includes(cityname)) {
+                setcity2local(city2local.filter(c => c !== cityname));
+            } else {
+                const filtered = city2local.filter(c => !subCities.includes(c));
+                setcity2local([...filtered, cityname]);
+            }
         } else {
-            setcity2local([...city2local, cityname]);
+            const parentRegion = Object.keys(locations).find(r => locations[r].includes(cityname));
+            let updated = city2local;
+            if (parentRegion) {
+                const allLabel = `همه ی شهرهای ${parentRegion}`;
+                if (city2local.includes(allLabel)) {
+                    updated = city2local.filter(c => c !== allLabel);
+                }
+            }
+            if (updated.includes(cityname)) {
+                setcity2local(updated.filter(c => c !== cityname));
+            } else {
+                setcity2local([...updated, cityname]);
+            }
         }
     };
 
-    const list = () => {
-        return Object.keys(locations).map((cityName, index) => (
+    const list = () => (
+        Object.keys(locations).map((cityName, index) => (
             <div key={index} className="citylocotionchild">
                 <button onClick={() => city2(cityName)} value={cityName}>{cityName}</button>
-                {locations[cityName].slice(0).map((city, i) => (
-                    <label key={i} id={getOrCreateUniqueID()} onClick={() => addLocalHistory(city)} className={`city-label city-${cityName}`}>
+                {locations[cityName].map((city, i) => (
+                    <label key={i} className={`city-label city-${cityName}`}>
                         <input
-                            key={getOrCreateUniqueID()}
-                            id={getOrCreateUniqueID()}
                             type="checkbox"
-                            checked={city2local.includes(city)}
+                            checked={city.includes('همه ی شهرهای')
+                                ? city2local.includes(city)
+                                : city2local.includes(city)
+                            }
                             onChange={() => addLocalHistory(city)}
                         />
                         {city}
                     </label>
                 ))}
             </div>
-        ));
-    };
+        ))
+    );
 
     return (
         <>
-            <button onClick={openCity}>منطقه</button>
+            <button className='city_but' onClick={openCity}>منطقه</button>
             <div className='cityselected' id='maincityBlock'>
                 {list()}
             </div>

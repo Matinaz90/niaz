@@ -1,148 +1,210 @@
 @import url('../index.css'); 
 
 .tobbar_countainer{
-    height:  59px;
-    display: grid;
+  height:  59px;
+  display: grid;
 
-    padding: 0px;
-    margin: 0;
-    justify-content: center;
-    align-items: center;
+  padding: 0px;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
 }
 
 .user{
-    appearance: none;
-    font-size: 20px;
-    padding: 10px 8px;
-    display: none;
-    width: 120px;
-    line-height: 1.5;
+  appearance: none;
+  font-size: 20px;
+  padding: 10px 8px;
+  display: none;
+  width: 120px;
+  line-height: 1.5;
 }
 
 .add_user,
 .add_niaz {
-    display: inline-block;  
-    padding: 2px 12px;           /* bigger clickable area */
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--text_muded_between);
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center;
-    user-select: none;
-    white-space: nowrap;
-    margin: 0px 3px;
-    background-color: var(--layer2-bg-color);
-    transition: 0.3s;
-    border: 1px solid transparent;
-    box-sizing: border-box;
+  display: inline-block;  
+  padding: 2px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text_muded_between);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  user-select: none;
+  white-space: nowrap;
+  margin: 0px 3px;
+  background-color: var(--layer2-bg-color);
+  transition: 0.3s;
+  border: 1px solid transparent;
+  box-sizing: border-box;
 }
 
 .add_user{
-    margin-left: 8px;
+  margin-left: 12px;
 }
 
 .add_user:hover,
 .add_niaz:hover {
-    border: 1px solid var(--boeder-blue-color);
+  border: 1px solid var(--boeder-blue-color);
+}
+
+.niazImage{
+  height: 36px;
+  width: 70px;
+  justify-self: end;
+  margin-left: 13px;
+  margin-bottom: -11px;
+  cursor: pointer;
 }
 
 .search-container {
-  position: relative;
-  display: grid; 
+position: relative;
+display: grid; 
 margin: 2px 2px;
 max-width: 600px;
 }
 
 .serch_image_countaner{
-    height: 38px;
-    width: 35px;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    background-color: var(--layer1-importan-color);
-    position: absolute;
-    display: grid;
-    margin-left: 1px;
-    margin-top: 1px;
+  height: 38px;
+  width: 35px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: var(--layer1-importan-color);
+  position: absolute;
+  display: grid;
+  margin-left: 1px;
+  margin-top: 1px;
 }
 
 .search-icon {
-    position: absolute;
-    left: 29%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    padding-right: 5px; 
-    height: 18px;
-    pointer-events: none;
-    padding-top: 12px;
-    padding-bottom: 12px;
+  position: absolute;
+  left: 29%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  padding-right: 5px; 
+  height: 18px;
+  pointer-events: none;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .search-input {
-    padding-left: 42px;
-    height: 18px; 
-    font-size: 16px; 
-    padding-right: 2px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    background-color: var(--layer2-bg-color);
-    border-radius: 20px;
-    border: 1px solid var(--layer1-importan-color);
-    transition: 0.3s;
+  padding-left: 42px;
+  height: 18px; 
+  font-size: 16px; 
+  padding-right: 2px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  background-color: var(--layer2-bg-color);
+  border-radius: 20px;
+  border: 1px solid var(--layer1-importan-color);
+  transition: 0.3s;
 }
 
 .search-input::placeholder {
-    color: var(--text_muded_between);
+  color: var(--text_muded_between);
 }
 
 .search-input:focus {
-    outline: none;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    border: 1px solid var(--boeder-blue-color);
+  outline: none;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border: 1px solid var(--boeder-blue-color);
 }
 
 .top_rightbar_countaner{
-    display: grid;
-  grid-template-columns: 80px 40px;
-      justify-content: end;
-    align-items: end;
+  display: grid;
+grid-template-columns: 100px 40px;
+    justify-content: end;
+  align-items: end;
 }
 
 .hamburgurImage{
-    height: 28px;
-    justify-self: start;
-    justify-content: end;
-    align-items: end;
-    margin-bottom: 1px;
+  height: 32px;
+  justify-self: start;
+  justify-content: end;
+  align-items: end;
+  margin-bottom: 6.3px;
 }
 
-.niazImage{
-    height: 32px;
-    width: 70px;
-    justify-self: end;
-    margin-right: 11px;
+.city_but{
+  display: inline-block;  
+  padding: 2px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text_muded_between);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  user-select: none;
+  white-space: nowrap;
+  margin: 0px 3px;
+  background-color: var(--layer2-bg-color);
+  transition: 0.3s;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  margin-right: 12px;
 }
 
-.citylocotionchild{
-    display: grid;
-    grid-template-rows: 1fr;
-}
-
-.cityselected{
-    appearance: none;
-    font-size: 20px;
-    padding: 10px 8px;
-    width: 120px;
-    line-height: 1.5;
-    display: grid;
-    grid-template-rows: 1fr;
-    display: none;
-}
-.city-label {
-  color: white;
+.cityselected {
+  display: flex;
+  flex-wrap: wrap;
+  width: 200px;
+  gap: 16px;
+  padding: 12px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  margin-top: 12px;
+  border-radius: 8px;
+  max-height: 70vh;
+  overflow-y: auto;
   display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min-contentd;
+}
+
+.citylocotionchild {
+  flex: 1 1 300px;
+  background-color: #fff;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+
+}
+
+.citylocotionchild button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  margin-bottom: 8px;
+}
+
+.citylocotionchild button:hover {
+  background-color: #0056b3;
+}
+
+.city-label {
+  display: none;
+  margin-bottom: 6px;
+  cursor: pointer;
+  padding-left: 4px;
+}
+
+.city-label input[type="checkbox"] {
+  margin-right: 6px;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.city-label:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px;
 }

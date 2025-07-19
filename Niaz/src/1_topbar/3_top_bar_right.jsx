@@ -10,8 +10,7 @@ function Top_bar_right(){
 
         <CityDropdown></CityDropdown>
 
-            {/* <img className='niazImage' src='../../2.png' />
-            <img className='hamburgurImage' src='../../hamburger-menu-light.png' /> */}
+            <img className='hamburgurImage' src='../../hamburger-menu-light.png' />
         </div>
     )
 }

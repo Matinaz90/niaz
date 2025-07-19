@@ -22,12 +22,13 @@ function App() {
   return (
     <>
     <div className='tobbar_countainer'   style={{
-      gridTemplateColumns: `250px 1fr ${width * 0.3 + 38}px 1fr 250px`
+      gridTemplateColumns: `340px 1fr ${width * 0.3 + 38}px 90px 1fr 250px`
     }}>
-
-        <Top_bar_left></Top_bar_left><div></div><Top_bar_middle></Top_bar_middle><div></div><Top_bar_right></Top_bar_right>
+        <Top_bar_left></Top_bar_left><div></div><Top_bar_middle></Top_bar_middle> <div><slideModeChanger></slideModeChanger></div><div></div><Top_bar_right></Top_bar_right>
         </div>
+
       <div></div>
+
       <div></div>
     </>
   )
