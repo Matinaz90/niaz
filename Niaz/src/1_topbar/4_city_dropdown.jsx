@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './top_bar.css';
 
 function CityDropdown() {
@@ -12,6 +12,8 @@ function CityDropdown() {
 
     useEffect(() => {
         localStorage.setItem("city2local", JSON.stringify(city2local));
+
+        // run  acustome code for reloading web
     }, [city2local]);
 
 
@@ -49,6 +51,30 @@ function CityDropdown() {
         "قم": ["همه ی شهرهای قم", "سلفچگان", "کهک"]
         };
 
+    useEffect(() => {
+    const loadCity = () => {
+        const allCityLabels = city2local.filter(c => c.startsWith('همه ی شهرهای'));
+        
+        allCityLabels.forEach((label) => {
+            const region = label.replace(/^همه ی شهرهای\s*/, '');
+            const subCities = locations[region] || [];
+
+            subCities
+                .filter(c => !c.includes('همه ی شهرهای'))
+                .forEach((city) => {
+                    const elements = document.getElementsByClassName(`city-${region}`);
+                    for (let el of elements) {
+                        if (el.textContent.includes(city)) {
+                            el.style.display = 'none';
+                        }
+                    }
+                });
+        });
+    };
+
+    loadCity();
+    }, [city2local, locations]);
+
     const city2 = (cityname) => {
         if (prelocationDropdown.includes(cityname)) {
             document.querySelectorAll(`.city-${cityname}`).forEach(el => el.style.display = "none");
@@ -59,18 +85,22 @@ function CityDropdown() {
         }
     };
 
+
     const openCity = () => {
         const mainBlock = document.getElementById('maincityBlock');
         if (locationDropdown) {
-            mainBlock.classList.remove("open");
             setlocationDropdown(false);
+            mainBlock.classList.remove("open");
             prelocationDropdown.forEach(cityName => document.querySelectorAll(`.city-${cityName}`).forEach(el => el.style.display = "none"));
             setprelocation2Dropdown([]);
         } else {
-            mainBlock.classList.add("open");
             setlocationDropdown(true);
+            mainBlock.classList.add("open");
         }
     };
+
+    
+
 
     const addLocalHistory = (cityname) => {
         if (cityname.includes('همه ی شهرهای')) {
@@ -91,12 +121,10 @@ function CityDropdown() {
             
             if (city2local.includes(cityname)) {
                 setcity2local(city2local.filter(c => c !== cityname));
-                const running = () => invisCity("grid")
-                
+                invisCity("grid")
             } else {
                 const filtered = city2local.filter(c => !subCities.includes(c));
-                const stopRunning = () => invisCity("none")
-                
+                invisCity("none")
                 setcity2local([...filtered, cityname]);
             }
         } else {
@@ -140,7 +168,7 @@ function CityDropdown() {
 
     return (
         <>
-            <button className='city_but' onClick={openCity}>منطقه</button>
+            <button className='city_but' id='openCityButton' onClick={openCity}>منطقه</button>
             <div className='cityselected' id='maincityBlock'>
                 {list()}
             </div>
