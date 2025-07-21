@@ -10,6 +10,15 @@
   align-items: center;
 }
 
+.niazImage{
+  height: 36px;
+  width: 70px;
+  justify-self: end;
+  margin-left: 15px;
+  margin-bottom: -12.5px;
+  cursor: pointer;
+}
+
 .user{
   appearance: none;
   font-size: 20px;
@@ -47,15 +56,6 @@
 .add_user:hover,
 .add_niaz:hover {
   border: 1px solid var(--boeder-blue-color);
-}
-
-.niazImage{
-  height: 36px;
-  width: 70px;
-  justify-self: end;
-  margin-left: 13px;
-  margin-bottom: -11px;
-  cursor: pointer;
 }
 
 .search-container {
@@ -114,19 +114,39 @@ max-width: 600px;
   border: 1px solid var(--boeder-blue-color);
 }
 
-.top_rightbar_countaner{
-  display: grid;
-grid-template-columns: 100px 40px;
-    justify-content: end;
-  align-items: end;
+.slideModeChanger{
+  height: 40px;
+  width: 80px;
+  background-color: var(--layer2-bg-color);
+  display: block;
+  position: relative;
+  border-radius: 200px;
+  margin-left: 20px
 }
 
-.hamburgurImage{
-  height: 32px;
-  justify-self: start;
-  justify-content: end;
+.slideModeChanger_changer{
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  background-color: var(--text_muded_between);
+  display: block;
+  position: relative;
+  border-radius: 200px;
+}
+
+.icon_sun{
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 53px;
+}
+
+.top_rightbar_countaner{
+  display: grid;
+grid-template-columns: 100px 44px;
+    justify-content: end;
   align-items: end;
-  margin-bottom: 6.3px;
 }
 
 .city_but{
@@ -147,44 +167,59 @@ grid-template-columns: 100px 40px;
   transition: 0.3s;
   border: 1px solid transparent;
   box-sizing: border-box;
-  margin-right: 12px;
+  margin-right: 14px;
 }
 
+.city_but:hover {
+  border: 1px solid var(--boeder-blue-color);
+}
+
+
 .cityselected {
-  display: flex;
   flex-wrap: wrap;
   width: 200px;
   gap: 16px;
   padding: 12px;
-  background: #fafafa;
-  border: 1px solid #ddd;
+  background: var(--layer2-bg-color);
   margin-top: 12px;
   border-radius: 8px;
   max-height: 70vh;
   overflow-y: auto;
-  display: none;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: min-contentd;
+  top: 50px;
+  right: 100px;
+  
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.cityselected.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .citylocotionchild {
   flex: 1 1 300px;
-  background-color: #fff;
+  background-color: var(--layer2-bg-color);
   padding: 12px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--layer2-bg-color);
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
-
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .citylocotionchild button {
   width: 100%;
-  background-color: #007bff;
+  background-color: var(--boeder-blue-color);
   color: white;
   border: none;
   margin-bottom: 8px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
 }
 
 .citylocotionchild button:hover {
@@ -196,15 +231,27 @@ grid-template-columns: 100px 40px;
   margin-bottom: 6px;
   cursor: pointer;
   padding-left: 4px;
+  color: var(--text);
+  text-align: end;
+  grid-template-columns: 20px 1fr;
+  transition: background-color 0.2s ease;
 }
 
 .city-label input[type="checkbox"] {
-  margin-right: 6px;
   transform: scale(1.1);
   cursor: pointer;
+  margin-bottom: 50%;
+  margin-top: 50%;
+  transition: transform 0.2s ease;
+  transition: visibility 0.3s, opacity 0.3s ease;
+
 }
 
-.city-label:hover {
-  background-color: #f0f0f0;
-  border-radius: 4px;
+.hamburgurImage {
+  height: 32px;
+  justify-self: start;
+  justify-content: end;
+  align-items: end;
+  margin-bottom: 6.3px;
+  transition: all 0.2s ease;
 }

@@ -54,7 +54,7 @@ function CityDropdown() {
             document.querySelectorAll(`.city-${cityname}`).forEach(el => el.style.display = "none");
             setprelocation2Dropdown(prelocationDropdown.filter(item => item !== cityname));
         } else {
-            document.querySelectorAll(`.city-${cityname}`).forEach(el => el.style.display = "block");
+            document.querySelectorAll(`.city-${cityname}`).forEach(el => el.style.display = "grid");
             setprelocation2Dropdown([...prelocationDropdown, cityname]);
         }
     };
@@ -62,12 +62,12 @@ function CityDropdown() {
     const openCity = () => {
         const mainBlock = document.getElementById('maincityBlock');
         if (locationDropdown) {
-            mainBlock.style.display = "none";
+            mainBlock.classList.remove("open");
             setlocationDropdown(false);
             prelocationDropdown.forEach(cityName => document.querySelectorAll(`.city-${cityName}`).forEach(el => el.style.display = "none"));
             setprelocation2Dropdown([]);
         } else {
-            mainBlock.style.display = "block";
+            mainBlock.classList.add("open");
             setlocationDropdown(true);
         }
     };
@@ -76,10 +76,27 @@ function CityDropdown() {
         if (cityname.includes('همه ی شهرهای')) {
             const region = cityname.replace(/^همه ی شهرهای\s*/, '');
             const subCities = locations[region] || [];
+            const invisCity = (displayValue) => {
+                subCities
+                    .filter(c => !c.includes("همه ی شهرهای"))
+                    .forEach((c) => {
+                        const elements = document.getElementsByName(c);
+                        for (let el of elements) {
+                            const label = el.closest('.city-label');
+                            if (label) label.style.display = displayValue;
+                        }
+                    });
+            };
+
+            
             if (city2local.includes(cityname)) {
                 setcity2local(city2local.filter(c => c !== cityname));
+                const running = () => invisCity("grid")
+                
             } else {
                 const filtered = city2local.filter(c => !subCities.includes(c));
+                const stopRunning = () => invisCity("none")
+                
                 setcity2local([...filtered, cityname]);
             }
         } else {
@@ -111,6 +128,7 @@ function CityDropdown() {
                                 ? city2local.includes(city)
                                 : city2local.includes(city)
                             }
+                            name={city}
                             onChange={() => addLocalHistory(city)}
                         />
                         {city}
