@@ -4,6 +4,10 @@ import './top_bar.css';
 function CityDropdown() {
     const [locationDropdown, setlocationDropdown] = useState(false);
     const [prelocationDropdown, setprelocation2Dropdown] = useState([]);
+    const divXRef = useRef(null);
+    const divYRef = useRef(null);
+    let isFirstClick = true;
+    let tester = "hi"
 
     const [city2local, setcity2local] = useState(() => {
         const stored = localStorage.getItem("city2local");
@@ -96,10 +100,36 @@ function CityDropdown() {
         } else {
             setlocationDropdown(true);
             mainBlock.classList.add("open");
+            document.addEventListener('click', handleClick);
         }
     };
 
-    
+    function handleClick(event) {
+        if (isFirstClick) {
+        isFirstClick = false;
+        return; 
+        }
+
+        if (
+            (divXRef.current && divXRef.current.contains(event.target)) ||
+            (divYRef.current && divYRef.current.contains(event.target))
+        ) {
+            tester = "hi"
+        } else {
+            if(tester == "hi"){
+            tester = "bye"
+            const mainBlock = document.getElementById('maincityBlock');
+            setlocationDropdown(false);
+            mainBlock.classList.remove("open");
+            prelocationDropdown.forEach(cityName => document.querySelectorAll(`.city-${cityName}`).forEach(el => el.style.display = "none"));
+            setprelocation2Dropdown([]);
+            document.removeEventListener('click', handleClick);
+            }
+
+        }
+    }
+
+
 
 
     const addLocalHistory = (cityname) => {
@@ -168,9 +198,12 @@ function CityDropdown() {
 
     return (
         <>
-            <button className='city_but' id='openCityButton' onClick={openCity}>منطقه</button>
-            <div className='cityselected' id='maincityBlock'>
+            <button ref={divXRef} className='city_but' id='openCityButton' onClick={openCity}>منطقه</button>
+            <div ref={divYRef} className='cityselected' id='maincityBlock'>
+                <button>پاک کردن همه</button>
+                <input type='text'></input>
                 {list()}
+                <button className="fixed-bottom-button">hi</button>
             </div>
         </>
     );

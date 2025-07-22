@@ -247,6 +247,17 @@ grid-template-columns: 100px 44px;
 
 }
 
+.fixed-bottom-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: lightblue;
+  border: none;
+  cursor: pointer;
+}
+
 .hamburgurImage {
   height: 32px;
   justify-self: start;
