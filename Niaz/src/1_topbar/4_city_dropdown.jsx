@@ -1,26 +1,48 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import './top_bar.css';
 
 function CityDropdown() {
     const [locationDropdown, setlocationDropdown] = useState(false);
     const [prelocationDropdown, setprelocation2Dropdown] = useState([]);
+    const [localHistoryCity, setlocalHistoryCity] = useState([])
+    const [searchCity, setSearchCity] = useState('');
     const divXRef = useRef(null);
     const divYRef = useRef(null);
     let isFirstClick = true;
     let tester = "hi"
 
+
+    const closeCity = () => {
+        const mainBlock = document.getElementById('maincityBlock');
+        
+        setlocationDropdown(false);
+        
+        if (mainBlock) {
+            mainBlock.classList.remove("open");
+        }
+
+        prelocationDropdown.forEach(cityName => {
+            document.querySelectorAll(`.city-${cityName}`).forEach(el => {
+                el.style.display = "none";
+            });
+        });
+
+        setSearchCity('')
+
+        setprelocation2Dropdown([]);
+        
+        document.removeEventListener('click', handleClick);
+    };
+    
     const [city2local, setcity2local] = useState(() => {
         const stored = localStorage.getItem("city2local");
         return stored ? JSON.parse(stored) : [];
     });
-
+    
     useEffect(() => {
         localStorage.setItem("city2local", JSON.stringify(city2local));
-
-        // run  acustome code for reloading web
-    }, [city2local]);
-
-
+    }, [localHistoryCity]);
+    
     const locations = {
         "همدان": ["همه ی شهرهای همدان", "ملایر", "نهاوند", "لالجین", "تویسرکان", "سرکان", "اسد آباد", "کبودرآهنگ", "فرسفج", "سامن"],
         "قزوین": ["همه ی شهرهای قزوین", "ابگرم قزوین", "تاکستان", "بوئین زهرا"],
@@ -53,7 +75,25 @@ function CityDropdown() {
         "خرم آباد": ["همه ی شهرهای خرم آباد", "پل دختر", "الیگودرز", "ازنا", "بروجرد", "درود", "کوهدشت"],
         "تبریز": ["همه ی شهرهای تبریز", "جلفا", "مرند", "لیقوان", "لیلان", "کلیبر", "بناب", "مراغه", "سراب", "عجب شیر", "اسکو", "شبستر", "کندوان", "سردرود", "میانه", "ورزقان", "هشترود", "اهر", "نقده", "بستان آباد"],
         "قم": ["همه ی شهرهای قم", "سلفچگان", "کهک"]
-        };
+    };
+
+    const saveCityLocalHost = () => {
+        setlocalHistoryCity(city2local)
+        closeCity()
+    }
+
+    const cancleCitLocalhost = () => {
+        setcity2local(localHistoryCity)
+        closeCity()
+    }
+
+    const clearAllCityLocalHost = () => {
+        setprelocation2Dropdown([])
+        setlocalHistoryCity([])
+        setcity2local([])
+        closeCity()
+    }
+
 
     useEffect(() => {
     const loadCity = () => {
@@ -94,9 +134,7 @@ function CityDropdown() {
         const mainBlock = document.getElementById('maincityBlock');
         if (locationDropdown) {
             setlocationDropdown(false);
-            mainBlock.classList.remove("open");
-            prelocationDropdown.forEach(cityName => document.querySelectorAll(`.city-${cityName}`).forEach(el => el.style.display = "none"));
-            setprelocation2Dropdown([]);
+            closeCity()
         } else {
             setlocationDropdown(true);
             mainBlock.classList.add("open");
@@ -118,19 +156,11 @@ function CityDropdown() {
         } else {
             if(tester == "hi"){
             tester = "bye"
-            const mainBlock = document.getElementById('maincityBlock');
-            setlocationDropdown(false);
-            mainBlock.classList.remove("open");
-            prelocationDropdown.forEach(cityName => document.querySelectorAll(`.city-${cityName}`).forEach(el => el.style.display = "none"));
-            setprelocation2Dropdown([]);
-            document.removeEventListener('click', handleClick);
+            closeCity()
             }
 
         }
     }
-
-
-
 
     const addLocalHistory = (cityname) => {
         if (cityname.includes('همه ی شهرهای')) {
@@ -196,14 +226,67 @@ function CityDropdown() {
         ))
     );
 
+    const filterdLocations = useMemo(() => {
+    let result = {}
+    
+    for (const province in locations){
+        const cities = locations[province];
+        const matchContain = [];
+
+
+        cities.forEach(city => {
+            const lowwerCity = city.trim();
+
+            if (lowwerCity.includes(searchCity)) {
+                matchContain.push(lowwerCity);
+            }
+        });
+
+        const combined = [...matchContain];
+        if (combined.length > 0) {
+            result[province] = combined;
+        }
+    }
+
+
+    return result;
+
+    }, [searchCity])
+
     return (
         <>
-            <button ref={divXRef} className='city_but' id='openCityButton' onClick={openCity}>منطقه</button>
-            <div ref={divYRef} className='cityselected' id='maincityBlock'>
-                <button>پاک کردن همه</button>
-                <input type='text'></input>
+            <button ref={divXRef} className='city_but' id='openCityButton' onClick={openCity}>استان</button>
+            <div ref={divYRef} className="cityselected" id="maincityBlock">
+            <div className="city-scroll-content">
+                <button className='clearAllCityBut' onClick={clearAllCityLocalHost}>پاک کردن همه</button>
+                    <input type="text" value={searchCity} onChange={(e) => {setSearchCity(e.target.value); }} placeholder='جستجو در شهر ها' className='serchInCitys' />
+                        
+                    <div className='citylocotionchild'>
+                        {searchCity && Object.entries(filterdLocations).map(([province, cities]) => (
+                            <div key={province} >
+                            {cities.map((city, i) => (
+                                
+                            <label className='city-label-serch' key={i}>
+                                <input
+                                type="checkbox"
+                                checked={city.includes('همه ی شهرهای')
+                                    ? city2local.includes(city)
+                                    : city2local.includes(city)
+                                }
+                                name={city}
+                                onChange={() => addLocalHistory(city)}
+                                />
+                                {city}
+                            </label>
+                            
+                            ))}
+                        </div>
+                    ))}
+                </div>
+                
                 {list()}
-                <button className="fixed-bottom-button">hi</button>
+            </div>
+            <div className="fixed-bottom-button"><button className='conformCity' onClick={saveCityLocalHost}>تایید</button><button onClick={cancleCitLocalhost} className='deconformCity'>لغو</button></div>
             </div>
         </>
     );

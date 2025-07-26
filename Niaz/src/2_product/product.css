@@ -1,0 +1,81 @@
+@import url('../index.css');
+
+.products_cointainer{
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.product-card {
+    width: 220px;
+    border: 1px solid var(--layer1-important-color);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    background-color: var(--layer2-bg-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    user-select: none;
+
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text);
+    margin-bottom: 30px;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    width: 100%;
+    height: 220px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 16px; /* a bit more breathing room */
+}
+
+.product-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 14px 0; /* slightly more margin */
+    text-align: center;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+}
+
+.product-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+}
+
+.product-price {
+    color: var(--border-blue-color);
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.product-date {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* If you use a <p> inside product-date, keep inline and add margin for spacing */
+.product-date p {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
