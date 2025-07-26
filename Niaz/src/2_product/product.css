@@ -5,9 +5,16 @@
     margin-left: 20px;
     margin-right: 20px;
 
+    width: calc(100% - 40px);
+
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-items: center;
+    transition: width 0.3s ease;
+}
+
+.products_cointainer.open{
+    width: calc(80% - 40px);
 }
 
 .product-card {

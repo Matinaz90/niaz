@@ -1,3 +1,5 @@
+@import url('./index.css'); 
+
 .gradient-border {
     margin-top: 10px;
     padding: 3px; /* thickness of border */
@@ -7,10 +9,15 @@
     height: 400px;
     margin-right: 20px;
     margin-left: 20px;
+    transition: width 0.3s ease;
+}
+
+.gradient-border.open {
+    width: calc(80% - 46px);
 }
 
 .content-box {
-    background-color: #121212; /* match your dark theme */
+    background-color: var(--layer2-bg-color); /* match your dark theme */
     color: white;
     padding: 16px;
     border-radius: 10px;

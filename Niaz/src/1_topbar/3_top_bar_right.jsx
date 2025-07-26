@@ -1,16 +1,24 @@
 import './top_bar.css'
 import CityDropdown from './4_city_dropdown'
+import { rightBarConfig } from '../3_right_bar/1_right_bar';
 
 function Top_bar_right(){
 
-
+    const handleClick = () => {
+        rightBarConfig(); 
+    };
 
     return(
         <div className='top_rightbar_countaner'>
 
         <CityDropdown></CityDropdown>
 
-            <img className='hamburgurImage' src='../../hamburger-menu-light.png' />
+        <img
+        id="hamburgurMenu"
+        className="hamburgurImage"
+        src="../../hamburger-menu-light.png"
+        onClick={handleClick}
+        />
         </div>
     )
 }

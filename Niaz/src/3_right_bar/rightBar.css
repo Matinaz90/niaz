@@ -1,0 +1,16 @@
+@import url('../index.css'); 
+
+.right_bar{
+    height: calc(100% - 56px);
+    background-color: var(--layer3-bg-color);
+    position: fixed;
+    top: 56px;
+    right: 0;
+    width: 0;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+#rightBar.open {
+  width: 20%;
+}

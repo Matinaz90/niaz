@@ -1,13 +1,18 @@
 @import url('../index.css'); 
 
-.tobbar_countainer{
-  height:  59px;
+.tobbar_countainer {
+  position: fixed;                    
+  left: 0;
+  top: 0;
+  width: 100%;              
+  height: 59px;
   display: grid;
-
-  padding: 0px;
-  margin: 0;
   justify-content: center;
   align-items: center;
+  padding: 0;
+  margin: 0;
+  background-color: var(--layer3-bg-color);
+  z-index: 1000;             
 }
 
 .niazImage{
@@ -65,6 +70,7 @@
   padding: 5px 0px;
   margin-left: 20px;
   margin-right: 20px;
+  margin-top: 59px;
   scrollbar-width: none; /* Firefox */
 }
 
@@ -76,7 +82,7 @@
   white-space: nowrap;
   background-color: var(--layer2-bg-color);
   color: var(--text_muded_between);
-  padding: 6px 16px;
+  padding: 4px 14px;
   border: none;
   border-radius: 16px;
   font-size: 14px;
@@ -138,6 +144,7 @@ max-width: 600px;
   border-radius: 20px;
   border: 1px solid var(--layer1-importan-color);
   transition: 0.3s;
+  color: var(--text_muded_between);
 }
 
 .search-input::placeholder {
@@ -401,4 +408,5 @@ grid-template-columns: 100px 44px;
   align-items: end;
   margin-bottom: 6.3px;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
