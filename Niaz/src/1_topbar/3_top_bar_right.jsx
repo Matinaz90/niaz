@@ -1,11 +1,11 @@
 import './top_bar.css'
 import CityDropdown from './4_city_dropdown'
-import { rightBarConfig } from '../3_right_bar/1_right_bar';
+import { RightBarConfig } from '../3_right_bar/1_right_bar';
 
 function Top_bar_right(){
 
     const handleClick = () => {
-        rightBarConfig(); 
+        RightBarConfig(); 
     };
 
     return(

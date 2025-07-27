@@ -7,10 +7,12 @@ import Top_bar_right from './1_topbar/3_top_bar_right'
 import SlideModeChanger from './1_topbar/2.5_slideModeChanger'
 import Product from "./2_product/product";
 import Right_bar from "./3_right_bar/1_right_bar.jsx";
+import { RightBarConfig } from './3_right_bar/1_right_bar.jsx';
 
 function App() {
 
   const [width, setWidth] = useState(window.innerWidth)
+  const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
 
   useEffect(() => {
         const resize = () => {
@@ -35,19 +37,19 @@ function App() {
 
         <Filter_chip_bar></Filter_chip_bar>
 
-        <div class="gradient-border" id="gradient-border">
-            <div class="content-box">
+        <div className={`gradient-border ${isRightBarOpen ? 'open' : ''}`} id="gradient-border">
+            <div className="content-box">
                 <img src="../../Untitled-1.png" className="image_mainPage"></img>
             </div>
         </div>
 
-        <div id="products_cointainer" className="products_cointainer">
+        <div id="products_cointainer" className={`products_cointainer ${isRightBarOpen ? 'open' : ''}`}>
         <Product></Product><Product></Product><Product></Product><Product></Product><Product></Product>
         </div>
         
         <div></div>
     </>
-  )
+  ) 
 }
 
 export default App
