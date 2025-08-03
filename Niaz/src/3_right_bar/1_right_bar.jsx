@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import'./rightBar.css'
+import { Link } from 'react-router-dom';
+import'./1_rightBar.css'
 
 
 export function RightBarConfig() {
@@ -25,9 +26,15 @@ export function RightBarConfig() {
 function Right_bar(){
 
     const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
+    
+
     return(
         <div id='rightBar' className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
-
+          <nav className="right-bar-nav">
+            <Link to="/home" className="right-bar-link">خانه</Link>
+            <Link to="/car" className="right-bar-link">ماشین</Link>
+            <Link to="/employ" className="right-bar-link">استخدام</Link>
+          </nav>
         </div>
     )
 
