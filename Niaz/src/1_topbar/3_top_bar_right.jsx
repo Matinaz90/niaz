@@ -16,7 +16,7 @@ function Top_bar_right(){
         <img
         id="hamburgurMenu"
         className="hamburgurImage"
-        src="../../hamburger-menu-light.png"
+        src="/hamburger-menu-light.png"
         onClick={handleClick}
         />
         </div>

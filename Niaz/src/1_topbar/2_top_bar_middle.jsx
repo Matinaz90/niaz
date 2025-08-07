@@ -20,7 +20,7 @@ function Top_bar_middle(){
         <div className="search-container">
             <div className="serch_image_countaner">
                 <img
-                src="search.png"
+                src="/search.png"
                 alt="search"
                 className="search-icon"
             />

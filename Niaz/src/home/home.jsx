@@ -9,7 +9,6 @@ import Product from "../2_product/product.jsx";
 import Home_RightBar from "../3_right_bar/2_home_rightBar.jsx";
 
 function Home() {
-
   const [width, setWidth] = useState(window.innerWidth)
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
 
@@ -38,7 +37,7 @@ function Home() {
 
         <div className={`gradient-border ${isRightBarOpen ? 'open' : ''}`} id="gradient-border">
             <div className="content-box">
-                <img src="../../Untitled-1.png" className="image_mainPage"></img>
+                <img src="/Untitled-1.png" className="image_mainPage"></img>
             </div>
         </div>
 
