@@ -368,6 +368,8 @@ const [mode, setMode] = useState('default');
 
         {mode === 'options' && (
           <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
             <p className="showInput">مبله:</p>
             <div className="input-wrapper homeface-wrapper">
               <label className="homeface-option">
@@ -571,9 +573,11 @@ const [mode, setMode] = useState('default');
               تایید
             </button>
 
+            </div>
 
-            <div className='oneBack_options_parents'></div>
+
               <button className="oneBack_options" onClick={trimPathToRoot}>بازگشت</button>
+            <div className='oneBack_options_parents'></div>
           </div>
         )}
 
