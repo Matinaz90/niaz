@@ -10,24 +10,38 @@ export function useValidatePathHome() {
 
     if (segments[0] !== 'home') return;
 
-    // Validate values
     const validators = {
-      meter: (val) => /^\d+$/.test(val), // must be number
-      rooms: (val) => /^\d+$/.test(val), // must be number
-      year: (val) => /^\d{4}$/.test(val), // e.g., 1403
+      meter: (val) => /^\d+$/.test(val),
+      rooms: (val) => /^\d+$/.test(val),
+      year: (val) => /^\d{4}$/.test(val),
       face: (val) => ['north', 'south'].includes(val),
-      floor: (val) => /^(\d+,)*\d+$/.test(val), // e.g., 2,5,2
-      condition: (val) => ['ok','normal', 'bad', 'new'].includes(val), // allowed values
+      floor: (val) => /^(\d+,)*\d+$/.test(val),
+      condition: (val) => ['ok','normal', 'bad', 'new'].includes(val),
+
+      options: val => {
+        const allowed = ['t','f','i','Fi','w','g','Wg','h','c','Hc'];
+        const parts = val.split(',');
+        return parts.length === 8 && parts.every(v => allowed.includes(v));
+      }
     };
 
     for (let i = 2; i < segments.length; i++) {
       const [key, value] = segments[i].split(':');
       const validate = validators[key];
-      if (!validate || !validate(value)) {
+
+      console.log(`Validating key: "${key}", value: "${value}"`);
+
+      if (!validate) {
+        console.warn(`No validator found for "${key}" — redirecting`);
+        navigate('/home');
+        return;
+      }
+
+      if (!validate(value)) {
+        console.warn(`Validation failed for "${key}" with value "${value}" — redirecting`);
         navigate('/home');
         return;
       }
     }
-
   }, [location.pathname, navigate]);
 }

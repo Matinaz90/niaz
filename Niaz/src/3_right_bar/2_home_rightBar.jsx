@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useValidatePathHome } from "../validPath.jsx";
 import './2.1_home_rightBar.css';
+import React from "react";
 
 export default function Home_RightBar() {
   useValidatePathHome()
@@ -18,14 +19,15 @@ const [mode, setMode] = useState('default');
   const [allHomes, setallHomes] = useState('');
   const [homeflorRooms, sethomeflorRooms] = useState('');
   const [homeCondition, sethomeCondition] = useState('');
-  const [withStuffInhome, setwithStuffInhome] = useState('');
-  const [anbary, setanbary] = useState('');
-  const [parking, setparking] = useState('');
-  const [asansor, setasansor] = useState('');
-  const [balkon, setbalkon] = useState('');
-  const [homehotTemp, sethomehotTemp] = useState('');
-  const [homecoldTemp, sethomecoldTemp] = useState('');
-  const [bathroom, setbathroom] = useState('');
+  const [withStuffInhome, setwithStuffInhome] = useState("");
+  const [anbary, setanbary] = useState("");
+  const [parking, setparking] = useState("");
+  const [asansor, setasansor] = useState("");
+  const [balkon, setbalkon] = useState("");
+  const [homehotTemp, sethomehotTemp] = useState("");
+  const [homecoldTemp, sethomecoldTemp] = useState("");
+  const [bathroom, setbathroom] = useState("");
+
   const yearListRef = useRef();
   const [showYearList, setShowYearList] = useState(false);
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
@@ -34,8 +36,10 @@ const [mode, setMode] = useState('default');
   useEffect(() => {
     const href = location.pathname;
     if (href.includes('/home')) {
-      if(href.includes('options:')){
+      if(href.includes('price:')){
         setMode('default');
+      }else if(href.includes('options:')){
+        setMode('pricehome');
       }else if (href.includes('condition:')){
         setMode('options')
       } else if (href.includes('floor:')) {
@@ -100,6 +104,12 @@ const [mode, setMode] = useState('default');
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
+  const categories = [
+    "70 میلیون",
+    "700 میلیون",
+    "7 ملیارد",
+];
+
   return (
     <div id="rightBar" className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
       <nav className="right-bar-nav">
@@ -124,6 +134,28 @@ const [mode, setMode] = useState('default');
               onKeyDown={handleKeyDown}
               ref={divXRef}
             />
+
+            <button
+              className="next"
+              disabled={
+                !price
+              }
+              onClick={() => {
+                if (price) {
+                  AddGoogleLink(`price:${price}`);
+                  setMode('default');
+                }
+              }}
+            >
+              تایید
+            </button>
+
+          <div id="category-bar" className="category-bar">
+            {categories.map((label, index) => (
+              <button id="category" key={index} className="category">{label}</button>
+            ))}
+          </div>
+
             <p id="priceDisplay" className="priceDisplay">
               {formatPrice(price)}
             </p>
@@ -375,16 +407,16 @@ const [mode, setMode] = useState('default');
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('north')}
-                  checked={homeface === 'north'}
+                  onChange={() => setwithStuffInhome('t')}
+                  checked={withStuffInhome === 't'}
                 />
                 هست
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
+                  onChange={() => setwithStuffInhome('f')}
+                  checked={withStuffInhome === 'f'}
                 />
                 نیست
               </label>
@@ -395,16 +427,16 @@ const [mode, setMode] = useState('default');
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('north')}
-                  checked={homeface === 'north'}
+                  onChange={() => setparking('t')}
+                  checked={parking === 't'}
                 />
                 دارد
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
+                  onChange={() => setparking('f')}
+                  checked={parking === 'f'}
                 />
                 ندارد
               </label>
@@ -415,16 +447,16 @@ const [mode, setMode] = useState('default');
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('north')}
-                  checked={homeface === 'north'}
+                  onChange={() => setasansor('t')}
+                  checked={asansor === 't'}
                 />
                 دارد
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
+                  onChange={() => setasansor('f')}
+                  checked={asansor === 'f'}
                 />
                 ندارد
               </label>
@@ -436,16 +468,16 @@ const [mode, setMode] = useState('default');
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('north')}
-                  checked={homeface === 'north'}
+                  onChange={() => setanbary('t')}
+                  checked={anbary === 't'}
                 />
                 دارد
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
+                  onChange={() => setanbary('f')}
+                  checked={anbary === 'f'}
                 />
                 ندارد
               </label>
@@ -456,16 +488,16 @@ const [mode, setMode] = useState('default');
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('north')}
-                  checked={homeface === 'north'}
+                  onChange={() => setbalkon('t')}
+                  checked={balkon === 't'}
                 />
                 دارد
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
+                  onChange={() => setbalkon('f')}
+                  checked={balkon === 'f'}
                 />
                 ندارد
               </label>
@@ -474,99 +506,115 @@ const [mode, setMode] = useState('default');
             
             <p className="showInput">گرمایش:</p>
             <div className="input-wrapper homeface-wrapper">
+              <div className="homeface-row">
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => sethomehotTemp('h')}
+                    checked={homehotTemp === 'h'}// stands for heater
+                  />
+                  بخاری
+                </label>
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => sethomehotTemp('c')}
+                    checked={homehotTemp === 'c'}// stands for combi boiler
+                  />
+                  پکیج
+                </label>
+              </div>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('north')}
-                  checked={homeface === 'north'}
-                />
-                بخاری
-              </label>
-              <label className="homeface-option">
-                <input
-                  type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
-                />
-                پکیج
-              </label>
-              <label className="homeface-option">
-                <input
-                  type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
+                  onChange={() => sethomehotTemp('Hc')}
+                  checked={homehotTemp === 'Hc'} // stands for Heater and package
                 />
                 بخاری و پکیج
               </label>
             </div>
 
-
             <p className="showInput">سرمایش :</p>
             <div className="input-wrapper homeface-wrapper">
+              <div className="homeface-row">
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => sethomecoldTemp('w')}
+                    checked={homecoldTemp === 'w'} // stands for water
+                  />
+                  ابی
+                </label>
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => sethomecoldTemp('g')}
+                    checked={homecoldTemp === 'g'} // stadns for gas
+                  />
+                  گازی
+                </label>
+              </div>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('north')}
-                  checked={homeface === 'north'}
-                />
-                ابی
-              </label>
-              <label className="homeface-option">
-                <input
-                  type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
-                />
-                گازی
-              </label>
-              <label className="homeface-option">
-                <input
-                  type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
+                  onChange={() => sethomecoldTemp('Wg')}
+                  checked={homecoldTemp === 'Wg'} // stands for water and gas
                 />
                 ابی و گازی
               </label>
             </div>
 
-
             <p className="showInput">سرویس بهداشتی:</p>
             <div className="input-wrapper homeface-wrapper">
+              <div className="homeface-row">
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => setbathroom('f')}
+                    checked={bathroom === 'f'} // farangi
+                  />
+                  فرنگی
+                </label>
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => setbathroom('i')}
+                    checked={bathroom === 'i'} // irany
+                  />
+                  ایرانی
+                </label>
+              </div>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => sethomeface('north')}
-                  checked={homeface === 'north'}
-                />
-                فرنگی
-              </label>
-              <label className="homeface-option">
-                <input
-                  type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
-                />
-                ایرانی
-              </label>
-              <label className="homeface-option">
-                <input
-                  type="checkbox"
-                  onChange={() => sethomeface('south')}
-                  checked={homeface === 'south'}
+                  onChange={() => setbathroom('Fi')}
+                  checked={bathroom === 'Fi'} // farhangi and irany
                 />
                 فرنگی و ایرانی
               </label>
             </div>
 
+
+
             
 
             <button
               className="next"
-              disabled={!homeface}
+              disabled={
+                !withStuffInhome ||
+                !anbary ||
+                !parking ||
+                !asansor ||
+                !balkon ||
+                !homehotTemp ||
+                !homecoldTemp ||
+                !bathroom
+              }
               onClick={() => {
-                if (homeface) {
-                  AddGoogleLink(`options:${homeface}`);
-                  setMode('homeNumbresInfloor');
+                const options = `${withStuffInhome},${anbary},${parking},${asansor},${balkon},${homehotTemp},${homecoldTemp},${bathroom}`
+                if (withStuffInhome || anbary || parking || asansor || balkon || homehotTemp || homecoldTemp || bathroom) {
+                  AddGoogleLink(`options:${options}`);
+                  setMode('pricehome');
                 }
               }}
             >
