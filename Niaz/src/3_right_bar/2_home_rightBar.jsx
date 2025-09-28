@@ -2,11 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useValidatePathHome } from "../validPath.jsx";
 import './2.1_home_rightBar.css';
-import React from "react";
+import { useResultSearch } from "../24_run.jsx";
 
 export default function Home_RightBar() {
   useValidatePathHome()
-const [mode, setMode] = useState('default');
+  const [mode, setMode] = useState('default');
+  const [page, setpage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,6 +33,7 @@ const [mode, setMode] = useState('default');
   const [showYearList, setShowYearList] = useState(false);
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
   const divXRef = useRef(null);
+  const [priceresultSearch] = useResultSearch();
 
   useEffect(() => {
     const href = location.pathname;
@@ -58,6 +60,13 @@ const [mode, setMode] = useState('default');
         setMode('default');
       }
     }
+
+  if(href.includes('Aparteman')){
+      setpage('Aparteman')
+    } else {
+      setpage('');
+    };
+
   }, [location.pathname]);
 
   const formatPrice = (value) => {
@@ -104,11 +113,24 @@ const [mode, setMode] = useState('default');
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
-  const categories = [
-    "70 میلیون",
-    "700 میلیون",
-    "7 ملیارد",
-];
+    const sendPostRequestprice = async () => {
+    try {
+      await fetch("http://localhost:8080/recommended", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Addres_page: "home",
+          Whichserch: page,
+          What_is_serch: price,
+        }),
+      });
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div id="rightBar" className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
@@ -116,7 +138,7 @@ const [mode, setMode] = useState('default');
         {mode === 'default' && (
           <>
             <a onClick={() => setMode('pricehome')}>مشارکت ساخت</a>
-            <a onClick={() => { setMode('MeterageId'); AddGoogleLink('Aparteman'); }}>اپارتمان</a>
+            <a onClick={() => { setMode('MeterageId'); AddGoogleLink('Aparteman');}}>اپارتمان</a>
             <a>ویلایی</a>
             <a>اجاره</a>
             <a>تجاری</a>
@@ -144,17 +166,20 @@ const [mode, setMode] = useState('default');
                 if (price) {
                   AddGoogleLink(`price:${price}`);
                   setMode('default');
+                  sendPostRequestprice()
                 }
               }}
             >
               تایید
             </button>
 
-          <div id="category-bar" className="category-bar">
-            {categories.map((label, index) => (
-              <button id="category" key={index} className="category">{label}</button>
+            <div>
+            {priceresultSearch.map((val, index) => (
+              <button  key={index} className="category">
+                {val}
+              </button>
             ))}
-          </div>
+            </div>
 
             <p id="priceDisplay" className="priceDisplay">
               {formatPrice(price)}

@@ -29,7 +29,6 @@ export function useValidatePathHome() {
       const [key, value] = segments[i].split(':');
       const validate = validators[key];
 
-      console.log(`Validating key: "${key}", value: "${value}"`);
 
       if (!validate) {
         console.warn(`No validator found for "${key}" — redirecting`);

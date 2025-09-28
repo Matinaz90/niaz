@@ -250,24 +250,3 @@
   left: 20px;
   right: 0;
 }
-
-#category-bar {
-  flex-wrap: nowrap;      /* make sure it stays in one row */
-  overflow-x: auto;       /* enable horizontal scroll */
-  overflow-y: hidden;     /* prevent vertical scroll */
-  -webkit-overflow-scrolling: touch; /* smooth on mobile */
-  width: 100px;
-  margin-top: 2px;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-#category-bar::-webkit-scrollbar {
-  display: none;          /* Chrome/Safari hide */
-}
-
-/* ID version for buttons inside */
-#category {
-  flex: 0 0 auto;          /* prevent stretching */
-  white-space: nowrap;     /* keep text on one line */
-}
