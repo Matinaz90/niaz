@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useValidatePathHome } from "../validPath.jsx";
 import './2.1_home_rightBar.css';
-import { useResultSearch } from "../24_run.jsx";
 
 export default function Home_RightBar() {
   useValidatePathHome()
@@ -12,6 +11,7 @@ export default function Home_RightBar() {
   const location = useLocation();
 
   const [price, setPrice] = useState('');
+  const [priceRecommended, setpriceRecommended]= useState()
   const [meterage, setMeterage] = useState('');
   const [roomsInHome, setroomsInHome] = useState('');
   const [yearBuilt, setYearBuilt] = useState('');
@@ -33,7 +33,6 @@ export default function Home_RightBar() {
   const [showYearList, setShowYearList] = useState(false);
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
   const divXRef = useRef(null);
-  const [priceresultSearch] = useResultSearch();
 
   useEffect(() => {
     const href = location.pathname;
@@ -80,6 +79,7 @@ export default function Home_RightBar() {
 
   const handleChange = (e, setter) => {
     let raw = e.target.value;
+    if (raw.length > 30) return; 
     if (!/^\d*$/.test(raw)) return;
     if (raw.length > 0 && raw.startsWith('0')) raw = raw.replace(/^0+/, '');
     setter(raw);
@@ -103,6 +103,13 @@ export default function Home_RightBar() {
     navigate(trimmedPath);
   };
 
+  const priceRecommendedcal = (e) => {
+    const price = e.target.value;
+    if (price.length > 30) return;
+
+    setpriceRecommended(String(price) + 'ملیارد') 
+  }
+
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (yearListRef.current && !yearListRef.current.contains(e.target)) {
@@ -113,31 +120,13 @@ export default function Home_RightBar() {
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
-    const sendPostRequestprice = async () => {
-    try {
-      await fetch("http://localhost:8080/recommended", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Addres_page: "home",
-          Whichserch: page,
-          What_is_serch: price,
-        }),
-      });
-
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   return (
     <div id="rightBar" className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
       <nav className="right-bar-nav">
         {mode === 'default' && (
           <>
-            <a onClick={() => setMode('pricehome')}>مشارکت ساخت</a>
+            <a onClick={() => { setMode('pricehome')}}>مشارکت ساخت</a>
             <a onClick={() => { setMode('MeterageId'); AddGoogleLink('Aparteman');}}>اپارتمان</a>
             <a>ویلایی</a>
             <a>اجاره</a>
@@ -150,7 +139,7 @@ export default function Home_RightBar() {
             <p className="showInput">قیمت:</p>
             <input
               value={price}
-              onChange={(e) => handleChange(e, setPrice)}
+              onChange={(e) => {handleChange(e, setPrice); priceRecommendedcal(e);}}
               type="number"
               inputMode="numeric"
               onKeyDown={handleKeyDown}
@@ -166,24 +155,24 @@ export default function Home_RightBar() {
                 if (price) {
                   AddGoogleLink(`price:${price}`);
                   setMode('default');
-                  sendPostRequestprice()
                 }
               }}
             >
               تایید
             </button>
-
-            <div>
-            {priceresultSearch.map((val, index) => (
-              <button  key={index} className="category">
-                {val}
-              </button>
-            ))}
-            </div>
-
+            
             <p id="priceDisplay" className="priceDisplay">
               {formatPrice(price)}
             </p>
+
+            <div>
+            {
+              <button className="category">
+                {priceRecommended}
+              </button>
+            }
+            </div>
+
             <p className="oneBack" onClick={trimPathToRoot}>بازگشت</p>
           </>
         )}
