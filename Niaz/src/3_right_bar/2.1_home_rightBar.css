@@ -46,6 +46,18 @@
   transition: border 0.2s;
 }
 
+.right-bar-nav input[type="text"] {
+  padding: 12px 16px;
+  border: 1px solid transparent;
+  background-color: var(--layer2-bg-color);
+  color: var(--text_muded_between);
+  font-size: 1.1rem;
+  outline: none;
+  border-radius: 8px;
+  width: calc(100% - 32px - 2px);
+  transition: border 0.2s;
+}
+
 .showInput{
   display: block;
   text-decoration: none;
@@ -56,7 +68,6 @@
   border-radius: 8px;
   color: var(--text_muded_between);
   transition: background 0.2s;
-  cursor: pointer;
 
 }
 
@@ -66,6 +77,7 @@
   border-bottom-right-radius: 0;
   border: 1px solid var(--boeder-blue-color);
   border-bottom: none;
+  display: none;
 }
 
 .right-bar-nav input[type="number"]:focus {
@@ -74,9 +86,22 @@
 
 
 .priceDisplay {
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: -4px;
+  font-size: 18px;
   color: var(--text_muded_between);
+  margin-right: 4%;
+  margin-bottom: 0
+}
+
+.recommended_div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 8px;
+}
+
+.recommended_div button{
+  margin-left: 8%;
+  margin-right: 8%;
 }
 
 .conform_buttonYear{
@@ -143,10 +168,7 @@
 .year-dropdown.visible {
   opacity: 1;
   visibility: visible;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-top: 0;
-  max-height: 240px;
+  max-height: 280px;
 }
 
 .year-dropdown::-webkit-scrollbar {
@@ -218,6 +240,8 @@
 .optionDivchild::-webkit-scrollbar {
   width: 8px;
 }
+
+
 
 .oneBack_options{
   background-color: transparent;

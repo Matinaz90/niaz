@@ -11,7 +11,9 @@ export default function Home_RightBar() {
   const location = useLocation();
 
   const [price, setPrice] = useState('');
-  const [priceRecommended, setpriceRecommended]= useState()
+  const [PricePersion, setPricePersion] = useState('');
+  const [priceRecommended1, setpriceRecommended1]= useState();
+  const [priceRecommended2, setpriceRecommended2]= useState();
   const [meterage, setMeterage] = useState('');
   const [roomsInHome, setroomsInHome] = useState('');
   const [yearBuilt, setYearBuilt] = useState('');
@@ -31,6 +33,9 @@ export default function Home_RightBar() {
 
   const yearListRef = useRef();
   const [showYearList, setShowYearList] = useState(false);
+  const [showHomeNumber, setShowHomeNumber] = useState(false);
+  const [showallHomes, setShowAllHomes] = useState(false);
+  const [showhomeflorRooms, sethowHomeflorRooms] = useState(false);
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
   const divXRef = useRef(null);
 
@@ -71,22 +76,51 @@ export default function Home_RightBar() {
   const formatPrice = (value) => {
     const num = parseInt(value, 10);
     if (isNaN(num) || num <= 0) return '';
-    if (num >= 1_000_000_000) return (num / 1_000_000_000).toFixed(3).replace(/\.0+$/, '') + ' میلیارد';
-    if (num >= 1_000_000) return (num / 1_000_000).toFixed(3).replace(/\.0+$/, '') + ' میلیون';
-    if (num >= 1_000) return (num / 1_000).toFixed(3).replace(/\.0+$/, '') + ' هزار تومان';
-    return num + ' تومان';
+    if (num >= 1_000_000_000) return englishToPersianNumber((num / 1_000_000_000).toFixed(3).replace(/\.0+$/, '')) + ' میلیارد';
+    if (num >= 1_000_000) return englishToPersianNumber((num / 1_000_000).toFixed(3).replace(/\.0+$/, '')) + ' میلیون';
+    if (num >= 1_000) return englishToPersianNumber((num / 1_000).toFixed(3).replace(/\.0+$/, '')) + ' هزار تومان';
+    return englishToPersianNumber(num) + ' تومان';
   };
 
-  const handleChange = (e, setter) => {
-    let raw = e.target.value;
-    if (raw.length > 30) return; 
-    if (!/^\d*$/.test(raw)) return;
-    if (raw.length > 0 && raw.startsWith('0')) raw = raw.replace(/^0+/, '');
-    setter(raw);
-  };
+  const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
+  const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
-  const handleKeyDown = (e) => {
-    if (['e', 'E', '+', '-', '.'].includes(e.key)) e.preventDefault();
+  const persianToEnglishNumber = (val) => {
+        return String(val).split("").map(ch => {
+        const index = persianNums.indexOf(ch);
+        return index > -1 ? englishNums[index] : ch;
+      }).join("");
+    }
+
+  const englishToPersianNumber = (val) => {
+      return String(val).split("").map(ch => {
+      const index = englishNums.indexOf(ch);
+      return index > -1 ? persianNums[index] : ch;
+    }).join("");
+  }
+
+  const handleChange = (e, setter, setter2persion) => {
+
+    const raw = e.target.value
+
+    if(raw.length === 0){
+      setter('')
+      setter2persion('')
+      return;
+    }
+
+    const filtered = raw
+    .split('')
+    .filter(ch => englishNums.includes(ch) || persianNums.includes(ch))
+    .join('');
+
+
+    let englishVal = persianToEnglishNumber(filtered);
+
+    englishVal = englishVal.replace(/^0+(?=\d)/, '');
+
+    setter(englishVal);
+    setter2persion(englishToPersianNumber(filtered));
   };
 
   const AddGoogleLink = (addedLink) => {
@@ -96,6 +130,7 @@ export default function Home_RightBar() {
   };
 
   const trimPathToRoot = () => {
+    setMode('default')
     let currentPath = location.pathname;
     if (currentPath.endsWith('/')) currentPath = currentPath.slice(0, -1);
     if (currentPath === '/home' || currentPath === '') return;
@@ -104,11 +139,24 @@ export default function Home_RightBar() {
   };
 
   const priceRecommendedcal = (e) => {
-    const price = e.target.value;
-    if (price.length > 30) return;
+    const raw = persianToEnglishNumber(e.target.value);
+    const price = Number(raw);
 
-    setpriceRecommended(String(price) + 'ملیارد') 
-  }
+    if (!raw || isNaN(price)) {
+      setpriceRecommended1('');
+      setpriceRecommended2('');
+      return;
+    }
+
+    if (price > 999) {
+      setpriceRecommended1('');
+      setpriceRecommended2('');
+      return;
+    }
+
+    setpriceRecommended1(englishToPersianNumber(price) + ' میلیون');
+    setpriceRecommended2(englishToPersianNumber(price) + ' میلیارد');
+  };
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -119,6 +167,39 @@ export default function Home_RightBar() {
     document.addEventListener('mousedown', handleOutsideClick);
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
+
+  const AddLikemilion = (price) => {
+    AddGoogleLink(`price:${price}000000`);
+    setPrice(price + '000000')
+    setPricePersion(englishToPersianNumber(price + '000000'))
+    setpriceRecommended1()
+    setpriceRecommended2()
+  }
+
+  const AddLikemiliard = (price) => {
+    AddGoogleLink(`price:${price}000000000`);
+    setPrice(price + '000000000')
+    setPricePersion(englishToPersianNumber(price + '000000000'))
+    setpriceRecommended1()
+    setpriceRecommended2()
+  }
+
+  const handleChangeforOneNums = (e, setter) => {
+
+  const raw = persianToEnglishNumber(e.target.value)
+
+  const filtered = raw
+  .split('')
+  .filter(ch => englishNums.includes(ch) || persianNums.includes(ch))
+  .join('');
+
+
+  let englishVal = persianToEnglishNumber(filtered);
+
+  englishVal = englishVal.replace(/^0+(?=\d)/, '');
+
+  setter(englishVal);
+};
 
 
   return (
@@ -138,13 +219,16 @@ export default function Home_RightBar() {
           <>
             <p className="showInput">قیمت:</p>
             <input
-              value={price}
-              onChange={(e) => {handleChange(e, setPrice); priceRecommendedcal(e);}}
-              type="number"
+              value={PricePersion}
+              onChange={(e) => {handleChange(e, setPrice, setPricePersion); priceRecommendedcal(e);}}
+              type="text"
               inputMode="numeric"
-              onKeyDown={handleKeyDown}
               ref={divXRef}
             />
+
+            <p id="priceDisplay" className="priceDisplay">
+              {formatPrice(price)}
+            </p>
 
             <button
               className="next"
@@ -160,17 +244,37 @@ export default function Home_RightBar() {
             >
               تایید
             </button>
-            
-            <p id="priceDisplay" className="priceDisplay">
-              {formatPrice(price)}
-            </p>
 
-            <div>
-            {
-              <button className="category">
-                {priceRecommended}
+            <div className={`recommended_div`}>
+            {priceRecommended1 ? (
+              <button
+                className="category"
+                disabled={!price}
+                onClick={() => {
+                  if (price) {
+                    AddLikemilion(price)
+                    setMode('default');
+                  }
+                }}
+              >
+                {priceRecommended1}
               </button>
-            }
+            ) : null}
+
+            {priceRecommended2 ? (
+                <button
+                  className="category"
+                  disabled={!price}
+                  onClick={() => {
+                    if (price) {
+                      AddLikemiliard(price)
+                      setMode('default');
+                    }
+                  }}
+                >
+                  {priceRecommended2}
+                </button>
+              ) : null}
             </div>
 
             <p className="oneBack" onClick={trimPathToRoot}>بازگشت</p>
@@ -181,11 +285,10 @@ export default function Home_RightBar() {
           <>
             <p className="showInput">متراژ:</p>
             <input
-              type="number"
-              value={meterage}
-              onChange={(e) => handleChange(e, setMeterage)}
+              type="text"
+              value={englishToPersianNumber(meterage)}
+              onChange={(e) => handleChangeforOneNums(e, setMeterage)}
               inputMode="numeric"
-              onKeyDown={handleKeyDown}
             />
             <button
               className="next"
@@ -207,11 +310,10 @@ export default function Home_RightBar() {
           <>
             <p className="showInput">اتاق ها:</p>
             <input
-              type="number"
-              value={roomsInHome}
-              onChange={(e) => handleChange(e, setroomsInHome)}
+              type="text"
+              value={englishToPersianNumber(roomsInHome)}
+              onChange={(e) => handleChangeforOneNums(e, setroomsInHome)}
               inputMode="numeric"
-              onKeyDown={handleKeyDown}
             />
             <button
               className="next"
@@ -235,11 +337,10 @@ export default function Home_RightBar() {
             <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
               <input
                 id={showYearList ? 'inputter' : ''}
-                type="number"
-                value={yearBuilt}
-                onChange={(e) => handleChange(e, setYearBuilt)}
+                type="text"
+                value={englishToPersianNumber(yearBuilt)}
+                onChange={(e) => handleChangeforOneNums(e, setYearBuilt)}
                 inputMode="numeric"
-                onKeyDown={handleKeyDown}
                 onFocus={() => setShowYearList(true)}
               />
               <div className={`year-dropdown ${showYearList ? 'visible' : 'hidden'}`}>
@@ -252,7 +353,7 @@ export default function Home_RightBar() {
                     }}
                     className="conform_buttonYear"
                   >
-                    {year}
+                    {englishToPersianNumber(year)}
                   </div>
                 ))}
               </div>
@@ -315,28 +416,75 @@ export default function Home_RightBar() {
             <div className="floor-info">
               <p className="showInput">طبقه:</p>
               <input
-                type="number"
-                value={HomeNumber}
-                onChange={(e) => handleChange(e, sethomeHomeNumber)}
-                onKeyDown={handleKeyDown}
+                type="text"
+                value={englishToPersianNumber(HomeNumber)}
+                onChange={(e) => handleChangeforOneNums(e, sethomeHomeNumber)}
                 inputMode="numeric"
+                onFocus={() => setShowHomeNumber(true)}
               />
+
+            <div className={`year-dropdown ${showHomeNumber ? 'visible' : 'hidden'}`}>
+              {Array.from({ length: 50 - 1 + 1 }, (_, i) => 50 - i).map((HomeNumber) => (
+                <div
+                  key={HomeNumber}
+                  onClick={() => {
+                    setYearBuilt(String(HomeNumber));
+                    setShowHomeNumber(false);
+                  }}
+                  className="conform_buttonYear"
+                >
+                  {englishToPersianNumber(HomeNumber)}
+                </div>
+              ))}
+            </div>
+
               <p className="showInput">کل طبقات:</p>
               <input
-                type="number"
-                value={allHomes}
-                onChange={(e) => handleChange(e, setallHomes)}
-                onKeyDown={handleKeyDown}
+                type="text"
+                value={englishToPersianNumber(allHomes)}
+                onChange={(e) => handleChangeforOneNums(e, setallHomes)}
                 inputMode="numeric"
+                onFocus={() => setShowAllHomes(true)}
               />
+
+            <div className={`year-dropdown ${showallHomes ? 'visible' : 'hidden'}`}>
+              {Array.from({ length: 50 - 1 + 1 }, (_, i) => 1404 - i).map((allHomes) => (
+                <div
+                  key={allHomes}
+                  onClick={() => {
+                    setYearBuilt(String(allHomes));
+                    setShowAllHomes(false);
+                  }}
+                  className="conform_buttonYear"
+                >
+                  {englishToPersianNumber(allHomes)}
+                </div>
+              ))}
+            </div>
+
               <p className="showInput">تعداد واحد در طبقه :</p>
               <input
-                type="number"
-                value={homeflorRooms}
-                onChange={(e) => handleChange(e, sethomeflorRooms)}
-                onKeyDown={handleKeyDown}
+                type="text"
+                value={englishToPersianNumber(homeflorRooms)}
+                onChange={(e) => handleChangeforOneNums(e, sethomeflorRooms)}
                 inputMode="numeric"
+                onFocus={() => sethowHomeflorRooms(true)}
               />
+            </div>
+
+            <div className={`year-dropdown ${showhomeflorRooms ? 'visible' : 'hidden'}`}>
+              {Array.from({ length: 10 - 1 + 1 }, (_, i) => 10 - i).map((homeflorRooms) => (
+                <div
+                  key={homeflorRooms}
+                  onClick={() => {
+                    setYearBuilt(String(homeflorRooms));
+                    sethowHomeflorRooms(false);
+                  }}
+                  className="conform_buttonYear"
+                >
+                  {englishToPersianNumber(homeflorRooms)}
+                </div>
+              ))}
             </div>
 
             <button
