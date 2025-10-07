@@ -34,10 +34,15 @@ export default function Home_RightBar() {
   const yearListRef = useRef();
   const [showYearList, setShowYearList] = useState(false);
   const [showHomeNumber, setShowHomeNumber] = useState(false);
-  const [showallHomes, setShowAllHomes] = useState(false);
-  const [showhomeflorRooms, sethowHomeflorRooms] = useState(false);
+  const [showAllHomes, setShowAllHomes] = useState(false);
+  const [showHomeFlorRooms, setShowHomeFlorRooms] = useState(false);
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
   const divXRef = useRef(null);
+
+  const div1Ref = useRef(null);
+  const div2Ref = useRef(null);
+  const div3Ref = useRef(null);
+  const div4Ref = useRef(null);
 
   useEffect(() => {
     const href = location.pathname;
@@ -72,6 +77,56 @@ export default function Home_RightBar() {
     };
 
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (showHomeNumber) {
+      setShowAllHomes(false);
+      setShowHomeFlorRooms(false);
+    }
+  }, [showHomeNumber]);
+
+  useEffect(() => {
+    if (showAllHomes) {
+      setShowHomeNumber(false);
+      setShowHomeFlorRooms(false);
+    }
+  }, [showAllHomes]);
+
+  useEffect(() => {
+    if (showHomeFlorRooms) {
+      setShowHomeNumber(false);
+      setShowAllHomes(false);
+    }
+  }, [showHomeFlorRooms]);
+
+  useEffect(() => {
+  let tester = "bye";
+
+  function handleClick(event) {
+
+    if (
+      (div1Ref.current && div1Ref.current.contains(event.target)) ||
+      (div2Ref.current && div2Ref.current.contains(event.target)) ||
+      (div3Ref.current && div3Ref.current.contains(event.target)) ||
+      (div4Ref.current && div4Ref.current.contains(event.target))
+    ) {
+      tester = "hi";
+    } else {
+      if (tester === "hi") {
+        tester = "bye";
+        setShowHomeNumber(false);
+        setShowAllHomes(false);
+        setShowHomeFlorRooms(false);
+      }
+    }
+  }
+
+  document.addEventListener("mousedown", handleClick);
+  
+  return () => {
+    document.removeEventListener("mousedown", handleClick);
+  };
+}, []);
 
   const formatPrice = (value) => {
     const num = parseInt(value, 10);
@@ -199,8 +254,7 @@ export default function Home_RightBar() {
   englishVal = englishVal.replace(/^0+(?=\d)/, '');
 
   setter(englishVal);
-};
-
+  };
 
   return (
     <div id="rightBar" className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
@@ -413,23 +467,23 @@ export default function Home_RightBar() {
 
         {mode === 'homeNumbresInfloor' && (
           <>
+              <p className="showInput showInputfloar">طبقه:</p>
             <div className="floor-info">
-              <p className="showInput">طبقه:</p>
               <input
                 type="text"
                 value={englishToPersianNumber(HomeNumber)}
                 onChange={(e) => handleChangeforOneNums(e, sethomeHomeNumber)}
                 inputMode="numeric"
                 onFocus={() => setShowHomeNumber(true)}
+                ref={div1Ref}
               />
 
-            <div className={`year-dropdown ${showHomeNumber ? 'visible' : 'hidden'}`}>
-              {Array.from({ length: 50 - 1 + 1 }, (_, i) => 50 - i).map((HomeNumber) => (
+            <div className={`homeNumbresInfloor ${showHomeNumber ? 'visible' : ''}`} ref={div4Ref}>
+              {Array.from({ length: 50 }, (_, i) => 50 - i).map((HomeNumber) => (
                 <div
-                  key={HomeNumber}
                   onClick={() => {
-                    setYearBuilt(String(HomeNumber));
                     setShowHomeNumber(false);
+                    sethomeHomeNumber(String(HomeNumber));
                   }}
                   className="conform_buttonYear"
                 >
@@ -439,20 +493,22 @@ export default function Home_RightBar() {
             </div>
 
               <p className="showInput">کل طبقات:</p>
+            <div className="floor-info">
               <input
                 type="text"
                 value={englishToPersianNumber(allHomes)}
                 onChange={(e) => handleChangeforOneNums(e, setallHomes)}
                 inputMode="numeric"
                 onFocus={() => setShowAllHomes(true)}
+                ref={div2Ref}
               />
 
-            <div className={`year-dropdown ${showallHomes ? 'visible' : 'hidden'}`}>
-              {Array.from({ length: 50 - 1 + 1 }, (_, i) => 1404 - i).map((allHomes) => (
+            <div className={`homeNumbresInfloor ${showAllHomes ? 'visible' : ''}`} ref={div4Ref}>
+              {Array.from({ length: 50 }, (_, i) => 50 - i).map((allHomes) => (
                 <div
                   key={allHomes}
                   onClick={() => {
-                    setYearBuilt(String(allHomes));
+                    setallHomes(String(allHomes));
                     setShowAllHomes(false);
                   }}
                   className="conform_buttonYear"
@@ -461,32 +517,35 @@ export default function Home_RightBar() {
                 </div>
               ))}
             </div>
+            </div>
 
-              <p className="showInput">تعداد واحد در طبقه :</p>
+             <p className="showInput">تعداد واحد در طبقه :</p>
+          <div className="floor-info">
               <input
                 type="text"
                 value={englishToPersianNumber(homeflorRooms)}
                 onChange={(e) => handleChangeforOneNums(e, sethomeflorRooms)}
                 inputMode="numeric"
-                onFocus={() => sethowHomeflorRooms(true)}
+                onFocus={() => setShowHomeFlorRooms(true)}
+                ref={div3Ref}
               />
-            </div>
 
-            <div className={`year-dropdown ${showhomeflorRooms ? 'visible' : 'hidden'}`}>
-              {Array.from({ length: 10 - 1 + 1 }, (_, i) => 10 - i).map((homeflorRooms) => (
-                <div
-                  key={homeflorRooms}
-                  onClick={() => {
-                    setYearBuilt(String(homeflorRooms));
-                    sethowHomeflorRooms(false);
-                  }}
-                  className="conform_buttonYear"
-                >
-                  {englishToPersianNumber(homeflorRooms)}
+                <div className={`homeNumbresInfloor ${showHomeFlorRooms ? 'visible' : ''}`} ref={div4Ref}>
+                  {Array.from({ length: 10 }, (_, i) => 10 - i).map((homeflorRooms) => (
+                    <div
+                      key={homeflorRooms}
+                      onClick={() => {
+                        sethomeflorRooms(String(homeflorRooms));
+                        setShowHomeFlorRooms(false);
+                      }}
+                      className="conform_buttonYear"
+                    >
+                      {englishToPersianNumber(homeflorRooms)}
+                    </div>
+                  ))}
                 </div>
-              ))}
             </div>
-
+          </div>
             <button
               className="next"
               disabled={!(HomeNumber && allHomes && homeflorRooms)}

@@ -55,6 +55,7 @@
   outline: none;
   border-radius: 8px;
   width: calc(100% - 32px - 2px);
+  margin-bottom: 3px;
   transition: border 0.2s;
 }
 
@@ -64,11 +65,15 @@
   font-size: 1.1rem;
   padding: 0px 10px;
   margin-top: 0;
-  margin-bottom: 0px;
+  margin-bottom: 4px;
   border-radius: 8px;
   color: var(--text_muded_between);
   transition: background 0.2s;
 
+}
+
+.showInputfloar{
+ margin-bottom: -8px;
 }
 
 #inputter {
@@ -220,9 +225,39 @@
   cursor: pointer;
 }
 
-.optionDiv {
-  
+.floor-info {
+  position: relative;
 }
+
+
+.homeNumbresInfloor {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 0px;
+  overflow-y: auto;
+  background-color: var(--layer2-bg-color);
+  border: 1px solid var(--boeder-blue-color);
+  border-radius: 8px;
+  z-index: 10;
+  font-size: 14px;
+  color: var(--text_muded_between);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+  transition: 0.2s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 999;
+}
+
+.homeNumbresInfloor.visible {
+  opacity: 1;
+  visibility: visible;
+  max-height: 280px;
+}
+
 
 .optionDivchild{
   height: calc(100vh - 161px); /* 100px accounts for footer height + some padding */
@@ -241,6 +276,41 @@
   width: 8px;
 }
 
+.homeNumbresInfloor {
+  position: absolute;
+  top: 0%;
+  left: 0;
+  right: 0;
+  max-height: 0px;
+  overflow-y: auto;
+  background-color: var(--layer2-bg-color);
+  border: 1px solid var(--boeder-blue-color);
+  border-radius: 8px;
+  z-index: 10;
+  font-size: 14px;
+  color: var(--text_muded_between);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+  transition: 0.2s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.homeNumbresInfloor.visible {
+  opacity: 1;
+  visibility: visible;
+  max-height: 280px;
+}
+
+.homeNumbresInfloor::-webkit-scrollbar {
+  width: 6px;
+}
+
+.homeNumbresInfloor::-webkit-scrollbar-thumb {
+  background-color: var(--text-muted);
+  border-radius: 4px;
+}
 
 
 .oneBack_options{
