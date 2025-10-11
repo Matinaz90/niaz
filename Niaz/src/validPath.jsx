@@ -11,18 +11,50 @@ export function useValidatePathHome() {
     if (segments[0] !== 'home') return;
 
     const validators = {
-      meter: (val) => /^\d+$/.test(val),
-      rooms: (val) => /^\d+$/.test(val),
-      year: (val) => /^\d{4}$/.test(val),
-      face: (val) => ['north', 'south'].includes(val),
-      floor: (val) => /^(\d+,)*\d+$/.test(val),
-      condition: (val) => ['ok','normal', 'bad', 'new'].includes(val),
+      // 1–100,000,000
+      meter: (val) => {
+        const num = Number(val);
+        return Number.isInteger(num) && num >= 1 && num <= 100000000;
+      },
 
-      options: val => {
-        const allowed = ['t','f','i','Fi','w','g','Wg','h','c','Hc'];
-        const parts = val.split(',');
-        return parts.length === 8 && parts.every(v => allowed.includes(v));
-      }
+      // 1–10
+      rooms: (val) => {
+        const num = Number(val);
+        return Number.isInteger(num) && num >= 1 && num <= 10;
+      },
+
+      // 1390–1403
+      year: (val) => {
+        const num = Number(val);
+        return Number.isInteger(num) && num >= 1390 && num <= 1403;
+      },
+
+      // north or south
+      face: (val) => ['north', 'south'].includes(val.trim().toLowerCase()),
+
+      // floor: "x,y,z" => x ≤ 30, y ≤ 30, z ≤ 10
+      floor: (val) => {
+        if (typeof val !== 'string') return false;
+        const parts = val.split(',').map((v) => Number(v.trim()));
+        if (parts.length !== 3) return false;
+        const [x, y, z] = parts;
+        return (
+          Number.isInteger(x) && x >= 1 && x <= 30 &&
+          Number.isInteger(y) && y >= 1 && y <= 30 &&
+          Number.isInteger(z) && z >= 1 && z <= 10
+        );
+      },
+
+      // condition
+      condition: (val) => ['ok', 'normal', 'bad', 'new'].includes(val.trim().toLowerCase()),
+
+      // options: 8 comma-separated, each must be one of allowed
+      options: (val) => {
+        if (typeof val !== 'string') return false;
+        const allowed = ['t', 'f', 'i', 'fi', 'w', 'g', 'wg', 'h', 'c', 'hc'];
+        const parts = val.split(',').map((v) => v.trim().toLowerCase());
+        return parts.length === 8 && parts.every((v) => allowed.includes(v));
+      },
     };
 
     for (let i = 2; i < segments.length; i++) {

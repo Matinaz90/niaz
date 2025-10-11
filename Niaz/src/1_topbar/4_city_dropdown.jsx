@@ -8,8 +8,6 @@ function CityDropdown() {
     const [searchCity, setSearchCity] = useState('');
     const divXRef = useRef(null);
     const divYRef = useRef(null);
-    let isFirstClick = true;
-    let tester = "hi"
 
 
     const closeCity = () => {
@@ -142,25 +140,35 @@ function CityDropdown() {
         }
     };
 
-    function handleClick(event) {
-        if (isFirstClick) {
-        isFirstClick = false;
-        return; 
-        }
+    useEffect(() => {
+    let rafId;
+    let tester = "bye";
 
-        if (
-            (divXRef.current && divXRef.current.contains(event.target)) ||
-            (divYRef.current && divYRef.current.contains(event.target))
-        ) {
-            tester = "hi"
-        } else {
-            if(tester == "hi"){
-            tester = "bye"
-            closeCity()
+    const handleClick = (event) => {
+
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+        const inside =
+            divXRef.current?.contains(event.target) ||
+            divYRef.current?.contains(event.target);
+
+        if (!inside) {
+            if (tester === "hi") {
+            tester = "bye";
+            closeCity();
             }
-
+        } else {
+            tester = "hi";
         }
-    }
+        });
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+        cancelAnimationFrame(rafId);
+        document.removeEventListener("mousedown", handleClick);
+    };
+    }, []);
 
     const addLocalHistory = (cityname) => {
         if (cityname.includes('همه ی شهرهای')) {

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useValidatePathHome } from "../validPath.jsx";
 import './2.1_home_rightBar.css';
@@ -18,8 +18,8 @@ export default function Home_RightBar() {
   const [roomsInHome, setroomsInHome] = useState('');
   const [yearBuilt, setYearBuilt] = useState('');
   const [HomeNumber, sethomeHomeNumber] = useState('');
-  const [homeface, sethomeface] = useState('');
   const [allHomes, setallHomes] = useState('');
+  const [homeface, sethomeface] = useState('');
   const [homeflorRooms, sethomeflorRooms] = useState('');
   const [homeCondition, sethomeCondition] = useState('');
   const [withStuffInhome, setwithStuffInhome] = useState("");
@@ -33,100 +33,58 @@ export default function Home_RightBar() {
 
   const yearListRef = useRef();
   const [showYearList, setShowYearList] = useState(false);
-  const [showHomeNumber, setShowHomeNumber] = useState(false);
-  const [showAllHomes, setShowAllHomes] = useState(false);
-  const [showHomeFlorRooms, setShowHomeFlorRooms] = useState(false);
+  const [showOpenDropdownFloars, setOpenDropdownFloars] = useState(null);
+  const [showError, setShowError] = useState(false);
+  const [openRoomDropdown, setopenRoomDropdown] = useState(false);
+
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
   const divXRef = useRef(null);
 
   const div1Ref = useRef(null);
   const div2Ref = useRef(null);
   const div3Ref = useRef(null);
-  const div4Ref = useRef(null);
+  
+  const div1DropdownRef = useRef();
+  const div2DropdownRef = useRef();
+  const div3DropdownRef = useRef();
+
+  const divRoomDropdownRef = useRef();
+
+  const floorOptions = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
+  const unitOptions = useMemo(() => Array.from({ length: 10 }, (_, i) => i + 1), []);
+
+  const apartemanSteps = ['MeterageId', 'roomsInHome', 'waylookhome', 'homeNumbresInfloor', 'homeCondition', 'options', 'default']
 
   useEffect(() => {
     const href = location.pathname;
     if (href.includes('/home')) {
-      if(href.includes('price:')){
-        setMode('default');
-      }else if(href.includes('options:')){
-        setMode('pricehome');
-      }else if (href.includes('condition:')){
-        setMode('options')
-      } else if (href.includes('floor:')) {
-        setMode('homeCondition');
-      } else if (href.includes('face:')) {
-        setMode('homeNumbresInfloor');
-      } else if (href.includes('year:')) {
-        setMode('waylookhome');
-      } else if (href.includes('rooms:')) {
-        setMode('timeCreated');
-      } else if (href.includes('meter:')) {
-        setMode('roomsInHome');
-      } else if (href.includes('Aparteman')) {
-        setMode('MeterageId');
+      if (href.includes('/Aparteman')) {
+        if(href.includes('price:')){
+          setMode('default');
+        }else if(href.includes('options:')){
+          setMode('pricehome');
+        }else if (href.includes('condition:')){
+          setMode('options')
+        } else if (href.includes('floor:')) {
+          setMode('homeCondition');
+        } else if (href.includes('face:')) {
+          setMode('homeNumbresInfloor');
+        } else if (href.includes('year:')) {
+          setMode('waylookhome');
+        } else if (href.includes('rooms:')) {
+          setMode('timeCreated');
+        } else if (href.includes('meter:')) {
+          setMode('roomsInHome');
+        } else {
+          setMode('MeterageId');
+        }
       } else {
         setMode('default');
       }
     }
 
-  if(href.includes('Aparteman')){
-      setpage('Aparteman')
-    } else {
-      setpage('');
-    };
-
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (showHomeNumber) {
-      setShowAllHomes(false);
-      setShowHomeFlorRooms(false);
-    }
-  }, [showHomeNumber]);
-
-  useEffect(() => {
-    if (showAllHomes) {
-      setShowHomeNumber(false);
-      setShowHomeFlorRooms(false);
-    }
-  }, [showAllHomes]);
-
-  useEffect(() => {
-    if (showHomeFlorRooms) {
-      setShowHomeNumber(false);
-      setShowAllHomes(false);
-    }
-  }, [showHomeFlorRooms]);
-
-  useEffect(() => {
-  let tester = "bye";
-
-  function handleClick(event) {
-
-    if (
-      (div1Ref.current && div1Ref.current.contains(event.target)) ||
-      (div2Ref.current && div2Ref.current.contains(event.target)) ||
-      (div3Ref.current && div3Ref.current.contains(event.target)) ||
-      (div4Ref.current && div4Ref.current.contains(event.target))
-    ) {
-      tester = "hi";
-    } else {
-      if (tester === "hi") {
-        tester = "bye";
-        setShowHomeNumber(false);
-        setShowAllHomes(false);
-        setShowHomeFlorRooms(false);
-      }
-    }
-  }
-
-  document.addEventListener("mousedown", handleClick);
   
-  return () => {
-    document.removeEventListener("mousedown", handleClick);
-  };
-}, []);
 
   const formatPrice = (value) => {
     const num = parseInt(value, 10);
@@ -213,15 +171,31 @@ export default function Home_RightBar() {
     setpriceRecommended2(englishToPersianNumber(price) + ' میلیارد');
   };
 
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (yearListRef.current && !yearListRef.current.contains(e.target)) {
-        setShowYearList(false);
-      }
-    };
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, []);
+useEffect(() => {
+  const handleClick = (event) => {
+    const refs = [
+      yearListRef,
+      div1Ref,
+      div2Ref,
+      div3Ref,
+      div1DropdownRef,
+      div2DropdownRef,
+      div3DropdownRef,
+      divRoomDropdownRef,
+    ];
+
+    const clickedInside = refs.some(ref => ref.current?.contains(event.target));
+
+    if (!clickedInside) {
+      setShowYearList(false);
+      setopenRoomDropdown(false);
+      setOpenDropdownFloars(null);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClick);
+  return () => document.removeEventListener('mousedown', handleClick);
+}, []);
 
   const AddLikemilion = (price) => {
     AddGoogleLink(`price:${price}000000`);
@@ -254,6 +228,36 @@ export default function Home_RightBar() {
   englishVal = englishVal.replace(/^0+(?=\d)/, '');
 
   setter(englishVal);
+  };
+
+  const floorOptionsPersian = useMemo(
+  () => floorOptions.map((num) => englishToPersianNumber(num)),
+  [floorOptions]
+  );
+
+  const unitOptionsPersian = useMemo(
+  () => unitOptions.map((num) => englishToPersianNumber(num)),
+  [unitOptions]
+  );
+
+  const HomeNumberserachBarVal = useMemo(
+    () => persianToEnglishNumber(HomeNumber),
+    [HomeNumber]
+  );
+
+  const allHomesserachBarVal = useMemo(
+    () => persianToEnglishNumber(allHomes),
+    [allHomes]
+  );
+
+  const homeflorRoomsserachBarVal = useMemo(
+    () => persianToEnglishNumber(homeflorRooms),
+    [homeflorRooms]
+  )
+
+  const triggerError = () => {
+    setShowError(true);
+    setTimeout(() => setShowError(false), 3000);
   };
 
   return (
@@ -363,12 +367,31 @@ export default function Home_RightBar() {
         {mode === 'roomsInHome' && (
           <>
             <p className="showInput">اتاق ها:</p>
+          <div className="floor-info">
             <input
               type="text"
               value={englishToPersianNumber(roomsInHome)}
               onChange={(e) => handleChangeforOneNums(e, setroomsInHome)}
               inputMode="numeric"
+              onFocus={() => setopenRoomDropdown(true)}
             />
+
+            <div className={`homeNumbresInfloor ${openRoomDropdown ? 'visible' : ''}`} ref={divRoomDropdownRef}>
+              {unitOptions.map((roomsInHome) => (
+                <div
+                  key={roomsInHome}
+                  onClick={() => {
+                    setopenRoomDropdown(false);
+                    setroomsInHome(String(roomsInHome));
+                  }}
+                  className="conform_buttonYear"
+                >
+                  {englishToPersianNumber(roomsInHome)}
+                </div>
+              ))}
+            </div>
+            </div>
+
             <button
               className="next"
               disabled={!roomsInHome}
@@ -471,18 +494,20 @@ export default function Home_RightBar() {
             <div className="floor-info">
               <input
                 type="text"
+                id={showYearList ? 'inputter' : ''}
                 value={englishToPersianNumber(HomeNumber)}
                 onChange={(e) => handleChangeforOneNums(e, sethomeHomeNumber)}
                 inputMode="numeric"
-                onFocus={() => setShowHomeNumber(true)}
+                onFocus={() => setOpenDropdownFloars('floor')}
                 ref={div1Ref}
               />
 
-            <div className={`homeNumbresInfloor ${showHomeNumber ? 'visible' : ''}`} ref={div4Ref}>
-              {Array.from({ length: 50 }, (_, i) => 50 - i).map((HomeNumber) => (
+            <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'floor' ? 'visible' : ''}`} ref={div1DropdownRef}>
+              {floorOptionsPersian.map((HomeNumber) => (
                 <div
+                  key={HomeNumber}
                   onClick={() => {
-                    setShowHomeNumber(false);
+                    setOpenDropdownFloars(null);
                     sethomeHomeNumber(String(HomeNumber));
                   }}
                   className="conform_buttonYear"
@@ -496,20 +521,21 @@ export default function Home_RightBar() {
             <div className="floor-info">
               <input
                 type="text"
+                id={showYearList ? 'inputter' : ''}
                 value={englishToPersianNumber(allHomes)}
                 onChange={(e) => handleChangeforOneNums(e, setallHomes)}
                 inputMode="numeric"
-                onFocus={() => setShowAllHomes(true)}
+                onFocus={() => setOpenDropdownFloars('all')}
                 ref={div2Ref}
               />
 
-            <div className={`homeNumbresInfloor ${showAllHomes ? 'visible' : ''}`} ref={div4Ref}>
-              {Array.from({ length: 50 }, (_, i) => 50 - i).map((allHomes) => (
+            <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'all' ? 'visible' : ''}`} ref={div2DropdownRef}>
+              {floorOptionsPersian.map((allHomes) => (
                 <div
                   key={allHomes}
                   onClick={() => {
                     setallHomes(String(allHomes));
-                    setShowAllHomes(false);
+                    setOpenDropdownFloars(null);
                   }}
                   className="conform_buttonYear"
                 >
@@ -523,20 +549,21 @@ export default function Home_RightBar() {
           <div className="floor-info">
               <input
                 type="text"
+                id={showYearList ? 'inputter' : ''}
                 value={englishToPersianNumber(homeflorRooms)}
                 onChange={(e) => handleChangeforOneNums(e, sethomeflorRooms)}
                 inputMode="numeric"
-                onFocus={() => setShowHomeFlorRooms(true)}
+                onFocus={() => setOpenDropdownFloars('roomInFloar')}
                 ref={div3Ref}
               />
 
-                <div className={`homeNumbresInfloor ${showHomeFlorRooms ? 'visible' : ''}`} ref={div4Ref}>
-                  {Array.from({ length: 10 }, (_, i) => 10 - i).map((homeflorRooms) => (
+                <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'roomInFloar' ? 'visible' : ''}`} ref={div3DropdownRef}>
+                  {unitOptionsPersian.map((homeflorRooms) => (
                     <div
                       key={homeflorRooms}
                       onClick={() => {
                         sethomeflorRooms(String(homeflorRooms));
-                        setShowHomeFlorRooms(false);
+                        setOpenDropdownFloars(null);
                       }}
                       className="conform_buttonYear"
                     >
@@ -551,14 +578,19 @@ export default function Home_RightBar() {
               disabled={!(HomeNumber && allHomes && homeflorRooms)}
               onClick={() => {
                 if (HomeNumber && allHomes && homeflorRooms) {
-                  const val = `${HomeNumber},${allHomes},${homeflorRooms}`;
+                  if (HomeNumberserachBarVal - allHomesserachBarVal - 1 >= 0) {
+                    triggerError();
+                    return;
+                  }
+                  const val = `${HomeNumberserachBarVal},${allHomesserachBarVal},${homeflorRoomsserachBarVal}`;
                   AddGoogleLink(`floor:${val}`);
-                  setMode('homeCondition');
+                  setMode("homeCondition");
                 }
               }}
             >
               تایید
             </button>
+            <p className={`floarErrText ${showError ? "visible" : ""}`}>خطا در انتخاب</p>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>
         )}
