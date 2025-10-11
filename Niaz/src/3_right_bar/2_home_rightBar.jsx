@@ -53,7 +53,34 @@ export default function Home_RightBar() {
   const floorOptions = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
   const unitOptions = useMemo(() => Array.from({ length: 10 }, (_, i) => i + 1), []);
 
+  const empityValTosend = 'e'
+  const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
+  const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+
   const apartemanSteps = ['MeterageId', 'roomsInHome', 'waylookhome', 'homeNumbresInfloor', 'homeCondition', 'options', 'default']
+
+  const resetAllFields = () => {
+  setPrice('');
+  setPricePersion('');
+  setpriceRecommended1();
+  setpriceRecommended2();
+  setMeterage('');
+  setroomsInHome('');
+  setYearBuilt('');
+  sethomeHomeNumber('');
+  setallHomes('');
+  sethomeface('');
+  sethomeflorRooms('');
+  sethomeCondition('');
+  setwithStuffInhome('');
+  setanbary('');
+  setparking('');
+  setasansor('');
+  setbalkon('');
+  sethomehotTemp('');
+  sethomecoldTemp('');
+  setbathroom('');
+  };
 
   useEffect(() => {
     const href = location.pathname;
@@ -78,10 +105,32 @@ export default function Home_RightBar() {
         } else {
           setMode('MeterageId');
         }
-      } else {
-        setMode('default');
       }
-    }
+      
+      if (href.includes('/villa')) {
+        if(href.includes('price:')){
+          setMode('default');
+        }else if(href.includes('options:')){
+          setMode('pricehome');
+        }else if (href.includes('condition:')){
+          setMode('options')
+        } else if (href.includes('face:')) {
+          setMode('homeCondition');
+        } else if (href.includes('year:')) {
+          setMode('waylookhome');
+        } else if (href.includes('rooms:')) {
+          setMode('timeCreated');
+        } else if (href.includes('meter:')) {
+          setMode('roomsInHome');
+        } else {
+          setMode('MeterageId');
+        }
+      } 
+
+    } else {
+        setMode('default');
+        resetAllFields()
+      }
 
   }, [location.pathname]);
   
@@ -94,9 +143,6 @@ export default function Home_RightBar() {
     if (num >= 1_000) return englishToPersianNumber((num / 1_000).toFixed(3).replace(/\.0+$/, '')) + ' هزار تومان';
     return englishToPersianNumber(num) + ' تومان';
   };
-
-  const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
-  const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
   const persianToEnglishNumber = (val) => {
         return String(val).split("").map(ch => {
@@ -265,9 +311,9 @@ useEffect(() => {
       <nav className="right-bar-nav">
         {mode === 'default' && (
           <>
-            <a onClick={() => { setMode('pricehome')}}>مشارکت ساخت</a>
-            <a onClick={() => { setMode('MeterageId'); AddGoogleLink('Aparteman');}}>اپارتمان</a>
-            <a>ویلایی</a>
+            <a>مشارکت ساخت</a>
+            <a onClick={() => {AddGoogleLink('Aparteman');}}>اپارتمان</a>
+            <a onClick={() => {AddGoogleLink('villa');}}>ویلایی</a>
             <a>اجاره</a>
             <a>تجاری</a>
           </>
@@ -296,7 +342,6 @@ useEffect(() => {
               onClick={() => {
                 if (price) {
                   AddGoogleLink(`price:${price}`);
-                  setMode('default');
                 }
               }}
             >
@@ -311,7 +356,6 @@ useEffect(() => {
                 onClick={() => {
                   if (price) {
                     AddLikemilion(price)
-                    setMode('default');
                   }
                 }}
               >
@@ -326,7 +370,6 @@ useEffect(() => {
                   onClick={() => {
                     if (price) {
                       AddLikemiliard(price)
-                      setMode('default');
                     }
                   }}
                 >
@@ -335,6 +378,7 @@ useEffect(() => {
               ) : null}
             </div>
 
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`price:${empityValTosend}`)}>نادیده گرفتن</button>
             <p className="oneBack" onClick={trimPathToRoot}>بازگشت</p>
           </>
         )}
@@ -354,12 +398,12 @@ useEffect(() => {
               onClick={() => {
                 if (meterage) {
                   AddGoogleLink(`meter:${meterage}`);
-                  setMode('roomsInHome');
                 }
               }}
             >
               تایید
             </button>
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`meter:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>
         )}
@@ -398,12 +442,12 @@ useEffect(() => {
               onClick={() => {
                 if (roomsInHome) {
                   AddGoogleLink(`rooms:${roomsInHome}`);
-                  setMode('timeCreated');
                 }
               }}
             >
               تایید
             </button>
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`rooms:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>
         )}
@@ -441,12 +485,12 @@ useEffect(() => {
               onClick={() => {
                 if (yearBuilt) {
                   AddGoogleLink(`year:${yearBuilt}`);
-                  setMode('waylookhome');
                 }
               }}
             >
               تایید
             </button>
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`year:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>
         )}
@@ -478,12 +522,12 @@ useEffect(() => {
               onClick={() => {
                 if (homeface) {
                   AddGoogleLink(`face:${homeface}`);
-                  setMode('homeNumbresInfloor');
                 }
               }}
             >
               تایید
             </button>
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`face:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>
         )}
@@ -584,13 +628,13 @@ useEffect(() => {
                   }
                   const val = `${HomeNumberserachBarVal},${allHomesserachBarVal},${homeflorRoomsserachBarVal}`;
                   AddGoogleLink(`floor:${val}`);
-                  setMode("homeCondition");
                 }
               }}
             >
               تایید
             </button>
             <p className={`floarErrText ${showError ? "visible" : ""}`}>خطا در انتخاب</p>
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`floor:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>
         )}
@@ -641,12 +685,12 @@ useEffect(() => {
               onClick={() => {
                 if (homeCondition) {
                   AddGoogleLink(`condition:${homeCondition}`);
-                  setMode('options');
                 }
               }}
             >
               تایید
             </button>
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`condition:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>
         )}
@@ -867,7 +911,6 @@ useEffect(() => {
                 const options = `${withStuffInhome},${anbary},${parking},${asansor},${balkon},${homehotTemp},${homecoldTemp},${bathroom}`
                 if (withStuffInhome || anbary || parking || asansor || balkon || homehotTemp || homecoldTemp || bathroom) {
                   AddGoogleLink(`options:${options}`);
-                  setMode('pricehome');
                 }
               }}
             >
@@ -876,8 +919,8 @@ useEffect(() => {
 
             </div>
 
-
-              <button className="oneBack_options" onClick={trimPathToRoot}>بازگشت</button>
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`options:${empityValTosend}`)}>نادیده گرفتن</button>
+            <button className="oneBack_options" onClick={trimPathToRoot}>بازگشت</button>
             <div className='oneBack_options_parents'></div>
           </div>
         )}
