@@ -304,7 +304,7 @@
 
 
 .optionDivchild{
-  height: calc(100vh - 161px); /* 100px accounts for footer height + some padding */
+  height: calc(100vh - 201px); /* 100px accounts for footer height + some padding */
   overflow-y: auto;
   display: flex; 
   flex-direction: column;

@@ -12,6 +12,8 @@ export default function Home_RightBar() {
 
   const [price, setPrice] = useState('');
   const [PricePersion, setPricePersion] = useState('');
+  const [price2, setPrice2] = useState('');
+  const [PricePersion2, setPricePersion2] = useState('');
   const [priceRecommended1, setpriceRecommended1]= useState();
   const [priceRecommended2, setpriceRecommended2]= useState();
   const [meterage, setMeterage] = useState('');
@@ -53,15 +55,16 @@ export default function Home_RightBar() {
   const floorOptions = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
   const unitOptions = useMemo(() => Array.from({ length: 10 }, (_, i) => i + 1), []);
 
+  const selectedpriceRent = useState('')
   const empityValTosend = 'e'
   const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
   const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
-  const apartemanSteps = ['MeterageId', 'roomsInHome', 'waylookhome', 'homeNumbresInfloor', 'homeCondition', 'options', 'default']
-
   const resetAllFields = () => {
   setPrice('');
   setPricePersion('');
+  setPrice2('');
+  setPricePersion2('');
   setpriceRecommended1();
   setpriceRecommended2();
   setMeterage('');
@@ -105,9 +108,7 @@ export default function Home_RightBar() {
         } else {
           setMode('MeterageId');
         }
-      }
-      
-      if (href.includes('/villa')) {
+      } else if (href.includes('/villa')) {
         if(href.includes('price:')){
           setMode('default');
         }else if(href.includes('options:')){
@@ -125,12 +126,31 @@ export default function Home_RightBar() {
         } else {
           setMode('MeterageId');
         }
-      } 
-
-    } else {
+      } else if(href.includes('/rent')) {
+        if(href.includes('pricerent:')){
+          setMode('default');
+        }else if(href.includes('options:')){
+          setMode('pricehomerRent');
+        }else if (href.includes('condition:')){
+          setMode('options')
+        } else if (href.includes('floor:')) {
+          setMode('homeCondition');
+        } else if (href.includes('face:')) {
+          setMode('homeNumbresInfloor');
+        } else if (href.includes('year:')) {
+          setMode('waylookhome');
+        } else if (href.includes('rooms:')) {
+          setMode('timeCreated');
+        } else if (href.includes('meter:')) {
+          setMode('roomsInHome');
+        } else {
+          setMode('MeterageId');
+        }
+      } else {
         setMode('default');
         resetAllFields()
       }
+    } 
 
   }, [location.pathname]);
   
@@ -314,7 +334,7 @@ useEffect(() => {
             <a>مشارکت ساخت</a>
             <a onClick={() => {AddGoogleLink('Aparteman');}}>اپارتمان</a>
             <a onClick={() => {AddGoogleLink('villa');}}>ویلایی</a>
-            <a>اجاره</a>
+            <a onClick={() => {AddGoogleLink('rent');}}>اجاره</a>
             <a>تجاری</a>
           </>
         )}
@@ -378,8 +398,80 @@ useEffect(() => {
               ) : null}
             </div>
 
-            <button className='ignoreVal' onClick={() => AddGoogleLink(`price:${empityValTosend}`)}>نادیده گرفتن</button>
-            <p className="oneBack" onClick={trimPathToRoot}>بازگشت</p>
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`price:${empityValTosend}`)}>نادیده گرفتن</button>\
+            <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
+          </>
+        )}
+
+        {mode === 'pricehomerRent' && (
+          <>
+            <p className="showInput">قیمت:</p>
+            <input
+              value={PricePersion}
+              onChange={(e) => {handleChange(e, setPrice, setPricePersion); priceRecommendedcal(e);}}
+              type="text"
+              inputMode="numeric"
+              ref={divXRef}
+            />
+
+            <input
+              value={PricePersion2}
+              onChange={(e) => {handleChange(e, setPrice2, setPricePersion2); priceRecommendedcal(e);}}
+              type="text"
+              inputMode="numeric"
+              ref={divXRef}
+            />
+
+            <p id="priceDisplay" className="priceDisplay">
+              {formatPrice(price)}
+            </p>
+
+            <button
+              className="next"
+              disabled={
+                !price
+              }
+              onClick={() => {
+                if (price) {
+                  AddGoogleLink(`pricerent:${price}`);
+                }
+              }}
+            >
+              تایید
+            </button>
+
+            <div className={`recommended_div`}>
+            {priceRecommended1 ? (
+              <button
+                className="category"
+                disabled={!price}
+                onClick={() => {
+                  if (price) {
+                    AddLikemilion(price)
+                  }
+                }}
+              >
+                {priceRecommended1}
+              </button>
+            ) : null}
+
+            {priceRecommended2 ? (
+                <button
+                  className="category"
+                  disabled={!price}
+                  onClick={() => {
+                    if (price) {
+                      AddLikemiliard(price)
+                    }
+                  }}
+                >
+                  {priceRecommended2}
+                </button>
+              ) : null}
+            </div>
+
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`pricerent:${empityValTosend}`)}>نادیده گرفتن</button>\
+            <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>
         )}
 
