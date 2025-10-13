@@ -1,19 +1,16 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useValidatePathHome } from "../validPath.jsx";
+// import { useValidatePathHome } from "../validPath.jsx";
 import './2.1_home_rightBar.css';
 
 export default function Home_RightBar() {
-  useValidatePathHome()
+  // useValidatePathHome()
   const [mode, setMode] = useState('default');
-  const [page, setpage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
   const [price, setPrice] = useState('');
-  const [PricePersion, setPricePersion] = useState('');
   const [price2, setPrice2] = useState('');
-  const [PricePersion2, setPricePersion2] = useState('');
   const [priceRecommended1, setpriceRecommended1]= useState();
   const [priceRecommended2, setpriceRecommended2]= useState();
   const [meterage, setMeterage] = useState('');
@@ -55,16 +52,14 @@ export default function Home_RightBar() {
   const floorOptions = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
   const unitOptions = useMemo(() => Array.from({ length: 10 }, (_, i) => i + 1), []);
 
-  const selectedpriceRent = useState('')
+  const [selectedpriceRent, setselectedpriceRent] = useState('')
   const empityValTosend = 'e'
   const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
   const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
   const resetAllFields = () => {
   setPrice('');
-  setPricePersion('');
   setPrice2('');
-  setPricePersion2('');
   setpriceRecommended1();
   setpriceRecommended2();
   setMeterage('');
@@ -264,36 +259,58 @@ useEffect(() => {
 }, []);
 
   const AddLikemilion = (price) => {
-    AddGoogleLink(`price:${price}000000`);
-    setPrice(price + '000000')
-    setPricePersion(englishToPersianNumber(price + '000000'))
-    setpriceRecommended1()
-    setpriceRecommended2()
-  }
+          AddGoogleLink(`price:${price}000000`);
+          setPrice(price + '000000');
+          setpriceRecommended1();
+          setpriceRecommended2();
+  };
 
   const AddLikemiliard = (price) => {
-    AddGoogleLink(`price:${price}000000000`);
-    setPrice(price + '000000000')
-    setPricePersion(englishToPersianNumber(price + '000000000'))
-    setpriceRecommended1()
-    setpriceRecommended2()
+      AddGoogleLink(`price:${price}000000000`);
+      setPrice(price + '000000000');
+      setpriceRecommended1();
+      setpriceRecommended2();
+  };
+
+const AddLikemilionrent = (priceValue, rentIndex) => {
+  const finalPrice = priceValue + '000000'; // million
+
+  if (rentIndex === 1) {
+    setPrice(finalPrice);
+  } else if (rentIndex === 2) {
+    setPrice2(finalPrice);
   }
 
+  setpriceRecommended1();
+  setpriceRecommended2();
+};
+
+const AddLikemiliardrent = (priceValue, rentIndex) => {
+  const finalPrice = priceValue + '000000000';
+
+  if (rentIndex === 1) {
+    setPrice(finalPrice);
+  } else if (rentIndex === 2) {
+    setPrice2(finalPrice);
+  }
+
+  setpriceRecommended1();
+  setpriceRecommended2();
+};
   const handleChangeforOneNums = (e, setter) => {
+    const raw = persianToEnglishNumber(e.target.value)
 
-  const raw = persianToEnglishNumber(e.target.value)
-
-  const filtered = raw
-  .split('')
-  .filter(ch => englishNums.includes(ch) || persianNums.includes(ch))
-  .join('');
+    const filtered = raw
+    .split('')
+    .filter(ch => englishNums.includes(ch) || persianNums.includes(ch))
+    .join('');
 
 
-  let englishVal = persianToEnglishNumber(filtered);
+    let englishVal = persianToEnglishNumber(filtered);
 
-  englishVal = englishVal.replace(/^0+(?=\d)/, '');
+    englishVal = englishVal.replace(/^0+(?=\d)/, '');
 
-  setter(englishVal);
+    setter(englishVal);
   };
 
   const floorOptionsPersian = useMemo(
@@ -343,15 +360,15 @@ useEffect(() => {
           <>
             <p className="showInput">قیمت:</p>
             <input
-              value={PricePersion}
-              onChange={(e) => {handleChange(e, setPrice, setPricePersion); priceRecommendedcal(e);}}
+              value={englishToPersianNumber(price)}
+              onChange={(e) => {handleChangeforOneNums(e, setPrice); priceRecommendedcal(e);}}
               type="text"
               inputMode="numeric"
               ref={divXRef}
             />
 
             <p id="priceDisplay" className="priceDisplay">
-              {formatPrice(price)}
+              {englishToPersianNumber(formatPrice(price))}
             </p>
 
             <button
@@ -379,7 +396,7 @@ useEffect(() => {
                   }
                 }}
               >
-                {priceRecommended1}
+                {englishToPersianNumber(priceRecommended1)}
               </button>
             ) : null}
 
@@ -389,11 +406,11 @@ useEffect(() => {
                   disabled={!price}
                   onClick={() => {
                     if (price) {
-                      AddLikemiliard(price)
+                      AddLikemiliard(price);
                     }
                   }}
                 >
-                  {priceRecommended2}
+                  {englishToPersianNumber(priceRecommended2)}
                 </button>
               ) : null}
             </div>
@@ -405,73 +422,85 @@ useEffect(() => {
 
         {mode === 'pricehomerRent' && (
           <>
-            <p className="showInput">قیمت:</p>
-            <input
-              value={PricePersion}
-              onChange={(e) => {handleChange(e, setPrice, setPricePersion); priceRecommendedcal(e);}}
-              type="text"
-              inputMode="numeric"
-              ref={divXRef}
-            />
+            <p className="showInput">وعدیه:</p>
 
             <input
-              value={PricePersion2}
-              onChange={(e) => {handleChange(e, setPrice2, setPricePersion2); priceRecommendedcal(e);}}
+              value={englishToPersianNumber(price)}
+              onChange={(e) => {
+                handleChangeforOneNums(e, setPrice);
+                priceRecommendedcal(e);
+              }}
               type="text"
               inputMode="numeric"
               ref={divXRef}
+              onFocus={() => setselectedpriceRent(true)}
+            />
+
+            <p className="showInput">اجاره:</p>
+
+            <input
+              value={englishToPersianNumber(price2)}
+              onChange={(e) => {
+                handleChangeforOneNums(e, setPrice2);
+                priceRecommendedcal(e);
+              }}
+              type="text"
+              inputMode="numeric"
+              ref={divXRef}
+              onFocus={() => setselectedpriceRent(false)}
             />
 
             <p id="priceDisplay" className="priceDisplay">
-              {formatPrice(price)}
+              {formatPrice(selectedpriceRent ? price : price2)}
             </p>
 
             <button
               className="next"
-              disabled={
-                !price
-              }
+              disabled={!Number(price) && !Number(price2)}
               onClick={() => {
-                if (price) {
-                  AddGoogleLink(`pricerent:${price}`);
+                if (price || price2) {
+                  AddGoogleLink(`pricerent:${price || price2}`);
                 }
               }}
             >
               تایید
             </button>
 
-            <div className={`recommended_div`}>
-            {priceRecommended1 ? (
-              <button
-                className="category"
-                disabled={!price}
-                onClick={() => {
-                  if (price) {
-                    AddLikemilion(price)
-                  }
-                }}
-              >
-                {priceRecommended1}
-              </button>
-            ) : null}
-
-            {priceRecommended2 ? (
+            <div className="recommended_div">
+              {priceRecommended1 && (
                 <button
                   className="category"
-                  disabled={!price}
                   onClick={() => {
-                    if (price) {
-                      AddLikemiliard(price)
-                    }
+                    const activePrice = selectedpriceRent ? price : price2;
+                    const activeIndex = selectedpriceRent ? 1 : 2;
+                    AddLikemilionrent(activePrice, activeIndex);
                   }}
                 >
-                  {priceRecommended2}
+                  {englishToPersianNumber(priceRecommended1)}
                 </button>
-              ) : null}
+              )}
+
+              {priceRecommended2 && (
+                <button
+                  className="category"
+                  onClick={() => {
+                    const activePrice = selectedpriceRent ? price : price2;
+                    const activeIndex = selectedpriceRent ? 1 : 2;
+                    AddLikemiliardrent(activePrice, activeIndex);
+                  }}
+                >
+                  {englishToPersianNumber(priceRecommended2)}
+                </button>
+              )}
             </div>
 
-            <button className='ignoreVal' onClick={() => AddGoogleLink(`pricerent:${empityValTosend}`)}>نادیده گرفتن</button>\
-            <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
+            <button className="ignoreVal" onClick={() => AddGoogleLink(`pricerent:${empityValTosend}`)}>
+              نادیده گرفتن
+            </button>
+
+            <button className="oneBack" onClick={trimPathToRoot}>
+              بازگشت
+            </button>
           </>
         )}
 
