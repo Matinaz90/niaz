@@ -189,8 +189,8 @@
 
 //                 const [min, max] = parts;
 //                 return (
-//                   Number.isInteger(min) && Number.isInteger(max) &&
-//                   min >= 1 && max >= 1 && min <= max && max <= 1_000_000_000
+//                   Number.isInteger(min) && min >= 1 && min <= 1_000_000_000_000_000 &&
+//                   Number.isInteger(max) && max >= 1 && max <= 1_000_000_000_000_000
 //                 );
 //               },
 //         };

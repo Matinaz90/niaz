@@ -26,15 +26,20 @@ export default function Home_RightBar() {
   const [parking, setparking] = useState("");
   const [asansor, setasansor] = useState("");
   const [balkon, setbalkon] = useState("");
-  const [homehotTemp, sethomehotTemp] = useState("");
-  const [homecoldTemp, sethomecoldTemp] = useState("");
-  const [bathroom, setbathroom] = useState("");
+  const [bahr, setbahr] = useState("");
+  const [joinbuild, setjoinbuild] = useState("");
+  const [joinbuildValue, setjoinbuildValue] = useState("");
+  const [electrycityStrore, setelectrycityStrore] = useState("");
+  const [waterStore, setwaterStore] = useState("");
+  const [gasStore, setgasStore] = useState("");
 
   const yearListRef = useRef();
   const [showYearList, setShowYearList] = useState(false);
   const [showOpenDropdownFloars, setOpenDropdownFloars] = useState(null);
   const [showError, setShowError] = useState(false);
+  const [showErrorText, setShowErrorText] = useState(false);
   const [openRoomDropdown, setopenRoomDropdown] = useState(false);
+  const [showJoinbuildDropdown, setShowJoinbuildDropdown] = useState(false);
 
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
   const divXRef = useRef(null);
@@ -42,6 +47,7 @@ export default function Home_RightBar() {
   const div1Ref = useRef(null);
   const div2Ref = useRef(null);
   const div3Ref = useRef(null);
+  const joinbuildDropdownref = useRef(null);
   
   const div1DropdownRef = useRef();
   const div2DropdownRef = useRef();
@@ -75,15 +81,24 @@ export default function Home_RightBar() {
   setparking('');
   setasansor('');
   setbalkon('');
-  sethomehotTemp('');
-  sethomecoldTemp('');
-  setbathroom('');
   };
 
   useEffect(() => {
     const href = location.pathname;
     if (href.includes('/home')) {
-      if (href.includes('/Aparteman')) {
+      if (href.includes('/joinbuild')) {
+        if(href.includes('price:')){
+          setMode('default');
+        } else if (href.includes('joinbuildpersent:')) {
+          setMode('pricehome');
+        } else if (href.includes('face:')) {
+          setMode('joinbuild');
+        } else if (href.includes('meter:')) {
+          setMode('waylookhome');
+        } else {
+          setMode('MeterageId');
+        }
+      }  else if (href.includes('/Aparteman')) {
         if(href.includes('price:')){
           setMode('default');
         }else if(href.includes('options:')){
@@ -141,6 +156,20 @@ export default function Home_RightBar() {
         } else {
           setMode('MeterageId');
         }
+      } else if (href.includes('/store')) {
+        if(href.includes('price:')){
+          setMode('default');
+        }else if (href.includes('condition:')){
+          setMode('pricehome');
+        } else if (href.includes('face:')) {
+          setMode('homeCondition');
+        } else if (href.includes('year:')) {
+          setMode('waylookhome');
+        } else if (href.includes('meter:')) {
+          setMode('timeCreated');
+        } else {
+          setMode('MeterageId');
+        }
       } else {
         setMode('default');
         resetAllFields()
@@ -172,30 +201,6 @@ export default function Home_RightBar() {
       return index > -1 ? persianNums[index] : ch;
     }).join("");
   }
-
-  const handleChange = (e, setter, setter2persion) => {
-
-    const raw = e.target.value
-
-    if(raw.length === 0){
-      setter('')
-      setter2persion('')
-      return;
-    }
-
-    const filtered = raw
-    .split('')
-    .filter(ch => englishNums.includes(ch) || persianNums.includes(ch))
-    .join('');
-
-
-    let englishVal = persianToEnglishNumber(filtered);
-
-    englishVal = englishVal.replace(/^0+(?=\d)/, '');
-
-    setter(englishVal);
-    setter2persion(englishToPersianNumber(filtered));
-  };
 
   const AddGoogleLink = (addedLink) => {
     const key = addedLink.split(':')[0];
@@ -235,6 +240,7 @@ export default function Home_RightBar() {
 useEffect(() => {
   const handleClick = (event) => {
     const refs = [
+      joinbuildDropdownref,
       yearListRef,
       div1Ref,
       div2Ref,
@@ -251,6 +257,7 @@ useEffect(() => {
       setShowYearList(false);
       setopenRoomDropdown(false);
       setOpenDropdownFloars(null);
+      setShowJoinbuildDropdown(false)
     }
   };
 
@@ -259,14 +266,12 @@ useEffect(() => {
 }, []);
 
   const AddLikemilion = (price) => {
-          AddGoogleLink(`price:${price}000000`);
           setPrice(price + '000000');
           setpriceRecommended1();
           setpriceRecommended2();
   };
 
   const AddLikemiliard = (price) => {
-      AddGoogleLink(`price:${price}000000000`);
       setPrice(price + '000000000');
       setpriceRecommended1();
       setpriceRecommended2();
@@ -340,7 +345,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
 
   const triggerError = () => {
     setShowError(true);
-    setTimeout(() => setShowError(false), 3000);
+    setTimeout(() => {setShowError(false), 2000; setShowErrorText('');})
   };
 
   return (
@@ -348,11 +353,11 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
       <nav className="right-bar-nav">
         {mode === 'default' && (
           <>
-            <a>مشارکت ساخت</a>
+            <a onClick={() => {AddGoogleLink('joinbuild');}}>مشارکت ساخت</a>
             <a onClick={() => {AddGoogleLink('Aparteman');}}>اپارتمان</a>
             <a onClick={() => {AddGoogleLink('villa');}}>ویلایی</a>
             <a onClick={() => {AddGoogleLink('rent');}}>اجاره</a>
-            <a>تجاری</a>
+            <a>تجاری</a> // what is it for
           </>
         )}
 
@@ -430,9 +435,9 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 handleChangeforOneNums(e, setPrice);
                 priceRecommendedcal(e);
               }}
+              onClick={(e) => priceRecommendedcal(e)}
               type="text"
               inputMode="numeric"
-              ref={divXRef}
               onFocus={() => setselectedpriceRent(true)}
             />
 
@@ -444,9 +449,9 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 handleChangeforOneNums(e, setPrice2);
                 priceRecommendedcal(e);
               }}
+              onClick={(e) => priceRecommendedcal(e)}
               type="text"
               inputMode="numeric"
-              ref={divXRef}
               onFocus={() => setselectedpriceRent(false)}
             />
 
@@ -458,9 +463,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
               className="next"
               disabled={!Number(price) && !Number(price2)}
               onClick={() => {
-                if (price || price2) {
-                  AddGoogleLink(`pricerent:${price || price2}`);
-                }
+                  AddGoogleLink(`pricerent:${price + ',' + price2}`);
               }}
             >
               تایید
@@ -539,6 +542,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
               onChange={(e) => handleChangeforOneNums(e, setroomsInHome)}
               inputMode="numeric"
               onFocus={() => setopenRoomDropdown(true)}
+              readOnly
             />
 
             <div className={`homeNumbresInfloor ${openRoomDropdown ? 'visible' : ''}`} ref={divRoomDropdownRef}>
@@ -584,6 +588,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 onChange={(e) => handleChangeforOneNums(e, setYearBuilt)}
                 inputMode="numeric"
                 onFocus={() => setShowYearList(true)}
+                readOnly
               />
               <div className={`year-dropdown ${showYearList ? 'visible' : 'hidden'}`}>
                 {Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i).map((year) => (
@@ -637,12 +642,43 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 جنوبی
               </label>
             </div>
+
+            <p className="showInput">بحر ملک:</p>
+            <div className="input-wrapper homeface-wrapper">
+              <div className="homeface-row">
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => setbahr('1')}
+                    checked={bahr === '1'}
+                  />
+                  ۱ بحر 
+                </label>
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => setbahr('2')}
+                    checked={bahr === '2'}
+                  />
+                  ۲ بحر
+                </label>
+              </div>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setbahr('3')}
+                  checked={bahr === '3'}
+                />
+                ۳ بحر
+              </label>
+            </div>
+
             <button
               className="next"
-              disabled={!homeface}
+              disabled={!homeface || !bahr}
               onClick={() => {
-                if (homeface) {
-                  AddGoogleLink(`face:${homeface}`);
+                if (homeface || bahr) {
+                  AddGoogleLink(`face:${homeface + ',' + bahr}`);
                 }
               }}
             >
@@ -665,6 +701,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 inputMode="numeric"
                 onFocus={() => setOpenDropdownFloars('floor')}
                 ref={div1Ref}
+                readOnly
               />
 
             <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'floor' ? 'visible' : ''}`} ref={div1DropdownRef}>
@@ -692,6 +729,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 inputMode="numeric"
                 onFocus={() => setOpenDropdownFloars('all')}
                 ref={div2Ref}
+                readOnly
               />
 
             <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'all' ? 'visible' : ''}`} ref={div2DropdownRef}>
@@ -720,6 +758,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 inputMode="numeric"
                 onFocus={() => setOpenDropdownFloars('roomInFloar')}
                 ref={div3Ref}
+                readOnly
               />
 
                 <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'roomInFloar' ? 'visible' : ''}`} ref={div3DropdownRef}>
@@ -921,101 +960,6 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
               </label>
             </div>
 
-            
-            <p className="showInput">گرمایش:</p>
-            <div className="input-wrapper homeface-wrapper">
-              <div className="homeface-row">
-                <label className="homeface-option">
-                  <input
-                    type="checkbox"
-                    onChange={() => sethomehotTemp('h')}
-                    checked={homehotTemp === 'h'}// stands for heater
-                  />
-                  بخاری
-                </label>
-                <label className="homeface-option">
-                  <input
-                    type="checkbox"
-                    onChange={() => sethomehotTemp('c')}
-                    checked={homehotTemp === 'c'}// stands for combi boiler
-                  />
-                  پکیج
-                </label>
-              </div>
-              <label className="homeface-option">
-                <input
-                  type="checkbox"
-                  onChange={() => sethomehotTemp('Hc')}
-                  checked={homehotTemp === 'Hc'} // stands for Heater and package
-                />
-                بخاری و پکیج
-              </label>
-            </div>
-
-            <p className="showInput">سرمایش :</p>
-            <div className="input-wrapper homeface-wrapper">
-              <div className="homeface-row">
-                <label className="homeface-option">
-                  <input
-                    type="checkbox"
-                    onChange={() => sethomecoldTemp('w')}
-                    checked={homecoldTemp === 'w'} // stands for water
-                  />
-                  ابی
-                </label>
-                <label className="homeface-option">
-                  <input
-                    type="checkbox"
-                    onChange={() => sethomecoldTemp('g')}
-                    checked={homecoldTemp === 'g'} // stadns for gas
-                  />
-                  گازی
-                </label>
-              </div>
-              <label className="homeface-option">
-                <input
-                  type="checkbox"
-                  onChange={() => sethomecoldTemp('Wg')}
-                  checked={homecoldTemp === 'Wg'} // stands for water and gas
-                />
-                ابی و گازی
-              </label>
-            </div>
-
-            <p className="showInput">سرویس بهداشتی:</p>
-            <div className="input-wrapper homeface-wrapper">
-              <div className="homeface-row">
-                <label className="homeface-option">
-                  <input
-                    type="checkbox"
-                    onChange={() => setbathroom('f')}
-                    checked={bathroom === 'f'} // farangi
-                  />
-                  فرنگی
-                </label>
-                <label className="homeface-option">
-                  <input
-                    type="checkbox"
-                    onChange={() => setbathroom('i')}
-                    checked={bathroom === 'i'} // irany
-                  />
-                  ایرانی
-                </label>
-              </div>
-              <label className="homeface-option">
-                <input
-                  type="checkbox"
-                  onChange={() => setbathroom('Fi')}
-                  checked={bathroom === 'Fi'} // farhangi and irany
-                />
-                فرنگی و ایرانی
-              </label>
-            </div>
-
-
-
-            
-
             <button
               className="next"
               disabled={
@@ -1023,14 +967,11 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 !anbary ||
                 !parking ||
                 !asansor ||
-                !balkon ||
-                !homehotTemp ||
-                !homecoldTemp ||
-                !bathroom
+                !balkon
               }
               onClick={() => {
-                const options = `${withStuffInhome},${anbary},${parking},${asansor},${balkon},${homehotTemp},${homecoldTemp},${bathroom}`
-                if (withStuffInhome || anbary || parking || asansor || balkon || homehotTemp || homecoldTemp || bathroom) {
+                const options = `${withStuffInhome},${anbary},${parking},${asansor},${balkon}`
+                if (withStuffInhome || anbary || parking || asansor || balkon) {
                   AddGoogleLink(`options:${options}`);
                 }
               }}
@@ -1044,6 +985,152 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
             <button className="oneBack_options" onClick={trimPathToRoot}>بازگشت</button>
             <div className='oneBack_options_parents'></div>
           </div>
+        )}
+
+        {mode === 'storeWaterGasWater' && (
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
+            <p className="showInput">اب:</p>
+            <div className="input-wrapper homeface-wrapper">
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setwaterStore('t')}
+                  checked={waterStore === 't'}
+                />
+                دارد
+              </label>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setwaterStore('f')}
+                  checked={waterStore === 'f'}
+                />
+                ندارد
+              </label>
+            </div>
+
+            <p className="showInput">برق:</p>
+            <div className="input-wrapper homeface-wrapper">
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setelectrycityStrore('t')}
+                  checked={electrycityStrore === 't'}
+                />
+                دارد
+              </label>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setelectrycityStrore('f')}
+                  checked={electrycityStrore === 'f'}
+                />
+                ندارد
+              </label>
+            </div>
+
+            <p className="showInput">گاز:</p>
+            <div className="input-wrapper homeface-wrapper">
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setgasStore('t')}
+                  checked={gasStore === 't'}
+                />
+                دارد
+              </label>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setgasStore('f')}
+                  checked={gasStore === 'f'}
+                />
+                ندارد
+              </label>
+            </div>
+
+            <button
+              className="next"
+              disabled={
+                !electrycityStrore ||
+                !waterStore ||
+                !gasStore
+              }
+              onClick={() => {
+                const storeWaterGasWater = `${electrycityStrore},${waterStore},${gasStore}`
+                if (electrycityStrore || waterStore || gasStore) {
+                  AddGoogleLink(`storeWaterGasWater:${storeWaterGasWater}`);
+                }
+              }}
+            >
+              تایید
+            </button>
+
+            </div>
+
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`options:${empityValTosend}`)}>نادیده گرفتن</button>
+            <button className="oneBack_options" onClick={trimPathToRoot}>بازگشت</button>
+            <div className='oneBack_options_parents'></div>
+          </div>
+        )}
+
+        {mode === 'joinbuild' && (
+          <>
+            <p className="showInput">درصد مشارکت:</p>
+            <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+              <input
+                id={showJoinbuildDropdown ? 'inputter' : ''}
+                type="text"
+                value={joinbuild}
+                onChange={(e) => handleChangeforOneNums(e, setjoinbuild)}
+                inputMode="text"
+                onFocus={() => setShowJoinbuildDropdown(true)}
+                readOnly
+              />
+
+              <div className={`year-dropdown ${showJoinbuildDropdown ? 'visible' : 'hidden'}`} ref={joinbuildDropdownref}>
+                {[
+                  { key: '70-30', text: 'مالک ۳۰ / ۷۰ سازنده', value: '70/30' },
+                  { key: '60-40', text: 'مالک ۴۰ / ۶۰ سازنده', value: '60/40' },
+                  { key: '50-50', text: 'مالک ۵۰ / ۵۰ سازنده', value: '50/50' },
+                  { key: '40-60', text: 'مالک ۶۰ / ۴۰ سازنده', value: '40/60' },
+                  { key: '30-70', text: 'مالک ۷۰ / ۳۰ سازنده', value: '30/70' },
+                ].map(({ key, text, value }) => (
+                  <div
+                    key={key}
+                    onClick={() => {
+                      setjoinbuild(text);
+                      setjoinbuildValue(value);
+                      setShowJoinbuildDropdown(false);
+                    }}
+                    className="conform_buttonYear"
+                  >
+                    {text}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <button
+              className="next"
+              disabled={!joinbuild}
+              onClick={() => {
+                AddGoogleLink(`joinbuildpersent:${joinbuildValue}`);
+              }}
+            >
+              تایید
+            </button>
+
+            <button className="ignoreVal" onClick={() => AddGoogleLink(`year:${empityValTosend}`)}>
+              نادیده گرفتن
+            </button>
+
+            <button className="oneBack" onClick={trimPathToRoot}>
+              بازگشت
+            </button>
+          </>
         )}
 
       </nav>

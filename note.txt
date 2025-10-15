@@ -16,3 +16,38 @@
 “Please be more casual/professional.”
 
 “Keep track of my project as we go, don’t reset context.”
+
+
+i can use this in right bar 
+
+
+            
+            <p className="showInput">گرمایش:</p>
+            <div className="input-wrapper homeface-wrapper">
+              <div className="homeface-row">
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => sethomehotTemp('h')}
+                    checked={homehotTemp === 'h'}// stands for heater
+                  />
+                  بخاری
+                </label>
+                <label className="homeface-option">
+                  <input
+                    type="checkbox"
+                    onChange={() => sethomehotTemp('c')}
+                    checked={homehotTemp === 'c'}// stands for combi boiler
+                  />
+                  پکیج
+                </label>
+              </div>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => sethomehotTemp('Hc')}
+                  checked={homehotTemp === 'Hc'} // stands for Heater and package
+                />
+                بخاری و پکیج
+              </label>
+            </div>

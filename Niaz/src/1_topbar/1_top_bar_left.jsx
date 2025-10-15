@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import './top_bar.css'
 
 function Top_bar_left(){
+      const navigate = useNavigate();
 
     const [isloggedin, setisloggedin] = useState(false)
 
@@ -28,7 +30,7 @@ function Top_bar_left(){
 
 
     return (<div>
-            <img className='niazImage' src='/2.png' />
+        <img className='niazImage' src='/2.png'  onClick={() =>navigate("/")}/>
         <select className='user' id='user' onChange={userDropdown} defaultValue="">
             <option value="" disabled hidden>&#9660; کاربر</option>
             <option> خروج</option>

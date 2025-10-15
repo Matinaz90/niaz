@@ -31,7 +31,7 @@
 }
 
 .right-bar-nav a:hover {
-  background-color: var(--layer3-bg-color);
+  background-color: var(--layer1-importan-color);
 }
 
 .right-bar-nav input[type="number"] {
