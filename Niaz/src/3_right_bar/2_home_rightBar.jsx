@@ -343,9 +343,13 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
     [homeflorRooms]
   )
 
-  const triggerError = () => {
+  const triggerError = (text) => {
     setShowError(true);
-    setTimeout(() => {setShowError(false), 2000; setShowErrorText('');})
+    setShowErrorText(text);
+    setTimeout(() => {
+      setShowError(false);
+      setShowErrorText('');
+    }, 2000);
   };
 
   return (
@@ -382,8 +386,10 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 !price
               }
               onClick={() => {
-                if (price) {
+                if (price >= 0 && price <= 100000000000) {
                   AddGoogleLink(`price:${price}`);
+                } else {
+                  triggerError("خطا در انتخاب شما");
                 }
               }}
             >
@@ -420,6 +426,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
               ) : null}
             </div>
 
+            
             <button className='ignoreVal' onClick={() => AddGoogleLink(`price:${empityValTosend}`)}>نادیده گرفتن</button>\
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>
@@ -783,7 +790,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
               onClick={() => {
                 if (HomeNumber && allHomes && homeflorRooms) {
                   if (HomeNumberserachBarVal - allHomesserachBarVal - 1 >= 0) {
-                    triggerError();
+                    triggerError("خطا در انتخاب شما");
                     return;
                   }
                   const val = `${HomeNumberserachBarVal},${allHomesserachBarVal},${homeflorRoomsserachBarVal}`;
@@ -793,7 +800,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
             >
               تایید
             </button>
-            <p className={`floarErrText ${showError ? "visible" : ""}`}>خطا در انتخاب</p>
+            <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
             <button className='ignoreVal' onClick={() => AddGoogleLink(`floor:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </>

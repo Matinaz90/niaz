@@ -171,27 +171,30 @@
 
 .floarErrText {
   position: absolute;
-  top: 355px;
-  padding: 12px 18px;
-  right: 20px;
-  left: 30px;
+  top: 285px;
+  right: 10px;
+  left: 20px;
+  height: 60px;
 
-  color: #ff4d4f; /* softer red tone */
-  background: rgba(255, 77, 79, 0.08); /* subtle red tint background */
+  color: #ff181c; /* softer red tone */
+  background: rgba(255, 77, 80, 0.32); /* subtle red tint background */
   border: 1px solid rgba(255, 77, 79, 0.4);
   border-radius: 10px;
 
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: bold;
   text-align: center;
   backdrop-filter: blur(6px);
   box-shadow: 0 2px 6px rgba(255, 0, 0, 0.1);
   transition: all 0.25s ease;
-  opacity: 0;
+  display: none;
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
 }
 
 .floarErrText.visible {
-  opacity: 1;
+  display: flex;
 }
 
 .year-dropdown {
