@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-// import { useValidatePathHome } from "../validPath.jsx";
+import { useValidatePathHome } from "../validPath.jsx";
 import './2.1_home_rightBar.css';
 
 export default function Home_RightBar() {
-  // useValidatePathHome()
+  useValidatePathHome()
   const [mode, setMode] = useState('default');
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,7 +33,6 @@ export default function Home_RightBar() {
   const [waterStore, setwaterStore] = useState("");
   const [gasStore, setgasStore] = useState("");
   const [categorizestore, setcategorizestore] = useState("");
-  
 
   const yearListRef = useRef();
   const [showYearList, setShowYearList] = useState(false);
@@ -66,23 +65,30 @@ export default function Home_RightBar() {
   const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
   const resetAllFields = () => {
-  setPrice('');
-  setPrice2('');
-  setpriceRecommended1();
-  setpriceRecommended2();
-  setMeterage('');
-  setroomsInHome('');
-  setYearBuilt('');
-  sethomeHomeNumber('');
-  setallHomes('');
-  sethomeface('');
-  sethomeflorRooms('');
-  sethomeCondition('');
-  setwithStuffInhome('');
-  setanbary('');
-  setparking('');
-  setasansor('');
-  setbalkon('');
+    setPrice('');
+    setPrice2('');
+    setpriceRecommended1();
+    setpriceRecommended2();
+    setMeterage('');
+    setroomsInHome('');
+    setYearBuilt('');
+    sethomeHomeNumber('');
+    setallHomes('');
+    sethomeface('');
+    sethomeflorRooms('');
+    sethomeCondition('');
+    setwithStuffInhome('');
+    setanbary('');
+    setparking('');
+    setasansor('');
+    setbalkon('');
+    setbahr('');
+    setjoinbuild('');
+    setjoinbuildValue('');
+    setelectrycityStrore('');
+    setwaterStore('');
+    setgasStore('');
+    setcategorizestore('');
   };
 
   useEffect(() => {
@@ -180,7 +186,6 @@ export default function Home_RightBar() {
       }
     } 
   }, [location.pathname]);
-  
 
   const formatPrice = (value) => {
     const num = parseInt(value, 10);
@@ -196,7 +201,7 @@ export default function Home_RightBar() {
         const index = persianNums.indexOf(ch);
         return index > -1 ? englishNums[index] : ch;
       }).join("");
-    }
+  }
 
   const englishToPersianNumber = (val) => {
       return String(val).split("").map(ch => {
@@ -240,33 +245,33 @@ export default function Home_RightBar() {
     setpriceRecommended2(englishToPersianNumber(price) + ' میلیارد');
   };
 
-useEffect(() => {
-  const handleClick = (event) => {
-    const refs = [
-      joinbuildDropdownref,
-      yearListRef,
-      div1Ref,
-      div2Ref,
-      div3Ref,
-      div1DropdownRef,
-      div2DropdownRef,
-      div3DropdownRef,
-      divRoomDropdownRef,
-    ];
+  useEffect(() => {
+    const handleClick = (event) => {
+      const refs = [
+        joinbuildDropdownref,
+        yearListRef,
+        div1Ref,
+        div2Ref,
+        div3Ref,
+        div1DropdownRef,
+        div2DropdownRef,
+        div3DropdownRef,
+        divRoomDropdownRef,
+      ];
 
-    const clickedInside = refs.some(ref => ref.current?.contains(event.target));
+      const clickedInside = refs.some(ref => ref.current?.contains(event.target));
 
-    if (!clickedInside) {
-      setShowYearList(false);
-      setopenRoomDropdown(false);
-      setOpenDropdownFloars(null);
-      setShowJoinbuildDropdown(false)
-    }
-  };
+      if (!clickedInside) {
+        setShowYearList(false);
+        setopenRoomDropdown(false);
+        setOpenDropdownFloars(null);
+        setShowJoinbuildDropdown(false)
+      }
+    };
 
-  document.addEventListener('mousedown', handleClick);
-  return () => document.removeEventListener('mousedown', handleClick);
-}, []);
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
 
   const AddLikemilion = (price) => {
           setPrice(price + '000000');
@@ -726,9 +731,8 @@ useEffect(() => {
               className="next"
               disabled={!homeface || !bahr}
               onClick={() => {
-                if (homeface || bahr) {
-                  AddGoogleLink(`face:${homeface + ',' + bahr}`);
-                }
+                if (!homeface || !bahr) return;
+                AddGoogleLink(`face:${homeface},${bahr}`);
               }}
             >
               تایید
@@ -923,16 +927,16 @@ useEffect(() => {
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setwithStuffInhome('t')}
-                  checked={withStuffInhome === 't'}
+                  onChange={() => setwithStuffInhome('Ft')}
+                  checked={withStuffInhome === 'Ft'}
                 />
                 هست
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setwithStuffInhome('f')}
-                  checked={withStuffInhome === 'f'}
+                  onChange={() => setwithStuffInhome('Ff')}
+                  checked={withStuffInhome === 'Ff'}
                 />
                 نیست
               </label>
@@ -943,16 +947,16 @@ useEffect(() => {
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setparking('t')}
-                  checked={parking === 't'}
+                  onChange={() => setparking('Pt')}
+                  checked={parking === 'Pt'}
                 />
                 دارد
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setparking('f')}
-                  checked={parking === 'f'}
+                  onChange={() => setparking('Pf')}
+                  checked={parking === 'Pf'}
                 />
                 ندارد
               </label>
@@ -963,17 +967,19 @@ useEffect(() => {
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setasansor('t')}
-                  checked={asansor === 't'}
+                  onChange={() => setasansor('Et')}
+                  checked={asansor === 'Et'}
                 />
                 دارد
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setasansor('f')}
-                  checked={asansor === 'f'}
+                  onChange={() => setasansor('Ef')}
+                  checked={asansor === 'Ef'}
+
                 />
+
                 ندارد
               </label>
             </div>
@@ -984,16 +990,16 @@ useEffect(() => {
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setanbary('t')}
-                  checked={anbary === 't'}
+                  onChange={() => setanbary('St')}
+                  checked={anbary === 'St'}
                 />
                 دارد
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setanbary('f')}
-                  checked={anbary === 'f'}
+                  onChange={() => setanbary('Sf')}
+                  checked={anbary === 'Sf'}
                 />
                 ندارد
               </label>
@@ -1004,16 +1010,16 @@ useEffect(() => {
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setbalkon('t')}
-                  checked={balkon === 't'}
+                  onChange={() => setbalkon('Bt')}
+                  checked={balkon === 'Bt'}
                 />
                 دارد
               </label>
               <label className="homeface-option">
                 <input
                   type="checkbox"
-                  onChange={() => setbalkon('f')}
-                  checked={balkon === 'f'}
+                  onChange={() => setbalkon('Bf')}
+                  checked={balkon === 'Bf'}
                 />
                 ندارد
               </label>
@@ -1271,7 +1277,7 @@ useEffect(() => {
             </button>
           </div>
 
-            <button className="ignoreVal" onClick={() => AddGoogleLink(`year:${empityValTosend}`)}>
+            <button className="ignoreVal" onClick={() => AddGoogleLink(`joinbuildpersent:${empityValTosend}`)}>
               نادیده گرفتن
             </button>
 
