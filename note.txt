@@ -6,18 +6,6 @@
 
 
 
-
-“From now on, please help me with more detailed explanations.”
-
-“I want you to only give advice, no code.”
-
-“Remember I’m building a React app and prefer React-specific tips.”
-
-“Please be more casual/professional.”
-
-“Keep track of my project as we go, don’t reset context.”
-
-
 i can use this in right bar 
 
 
@@ -51,3 +39,5 @@ i can use this in right bar
                 بخاری و پکیج
               </label>
             </div>
+
+

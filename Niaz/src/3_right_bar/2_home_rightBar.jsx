@@ -32,6 +32,8 @@ export default function Home_RightBar() {
   const [electrycityStrore, setelectrycityStrore] = useState("");
   const [waterStore, setwaterStore] = useState("");
   const [gasStore, setgasStore] = useState("");
+  const [categorizestore, setcategorizestore] = useState("");
+  
 
   const yearListRef = useRef();
   const [showYearList, setShowYearList] = useState(false);
@@ -159,8 +161,10 @@ export default function Home_RightBar() {
       } else if (href.includes('/store')) {
         if(href.includes('price:')){
           setMode('default');
-        }else if (href.includes('condition:')){
+        } else if (href.includes('categorizestore:')) {
           setMode('pricehome');
+        } else if (href.includes('condition:')){
+          setMode('categorizestore')
         } else if (href.includes('face:')) {
           setMode('homeCondition');
         } else if (href.includes('year:')) {
@@ -175,7 +179,6 @@ export default function Home_RightBar() {
         resetAllFields()
       }
     } 
-
   }, [location.pathname]);
   
 
@@ -277,31 +280,32 @@ useEffect(() => {
       setpriceRecommended2();
   };
 
-const AddLikemilionrent = (priceValue, rentIndex) => {
-  const finalPrice = priceValue + '000000'; // million
+  const AddLikemilionrent = (priceValue, rentIndex) => {
+    const finalPrice = priceValue + '000000'; // million
 
-  if (rentIndex === 1) {
-    setPrice(finalPrice);
-  } else if (rentIndex === 2) {
-    setPrice2(finalPrice);
-  }
+    if (rentIndex === 1) {
+      setPrice(finalPrice);
+    } else if (rentIndex === 2) {
+      setPrice2(finalPrice);
+    }
 
-  setpriceRecommended1();
-  setpriceRecommended2();
-};
+    setpriceRecommended1();
+    setpriceRecommended2();
+  };
 
-const AddLikemiliardrent = (priceValue, rentIndex) => {
-  const finalPrice = priceValue + '000000000';
+  const AddLikemiliardrent = (priceValue, rentIndex) => {
+    const finalPrice = priceValue + '000000000';
 
-  if (rentIndex === 1) {
-    setPrice(finalPrice);
-  } else if (rentIndex === 2) {
-    setPrice2(finalPrice);
-  }
+    if (rentIndex === 1) {
+      setPrice(finalPrice);
+    } else if (rentIndex === 2) {
+      setPrice2(finalPrice);
+    }
 
-  setpriceRecommended1();
-  setpriceRecommended2();
-};
+    setpriceRecommended1();
+    setpriceRecommended2();
+  };
+
   const handleChangeforOneNums = (e, setter) => {
     const raw = persianToEnglishNumber(e.target.value)
 
@@ -356,17 +360,21 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
     <div id="rightBar" className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
       <nav className="right-bar-nav">
         {mode === 'default' && (
-          <>
-            <a onClick={() => {AddGoogleLink('joinbuild');}}>مشارکت ساخت</a>
-            <a onClick={() => {AddGoogleLink('Aparteman');}}>اپارتمان</a>
-            <a onClick={() => {AddGoogleLink('villa');}}>ویلایی</a>
-            <a onClick={() => {AddGoogleLink('rent');}}>اجاره</a>
-            <a>تجاری</a> // what is it for
-          </>
+          <div className='optionDiv'>
+          <div className='optionDivchildFullScreen'>
+              <a onClick={() => {AddGoogleLink('joinbuild');}}>مشارکت ساخت</a>
+              <a onClick={() => {AddGoogleLink('Aparteman');}}>اپارتمان</a>
+              <a onClick={() => {AddGoogleLink('villa');}}>ویلایی</a>
+              <a onClick={() => {AddGoogleLink('rent');}}>اجاره</a>
+              <a onClick={() => {AddGoogleLink('store');}}>تجاری</a>
+            </div>
+          </div>
         )}
 
         {mode === 'pricehome' && (
-          <>
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
             <p className="showInput">قیمت:</p>
             <input
               value={englishToPersianNumber(price)}
@@ -389,11 +397,12 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 if (price >= 0 && price <= 100000000000) {
                   AddGoogleLink(`price:${price}`);
                 } else {
-                  triggerError("خطا در انتخاب شما");
+                  triggerError("عدد وارد شده بیش از حد مجاز است.");
                 }
               }}
             >
               تایید
+              <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
             </button>
 
             <div className={`recommended_div`}>
@@ -425,16 +434,19 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 </button>
               ) : null}
             </div>
+          </div>
 
             
             <button className='ignoreVal' onClick={() => AddGoogleLink(`price:${empityValTosend}`)}>نادیده گرفتن</button>\
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
-          </>
+          </div>
         )}
 
         {mode === 'pricehomerRent' && (
-          <>
-            <p className="showInput">وعدیه:</p>
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
+            <p className="showInput">ودیعه:</p>
 
             <input
               value={englishToPersianNumber(price)}
@@ -468,12 +480,25 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
 
             <button
               className="next"
-              disabled={!Number(price) && !Number(price2)}
+              disabled={
+                price === '' ||
+                price2 === '' ||
+                isNaN(Number(price)) ||
+                isNaN(Number(price2))}
               onClick={() => {
-                  AddGoogleLink(`pricerent:${price + ',' + price2}`);
+                if(price >= 0 && price <= 100000000000){
+                  if(price2 >= 0 && price2 <= 100000000000){
+                    AddGoogleLink(`pricerent:${price + ',' + price2}`);
+                  } else {
+                    triggerError("اجاره وارد بیش از حد مجاز است.");
+                  } 
+                } else {
+                  triggerError("ودیعه وارد بیش از حد مجاز است.");
+                }
               }}
             >
               تایید
+            <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
             </button>
 
             <div className="recommended_div">
@@ -503,6 +528,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
                 </button>
               )}
             </div>
+          </div>
 
             <button className="ignoreVal" onClick={() => AddGoogleLink(`pricerent:${empityValTosend}`)}>
               نادیده گرفتن
@@ -511,11 +537,13 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
             <button className="oneBack" onClick={trimPathToRoot}>
               بازگشت
             </button>
-          </>
+          </div>
         )}
 
         {mode === 'MeterageId' && (
-          <>
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
             <p className="showInput">متراژ:</p>
             <input
               type="text"
@@ -525,22 +553,28 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
             />
             <button
               className="next"
-              disabled={!meterage}
+              disabled={meterage === '' || isNaN(Number(meterage))}
               onClick={() => {
-                if (meterage) {
+                if (meterage >= 0 && meterage <= 10000) {
                   AddGoogleLink(`meter:${meterage}`);
+                } else {
+                  triggerError("عدد وارد شده بیش از حد مجاز است.");
                 }
               }}
             >
               تایید
+            <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
             </button>
+          </div>
             <button className='ignoreVal' onClick={() => AddGoogleLink(`meter:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
-          </>
+          </div>
         )}
 
         {mode === 'roomsInHome' && (
-          <>
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
             <p className="showInput">اتاق ها:</p>
           <div className="floor-info">
             <input
@@ -570,22 +604,27 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
 
             <button
               className="next"
-              disabled={!roomsInHome}
+              disabled={roomsInHome === '' || isNaN(Number(roomsInHome))}
               onClick={() => {
-                if (roomsInHome) {
+                if (roomsInHome >= 0 && roomsInHome <= 100000) {
                   AddGoogleLink(`rooms:${roomsInHome}`);
+                } else {
+                  triggerError("عدد وارد شده بیش از حد مجاز است.");
                 }
               }}
             >
               تایید
             </button>
+          </div>
             <button className='ignoreVal' onClick={() => AddGoogleLink(`rooms:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
-          </>
+          </div>
         )}
 
         {mode === 'timeCreated' && (
-          <>
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
             <p className="showInput">سال ساخت:</p>
             <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
               <input
@@ -623,13 +662,16 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
             >
               تایید
             </button>
+          </div>
             <button className='ignoreVal' onClick={() => AddGoogleLink(`year:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
-          </>
+          </div>
         )}
 
         {mode === 'waylookhome' && (
-          <>
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
             <p className="showInput">جهت ساختمان:</p>
             <div className="input-wrapper homeface-wrapper">
               <label className="homeface-option">
@@ -691,13 +733,17 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
             >
               تایید
             </button>
+          </div>
             <button className='ignoreVal' onClick={() => AddGoogleLink(`face:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
-          </>
+          </div>
         )}
 
         {mode === 'homeNumbresInfloor' && (
-          <>
+          
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
               <p className="showInput showInputfloar">طبقه:</p>
             <div className="floor-info">
               <input
@@ -790,7 +836,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
               onClick={() => {
                 if (HomeNumber && allHomes && homeflorRooms) {
                   if (HomeNumberserachBarVal - allHomesserachBarVal - 1 >= 0) {
-                    triggerError("خطا در انتخاب شما");
+                    triggerError("انتخاب طبقه نامعتبر است.");
                     return;
                   }
                   const val = `${HomeNumberserachBarVal},${allHomesserachBarVal},${homeflorRoomsserachBarVal}`;
@@ -799,15 +845,19 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
               }}
             >
               تایید
-            </button>
             <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
+            </button>
+          </div>
             <button className='ignoreVal' onClick={() => AddGoogleLink(`floor:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
-          </>
+          </div>
         )}
 
         {mode === 'homeCondition' && (
-          <>
+          
+          <div className='optionDiv'>
+
+            <div className='optionDivchild'>
             <p className="showInput">وضعیت واحد:</p>
             <div className="homeCondition">
               <label className="homeface-option">
@@ -857,9 +907,11 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
             >
               تایید
             </button>
+            </div>
             <button className='ignoreVal' onClick={() => AddGoogleLink(`condition:${empityValTosend}`)}>نادیده گرفتن</button>
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
-          </>
+          
+          </div>
         )}
 
         {mode === 'options' && (
@@ -994,6 +1046,92 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
           </div>
         )}
 
+        {mode === 'categorizestore' && (
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
+            <p className="showInput">کاربری مغازه:</p>
+            <div className="input-wrapper homeface-wrapper">
+              <div className="homeface-row">
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setcategorizestore('retail')} 
+                  checked={categorizestore === 'retail'}
+                />
+                فروشگاهی
+              </label>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setcategorizestore('service')}
+                  checked={categorizestore === 'service'}
+                />
+                خدماتی
+              </label>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setcategorizestore('food')}
+                  checked={categorizestore === 'food'}
+                />
+                غذایی
+              </label>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setcategorizestore('workshop')}
+                  checked={categorizestore === 'workshop'}
+                />
+                کارگاهی
+              </label>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setcategorizestore('office')}
+                  checked={categorizestore === 'office'}
+                />
+                اداری
+              </label>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setcategorizestore('medical')}
+                  checked={categorizestore === 'medical'}
+                />
+                درمانی
+              </label>
+              <label className="homeface-option">
+                <input
+                  type="checkbox"
+                  onChange={() => setcategorizestore('educational')}
+                  checked={categorizestore === 'educational'}
+                />
+                آموزشی
+              </label>
+              </div>
+            </div>
+
+            <button
+              className="next"
+              disabled={!categorizestore}
+              onClick={() => {
+                if (categorizestore) {
+                  AddGoogleLink(`categorizestore:${categorizestore}`);
+                }
+              }}
+            >
+              تایید
+            </button>
+
+            </div>
+
+            <button className='ignoreVal' onClick={() => AddGoogleLink(`categorizestore:${empityValTosend}`)}>نادیده گرفتن</button>
+            <button className="oneBack_options" onClick={trimPathToRoot}>بازگشت</button>
+            <div className='oneBack_options_parents'></div>
+          </div>
+        )}
+
         {mode === 'storeWaterGasWater' && (
           <div className='optionDiv'>
             
@@ -1084,7 +1222,9 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
         )}
 
         {mode === 'joinbuild' && (
-          <>
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
             <p className="showInput">درصد مشارکت:</p>
             <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
               <input
@@ -1129,6 +1269,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
             >
               تایید
             </button>
+          </div>
 
             <button className="ignoreVal" onClick={() => AddGoogleLink(`year:${empityValTosend}`)}>
               نادیده گرفتن
@@ -1137,7 +1278,7 @@ const AddLikemiliardrent = (priceValue, rentIndex) => {
             <button className="oneBack" onClick={trimPathToRoot}>
               بازگشت
             </button>
-          </>
+          </div>
         )}
 
       </nav>

@@ -123,6 +123,7 @@
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  position: relative;
 }
 
 .ignoreVal{
@@ -171,9 +172,9 @@
 
 .floarErrText {
   position: absolute;
-  top: 285px;
-  right: 10px;
-  left: 20px;
+  top: -20px;
+  right: 0px;
+  left: 0px;
   height: 60px;
 
   color: #ff181c; /* softer red tone */
@@ -181,7 +182,7 @@
   border: 1px solid rgba(255, 77, 79, 0.4);
   border-radius: 10px;
 
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
   backdrop-filter: blur(6px);
@@ -270,7 +271,6 @@
   font-size: 14px;
   color: var(--text_muded_between);
   gap: 8px;
-  cursor: pointer;
 }
 
 .floor-info {
@@ -320,6 +320,23 @@
 }
 
 .optionDivchild::-webkit-scrollbar {
+  width: 8px;
+}
+
+.optionDivchildFullScreen{
+  height: calc(100vh - 50px);
+  overflow-y: auto;
+  display: flex; 
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+  width: calc(100% + 8px);
+
+}
+
+.optionDivchildFullScreen::-webkit-scrollbar {
   width: 8px;
 }
 
