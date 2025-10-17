@@ -35,12 +35,12 @@ export function useValidatePathHome() {
                 return allowedDirections.includes(direction) && allowedBahrs.includes(bahr);
               },
 
-joinbuildpersent: (val) => {
-  if (val === x) return 'e';
-  if (typeof val !== 'string') return false;
-  const allowed = ['70/30', '60/40', '50/50', '40/60', '30/70'];
-  return allowed.includes(val.trim());
-},
+              joinbuildpersent: (val) => {
+                if (val === x) return 'e';
+                if (typeof val !== 'string') return false;
+                const allowed = ['70-30', '60-40', '50-50', '40-60', '30-70'];
+                return allowed.includes(val.trim());
+              },
 
 
               price: (val) => {
@@ -261,7 +261,53 @@ joinbuildpersent: (val) => {
                 );
               },
         };
-      };
+      } else if(segments[1] == 'store'){
+        validators = {
+              meter: (val) => {
+                if (val === x) return 'e';
+                const num = Number(val);
+                return Number.isInteger(num) && num >= 1 && num <= 100_000_000;
+              },
+
+              year: (val) => {
+                if (val === x) return 'e';
+                const num = Number(val);
+                return Number.isInteger(num) && num >= 1390 && num <= 1403;
+              },
+
+              face: (val) => {
+                if (val === x) return 'e';
+                if (typeof val !== 'string') return false;
+
+                const parts = val.split(',').map((v) => v.trim().toLowerCase());
+                if (parts.length !== 2) return false;
+
+                const [direction, bahr] = parts;
+                const allowedDirections = ['north', 'south'];
+                const allowedBahrs = ['1', '2', '3'];
+
+                return allowedDirections.includes(direction) && allowedBahrs.includes(bahr);
+              },
+
+              condition: (val) => {
+                if (val === x) return 'e';
+                return ['ok', 'normal', 'bad', 'new'].includes(val.trim().toLowerCase());
+              },
+
+              categorizestore:  (val) => {
+                if (val === x) return 'e';
+                return ['retail', 'service', 'food', 'workshop', 'office', 'medical', 'educational'].includes(val.trim().toLowerCase());
+              },
+
+
+              price: (val) => {
+                if (val === x) return 'e';
+                const num = Number(val);
+                return Number.isInteger(num) && num >= 1 && num <= 100_000_000_000_000;
+              },
+
+        };
+      }
     };
 
     

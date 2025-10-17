@@ -8,6 +8,7 @@ export default function Home_RightBar() {
   const [mode, setMode] = useState('default');
   const navigate = useNavigate();
   const location = useLocation();
+  const href = location.pathname;
 
   const [price, setPrice] = useState('');
   const [price2, setPrice2] = useState('');
@@ -41,6 +42,18 @@ export default function Home_RightBar() {
   const [showErrorText, setShowErrorText] = useState(false);
   const [openRoomDropdown, setopenRoomDropdown] = useState(false);
   const [showJoinbuildDropdown, setShowJoinbuildDropdown] = useState(false);
+
+  const [finalpagejoinbuild1Dropdown, setfinalpagejoinbuild1Dropdown] = useState(false);
+  const [finalpagejoinbuild2Dropdown, setfinalpagejoinbuild2Dropdown] = useState(false);
+  const [finalpagejoinbuild3Dropdown, setfinalpagejoinbuild3Dropdown] = useState(false);
+  const [finalpagejoinbuild4Dropdown, setfinalpagejoinbuild4Dropdown] = useState(false);
+  const [finalpagejoinbuild5Dropdown, setfinalpagejoinbuild5Dropdown] = useState(false);
+
+  const finalpagejoinbuild1Ref = useRef(null)
+  const finalpagejoinbuild2Ref = useRef(null)
+  const finalpagejoinbuild3Ref = useRef(null)
+  const finalpagejoinbuild4Ref = useRef(null)
+  const finalpagejoinbuild5Ref = useRef(null)
 
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
   const divXRef = useRef(null);
@@ -91,12 +104,23 @@ export default function Home_RightBar() {
     setcategorizestore('');
   };
 
+  const closeAllDropdowns = () => {
+        setShowYearList(false);
+        setopenRoomDropdown(false);
+        setOpenDropdownFloars(null);
+        setShowJoinbuildDropdown(false);
+        setfinalpagejoinbuild1Dropdown(false);
+        setfinalpagejoinbuild2Dropdown(false);
+        setfinalpagejoinbuild3Dropdown(false);
+        setfinalpagejoinbuild4Dropdown(false);
+        setfinalpagejoinbuild5Dropdown(false);
+  }
+
   useEffect(() => {
-    const href = location.pathname;
     if (href.includes('/home')) {
       if (href.includes('/joinbuild')) {
         if(href.includes('price:')){
-          setMode('default');
+          setMode('finalpagejoinbuild');
         } else if (href.includes('joinbuildpersent:')) {
           setMode('pricehome');
         } else if (href.includes('face:')) {
@@ -108,7 +132,7 @@ export default function Home_RightBar() {
         }
       }  else if (href.includes('/Aparteman')) {
         if(href.includes('price:')){
-          setMode('default');
+          setMode('finalpage');
         }else if(href.includes('options:')){
           setMode('pricehome');
         }else if (href.includes('condition:')){
@@ -128,7 +152,7 @@ export default function Home_RightBar() {
         }
       } else if (href.includes('/villa')) {
         if(href.includes('price:')){
-          setMode('default');
+          setMode('finalpage');
         }else if(href.includes('options:')){
           setMode('pricehome');
         }else if (href.includes('condition:')){
@@ -146,7 +170,7 @@ export default function Home_RightBar() {
         }
       } else if(href.includes('/rent')) {
         if(href.includes('pricerent:')){
-          setMode('default');
+          setMode('finalpage');
         }else if(href.includes('options:')){
           setMode('pricehomerRent');
         }else if (href.includes('condition:')){
@@ -166,7 +190,7 @@ export default function Home_RightBar() {
         }
       } else if (href.includes('/store')) {
         if(href.includes('price:')){
-          setMode('default');
+          setMode('finalpage');
         } else if (href.includes('categorizestore:')) {
           setMode('pricehome');
         } else if (href.includes('condition:')){
@@ -228,7 +252,7 @@ export default function Home_RightBar() {
   const priceRecommendedcal = (e) => {
     const raw = persianToEnglishNumber(e.target.value);
     const price = Number(raw);
-
+    
     if (!raw || isNaN(price)) {
       setpriceRecommended1('');
       setpriceRecommended2('');
@@ -240,7 +264,8 @@ export default function Home_RightBar() {
       setpriceRecommended2('');
       return;
     }
-
+    
+    if (raw == 0) return
     setpriceRecommended1(englishToPersianNumber(price) + ' میلیون');
     setpriceRecommended2(englishToPersianNumber(price) + ' میلیارد');
   };
@@ -257,6 +282,11 @@ export default function Home_RightBar() {
         div2DropdownRef,
         div3DropdownRef,
         divRoomDropdownRef,
+        finalpagejoinbuild1Ref,
+        finalpagejoinbuild2Ref,
+        finalpagejoinbuild3Ref,
+        finalpagejoinbuild4Ref,
+        finalpagejoinbuild5Ref,
       ];
 
       const clickedInside = refs.some(ref => ref.current?.contains(event.target));
@@ -265,8 +295,13 @@ export default function Home_RightBar() {
         setShowYearList(false);
         setopenRoomDropdown(false);
         setOpenDropdownFloars(null);
-        setShowJoinbuildDropdown(false)
-      }
+        setShowJoinbuildDropdown(false);
+        setfinalpagejoinbuild1Dropdown(false);
+        setfinalpagejoinbuild2Dropdown(false);
+        setfinalpagejoinbuild3Dropdown(false);
+        setfinalpagejoinbuild4Dropdown(false);
+        setfinalpagejoinbuild5Dropdown(false);
+      };
     };
 
     document.addEventListener('mousedown', handleClick);
@@ -274,18 +309,21 @@ export default function Home_RightBar() {
   }, []);
 
   const AddLikemilion = (price) => {
+    if(price == 0) return
           setPrice(price + '000000');
           setpriceRecommended1();
           setpriceRecommended2();
   };
 
   const AddLikemiliard = (price) => {
+    if(price == 0) return
       setPrice(price + '000000000');
       setpriceRecommended1();
       setpriceRecommended2();
   };
 
   const AddLikemilionrent = (priceValue, rentIndex) => {
+    if(priceValue == 0) return
     const finalPrice = priceValue + '000000'; // million
 
     if (rentIndex === 1) {
@@ -299,6 +337,7 @@ export default function Home_RightBar() {
   };
 
   const AddLikemiliardrent = (priceValue, rentIndex) => {
+    if(priceValue == 0) return
     const finalPrice = priceValue + '000000000';
 
     if (rentIndex === 1) {
@@ -521,16 +560,16 @@ export default function Home_RightBar() {
               )}
 
               {priceRecommended2 && (
-                <button
-                  className="category"
-                  onClick={() => {
-                    const activePrice = selectedpriceRent ? price : price2;
-                    const activeIndex = selectedpriceRent ? 1 : 2;
-                    AddLikemiliardrent(activePrice, activeIndex);
-                  }}
-                >
-                  {englishToPersianNumber(priceRecommended2)}
-                </button>
+              <button
+                className="category"
+                onClick={() => {
+                  const activePrice = selectedpriceRent ? price : price2;
+                  const activeIndex = selectedpriceRent ? 1 : 2;
+                  AddLikemiliardrent(activePrice, activeIndex);
+                }}
+              >
+                {englishToPersianNumber(priceRecommended2)}
+              </button>
               )}
             </div>
           </div>
@@ -1245,11 +1284,11 @@ export default function Home_RightBar() {
 
               <div className={`year-dropdown ${showJoinbuildDropdown ? 'visible' : 'hidden'}`} ref={joinbuildDropdownref}>
                 {[
-                  { key: '70-30', text: 'مالک ۳۰ / ۷۰ سازنده', value: '70/30' },
-                  { key: '60-40', text: 'مالک ۴۰ / ۶۰ سازنده', value: '60/40' },
-                  { key: '50-50', text: 'مالک ۵۰ / ۵۰ سازنده', value: '50/50' },
-                  { key: '40-60', text: 'مالک ۶۰ / ۴۰ سازنده', value: '40/60' },
-                  { key: '30-70', text: 'مالک ۷۰ / ۳۰ سازنده', value: '30/70' },
+                  { key: '70-30', text: 'مالک ۳۰ / ۷۰ سازنده', value: '70-30' },
+                  { key: '60-40', text: 'مالک ۴۰ / ۶۰ سازنده', value: '60-40' },
+                  { key: '50-50', text: 'مالک ۵۰ / ۵۰ سازنده', value: '50-50' },
+                  { key: '40-60', text: 'مالک ۶۰ / ۴۰ سازنده', value: '40-60' },
+                  { key: '30-70', text: 'مالک ۷۰ / ۳۰ سازنده', value: '30-70' },
                 ].map(({ key, text, value }) => (
                   <div
                     key={key}
@@ -1270,7 +1309,7 @@ export default function Home_RightBar() {
               className="next"
               disabled={!joinbuild}
               onClick={() => {
-                AddGoogleLink(`joinbuildpersent:${joinbuildValue}`);
+                AddGoogleLink(`joinbuildpersent:${joinbuildValue}`)
               }}
             >
               تایید
@@ -1287,7 +1326,151 @@ export default function Home_RightBar() {
           </div>
         )}
 
+        {mode === 'finalpagejoinbuild' && (
+          <div className='optionDiv'>
+            
+            <div className='optionDivchild'>
+
+            <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+              <input
+                id={finalpagejoinbuild1Dropdown ? 'inputter' : ''}
+                type="text"
+                placeholder='قیمت'
+                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild1Dropdown(true)}}
+                inputMode="text"
+                readOnly
+              />
+
+              <div className={`year-dropdown ${finalpagejoinbuild1Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild1Ref}>
+                <div className='optionDivchild'>
+                  <p className="showInput">قیمت:</p>
+                  <input
+                    value={englishToPersianNumber(price)}
+                    onChange={(e) => {handleChangeforOneNums(e, setPrice); priceRecommendedcal(e);}}
+                    type="text"
+                    inputMode="numeric"
+                    ref={divXRef}
+                  />
+
+                  <p id="priceDisplay" className="priceDisplay">
+                    {englishToPersianNumber(formatPrice(price))}
+                  </p>
+
+                  <button
+                    className="next"
+                    disabled={
+                      !price
+                    }
+                    onClick={() => {
+                      if (price >= 0 && price <= 100000000000) {
+                        AddGoogleLink(`price:${price}`);
+                      } else {
+                        triggerError("عدد وارد شده بیش از حد مجاز است.");
+                      }
+                    }}
+                  >
+                    تایید
+                    <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
+                  </button>
+
+                  <div className={`recommended_div`}>
+                  {priceRecommended1 ? (
+                    <button
+                      className="category"
+                      disabled={!price}
+                      onClick={() => {
+                        if (price) {
+                          AddLikemilion(price)
+                        }
+                      }}
+                    >
+                      {englishToPersianNumber(priceRecommended1)}
+                    </button>
+                  ) : null}
+
+                  {priceRecommended2 ? (
+                      <button
+                        className="category"
+                        disabled={!price}
+                        onClick={() => {
+                          if (price) {
+                            AddLikemiliard(price);
+                          }
+                        }}
+                      >
+                        {englishToPersianNumber(priceRecommended2)}
+                      </button>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            </div> 
+
+            <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+              <input
+                id={finalpagejoinbuild2Dropdown ? 'inputter' : ''}
+                type="text"
+                placeholder='درصد'
+                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild2Dropdown(true)}}
+                inputMode="text"
+                readOnly
+              />
+
+              <div className={`year-dropdown ${finalpagejoinbuild2Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild2Ref}>
+              </div>
+            </div>
+
+             <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+              <input
+                id={finalpagejoinbuild3Dropdown ? 'inputter' : ''}
+                type="text"
+                placeholder='درصد'
+                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild3Dropdown(true)}}
+                inputMode="text"
+                readOnly
+              />
+
+              <div className={`year-dropdown ${finalpagejoinbuild3Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild3Ref}>
+              </div>
+            </div>
+
+             <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+              <input
+                id={finalpagejoinbuild4Dropdown ? 'inputter' : ''}
+                type="text"
+                placeholder='درصد'
+                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild4Dropdown(true)}}
+                inputMode="text"
+                readOnly
+              />
+
+              <div className={`year-dropdown ${finalpagejoinbuild4Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild4Ref}>
+              </div>
+            </div>
+
+             <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+              <input
+                id={finalpagejoinbuild5Dropdown ? 'inputter' : ''}
+                type="text"
+                placeholder='درصد'
+                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild5Dropdown(true)}}
+                inputMode="text"
+                readOnly
+              />
+
+              <div className={`year-dropdown ${finalpagejoinbuild5Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild5Ref}>
+              </div>
+            </div>
+
+          </div>
+
+            <button className="oneBack" onClick={() =>navigate("/")}>
+              بازگشت به صفحه اصلی
+            </button>
+          </div>
+        )};
+
       </nav>
     </div>
   );
-}
+};

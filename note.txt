@@ -52,4 +52,14 @@ i can use this in right bar
               </label>
             </div>
 
+store
 
+  | فارسی    | English (used in code) |
+  | -------- | ---------------------- |
+  | فروشگاهی | retail                 |
+  | خدماتی   | service                |
+  | غذایی    | food                   |
+  | کارگاهی  | workshop               |
+  | اداری    | office                 |
+  | درمانی   | medical                |
+  | آموزشی   | educational            |
