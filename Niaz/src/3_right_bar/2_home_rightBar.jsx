@@ -54,6 +54,24 @@ export default function Home_RightBar() {
   const finalpagejoinbuild3Ref = useRef(null)
   const finalpagejoinbuild5Ref = useRef(null)
 
+  const [finalpageaparteman1Dropdown, setfinalpageaparteman1Dropdown] = useState(false);
+  const [finalpageaparteman2Dropdown, setfinalpageaparteman2Dropdown] = useState(false);
+  const [finalpageaparteman3Dropdown, setfinalpageaparteman3Dropdown] = useState(false);
+  const [finalpageaparteman4Dropdown, setfinalpageaparteman4Dropdown] = useState(false);
+  const [finalpageaparteman5Dropdown, setfinalpageaparteman5Dropdown] = useState(false);
+  const [finalpageaparteman6Dropdown, setfinalpageaparteman6Dropdown] = useState(false);
+  const [finalpageaparteman7Dropdown, setfinalpageaparteman7Dropdown] = useState(false);
+  const [finalpageaparteman8Dropdown, setfinalpageaparteman8Dropdown] = useState(false);
+
+  const finalpageaparteman1Ref = useRef(null);
+  const finalpageaparteman2Ref = useRef(null);
+  const finalpageaparteman3Ref = useRef(null);
+  const finalpageaparteman4Ref = useRef(null);
+  const finalpageaparteman5Ref = useRef(null);
+  const finalpageaparteman6Ref = useRef(null);
+  const finalpageaparteman7Ref = useRef(null);
+  const finalpageaparteman8Ref = useRef(null);
+
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
   const divXRef = useRef(null);
 
@@ -74,6 +92,13 @@ export default function Home_RightBar() {
   const empityValTosend = 'e'
   const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
   const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  const joinbuildpersentoptions = [
+    { key: '70-30', text: 'مالک ۳۰ / ۷۰ سازنده', value: '70-30' },
+    { key: '60-40', text: 'مالک ۴۰ / ۶۰ سازنده', value: '60-40' },
+    { key: '50-50', text: 'مالک ۵۰ / ۵۰ سازنده', value: '50-50' },
+    { key: '40-60', text: 'مالک ۶۰ / ۴۰ سازنده', value: '40-60' },
+    { key: '30-70', text: 'مالک ۷۰ / ۳۰ سازنده', value: '30-70' },
+  ];
 
   const resetAllFields = () => {
     setPrice('');
@@ -112,6 +137,15 @@ export default function Home_RightBar() {
     setfinalpagejoinbuild1Dropdown(false);
     setfinalpagejoinbuild2Dropdown(false);
     setfinalpagejoinbuild3Dropdown(false);
+    setfinalpageaparteman1Dropdown(false);
+    setfinalpageaparteman2Dropdown(false);
+    setfinalpageaparteman3Dropdown(false);
+    setfinalpageaparteman4Dropdown(false);
+    setfinalpageaparteman5Dropdown(false);
+    setfinalpageaparteman6Dropdown(false);
+    setfinalpageaparteman7Dropdown(false);
+    setfinalpageaparteman8Dropdown(false);
+    finalPageSearchBarVal();
   }
 
   useEffect(() => {
@@ -131,7 +165,7 @@ export default function Home_RightBar() {
         }
       }  else if (href.includes('/aparteman')) {
         if(href.includes('price:')){
-          setMode('finalpage');
+          setMode('finalpageaparteman');
           finalPageSearchBarVal()
         }else if(href.includes('options:')){
           setMode('pricehome');
@@ -432,7 +466,8 @@ export default function Home_RightBar() {
 
     if (href.includes('joinbuild')) {
       const joinbuildval = getVal("joinbuildpersent");
-      setjoinbuildValue(joinbuildval);
+      const foundOption = joinbuildpersentoptions.find(opt => opt.value === joinbuildval);
+      setjoinbuild(foundOption.text);
       setPrice(price);
       setMeterage(meter);
       sethomeface(direction);
@@ -445,29 +480,16 @@ export default function Home_RightBar() {
 
     } else if(href.includes('store')){
   };
+  
 
-const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
 
-  if (!dropdownRef.current) return;
+  };
 
-  // Measure space
-  const inputRect = dropdownRef.current.parentNode.getBoundingClientRect();
-  const viewportHeight = window.innerHeight;
-
-  const spaceBelow = viewportHeight - inputRect.bottom;
-  const spaceAbove = inputRect.top;
-
-  // Flip if not enough space below
-  if (spaceBelow < 250 && spaceAbove > spaceBelow) {
-    dropdownRef.current.classList.add("open-up");
-  } else {
-    dropdownRef.current.classList.remove("open-up");
+  const openDropdown = (val, ref, setDropdownState) => {
+    val()
+    setDropdownState(true);
   }
-
-  setDropdown(openValue);
-};
-
-};
+  
   return (
     <div id="rightBar" className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
       <nav className="right-bar-nav">
@@ -547,7 +569,6 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
               ) : null}
             </div>
           </div>
-
             
             <button className='ignoreVal' onClick={() => AddGoogleLink(`price:${empityValTosend}`)}>نادیده گرفتن</button>\
             <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
@@ -1394,7 +1415,6 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
           </div>
         )}
         
-
         {mode === 'finalpagejoinbuild' && (
           <div className='optionDiv'>
             
@@ -1405,7 +1425,7 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
                 id={finalpagejoinbuild2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`متراژ`}
-                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild2Dropdown(true)}}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpagejoinbuild2Ref, setfinalpagejoinbuild2Dropdown)}}
                 inputMode="text"
                 readOnly
               />      
@@ -1439,6 +1459,7 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
                     تایید
                   <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
                   </button>
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
                 </div>
                 </div>
               </div>
@@ -1449,7 +1470,7 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
                 id={finalpagejoinbuild3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='جهت ساختمان / بحر'
-                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild3Dropdown(true)}}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpagejoinbuild3Ref, setfinalpagejoinbuild3Dropdown)}}
                 inputMode="text"
                 readOnly
               />
@@ -1518,6 +1539,7 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
                   >
                     تایید
                   </button>
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
                 </div>
               </div>
             </div>
@@ -1527,14 +1549,15 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
                 id={finalpagejoinbuild5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='درصد مشارکت'
-                onClick={() => {closeAllDropdowns();setfinalpagejoinbuild5Dropdown(true)}}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpagejoinbuild5Ref, setfinalpagejoinbuild5Dropdown)}}
                 inputMode="text"
                 readOnly
               />
 
               <span className="dropdown-arrow">{'\u2304'}</span>
 
-              <div className={`finalPage-dropdown ${finalpagejoinbuild5Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild5Ref}>
+                <div className={`finalPage-dropdown ${finalpagejoinbuild5Dropdown ? 'visible' : 'hidden'}`}ref={finalpagejoinbuild5Ref}>
+
                 <div className='optionDiv'>
                   
                   <div className='optionDivchildfinalPage'>
@@ -1550,14 +1573,8 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
                       readOnly
                     />
 
-                    <div className={`year-dropdown ${showJoinbuildDropdown ? 'visible' : 'hidden'}`} ref={joinbuildDropdownref}>
-                      {[
-                        { key: '70-30', text: 'مالک ۳۰ / ۷۰ سازنده', value: '70-30' },
-                        { key: '60-40', text: 'مالک ۴۰ / ۶۰ سازنده', value: '60-40' },
-                        { key: '50-50', text: 'مالک ۵۰ / ۵۰ سازنده', value: '50-50' },
-                        { key: '40-60', text: 'مالک ۶۰ / ۴۰ سازنده', value: '40-60' },
-                        { key: '30-70', text: 'مالک ۷۰ / ۳۰ سازنده', value: '30-70' },
-                      ].map(({ key, text, value }) => (
+                    <div className={`year-dropdown ${showJoinbuildDropdown ? 'visible' : 'hidden'}`} style={{ position: 'relative' }} ref={joinbuildDropdownref}>
+                      {joinbuildpersentoptions.map(({ key, text, value }) => (
                         <div
                           key={key}
                           onClick={() => {
@@ -1583,6 +1600,7 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
                   >
                     تایید
                   </button>
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
                 </div>
                 </div>
               </div>
@@ -1594,7 +1612,7 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
                 id={finalpagejoinbuild1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='قیمت'
-                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild1Dropdown(true)}}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpagejoinbuild1Ref, setfinalpagejoinbuild1Dropdown)}}
                 inputMode="text"
                 readOnly
               />
@@ -1633,6 +1651,363 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
                     تایید
                     <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
                   </button>
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+
+                  <div className={`recommended_div`}>
+                  {priceRecommended1 ? (
+                    <button
+                      className="category"
+                      disabled={!price}
+                      onClick={() => {
+                        if (price) {
+                          AddLikemilion(price)
+                        }
+                      }}
+                    >
+                      {englishToPersianNumber(priceRecommended1)}
+                    </button>
+                  ) : null}
+
+                  {priceRecommended2 ? (
+                      <button
+                        className="category"
+                        disabled={!price}
+                        onClick={() => {
+                          if (price) {
+                            AddLikemiliard(price);
+                          }
+                        }}
+                      >
+                        {englishToPersianNumber(priceRecommended2)}
+                      </button>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            </div> 
+
+          </div>
+
+            <button className="oneBack" onClick={() =>navigate("/")}>
+              بازگشت به صفحه اصلی
+            </button>
+          </div>
+        )}
+
+        {mode === 'finalpageaparteman' && (
+          <div className='optionDiv'>
+            
+            <div className='optionDivchildfinalPageMain'>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`متراژ`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman1Ref, setfinalpageaparteman1Dropdown)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman1Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman1Ref}>
+
+                <div className='optionDiv'>
+                  
+                  <div className='optionDivchildfinalPage'>
+                  <p className="showInput">متراژ:</p>
+                  <input
+                    type="text"
+                    value={englishToPersianNumber(meterage)}
+                    onChange={(e) => handleChangeforOneNums(e, setMeterage)}
+                    inputMode="numeric"
+                  />
+                  <button
+                    className="next"
+                    disabled={meterage === '' || isNaN(Number(meterage))}
+                    onClick={() => {
+                      if (meterage >= 0 && meterage <= 10000) {
+                        updatePathParam("meter", meterage);
+                        closeAllDropdowns();
+                      } else {
+                        triggerError("عدد وارد شده بیش از حد مجاز است.");
+                      }
+                    }}
+                  >
+                    تایید
+                  <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
+                  </button>
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`اتاق`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman2Ref, setfinalpageaparteman2Dropdown)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman2Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman2Ref}>
+                <div className='optionDiv'>
+                  
+                  <div className='optionDivchildfinalPage'>
+                  <p className="showInput">اتاق ها:</p>
+                <div className="floor-info">
+                  <input
+                    type="text"
+                    value={englishToPersianNumber(roomsInHome)}
+                    onChange={(e) => handleChangeforOneNums(e, setroomsInHome)}
+                    inputMode="numeric"
+                    onFocus={() => setopenRoomDropdown(true)}
+                    readOnly
+                  />
+
+                  <div className={`homeNumbresInfloor ${openRoomDropdown ? 'visible' : ''}`} ref={divRoomDropdownRef}>
+                    {unitOptions.map((roomsInHome) => (
+                      <div
+                        key={roomsInHome}
+                        onClick={() => {
+                          setopenRoomDropdown(false);
+                          setroomsInHome(String(roomsInHome));
+                        }}
+                        className="conform_buttonYear"
+                      >
+                        {englishToPersianNumber(roomsInHome)}
+                      </div>
+                    ))}
+                  </div>
+                  </div>
+
+                  <button
+                    className="next"
+                    disabled={roomsInHome === '' || isNaN(Number(roomsInHome))}
+                    onClick={() => {
+                      if (roomsInHome >= 0 && roomsInHome <= 100000) {
+                        AddGoogleLink(`rooms:${roomsInHome}`);
+                      } else {
+                        triggerError("عدد وارد شده بیش از حد مجاز است.");
+                      }
+                    }}
+                  >
+                    تایید
+                  </button>
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+                </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`متراژ`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman2Ref, setfinalpageaparteman3Dropdown)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman3Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman2Ref}>
+
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+
+              </div>
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`متراژ`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman4Ref, setfinalpageaparteman4Dropdown)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman4Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman4Ref}>
+
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+
+              </div>
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`متراژ`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman5Ref, setfinalpageaparteman5Dropdown)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman5Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman2Ref}>
+
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+
+              </div>
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`متراژ`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman6Ref, setfinalpageaparteman6Dropdown)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman6Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman6Ref}>
+
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+
+              </div>
+            </div>
+
+             <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman7Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder='جهت ساختمان / بحر'
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman7Ref, setfinalpageaparteman7Dropdown)}}
+                inputMode="text"
+                readOnly
+              />
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman7Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman7Ref}>
+                  <div className='optionDivchildfinalPage'>
+                  <p className="showInput">جهت ساختمان:</p>
+                  <div className="input-wrapper homeface-wrapper">
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => sethomeface('north')}
+                        checked={homeface === 'north'}
+                      />
+                      شمالی
+                    </label>
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => sethomeface('south')}
+                        checked={homeface === 'south'}
+                      />
+                      جنوبی
+                    </label>
+                  </div>
+
+                  <p className="showInput">بحر ملک:</p>
+                  <div className="input-wrapper homeface-wrapper">
+                    <div className="homeface-row">
+                      <label className="homeface-option">
+                        <input
+                          type="checkbox"
+                          onChange={() => setbahr('1')}
+                          checked={bahr == '1'}
+                        />
+                        ۱ بحر 
+                      </label>
+                      <label className="homeface-option">
+                        <input
+                          type="checkbox"
+                          onChange={() => setbahr('2')}
+                          checked={bahr == '2'}
+                        />
+                        ۲ بحر
+                      </label>
+                    </div>
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setbahr('3')}
+                        checked={bahr == '3'}
+                      />
+                      ۳ بحر
+                    </label>
+                  </div>
+
+                  <button
+                    className="next"
+                    disabled={!homeface || !bahr}
+                    onClick={() => {
+                      const val = homeface + "," + bahr
+                      updatePathParam("face", val);
+                    }}
+                  >
+                    تایید
+                  </button>
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman8Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder='قیمت'
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman8Ref, setfinalpageaparteman8Dropdown)}}
+                inputMode="text"
+                readOnly
+              />
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman8Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman8Ref}>
+                <div className='optionDivchildfinalPage'>
+                  <p className="showInput">قیمت:</p>
+                  <input
+                    value={englishToPersianNumber(price)}
+                    onChange={(e) => {handleChangeforOneNums(e, setPrice); priceRecommendedcal(e);}}
+                    type="text"
+                    inputMode="numeric"
+                    ref={divXRef}
+                  />
+
+                  <p id="priceDisplay" className="priceDisplay">
+                    {englishToPersianNumber(formatPrice(price))}
+                  </p>
+
+                  <button
+                    className="next"
+                    disabled={
+                      !price
+                    }
+                    onClick={() => {
+                      if (price >= 0 && price <= 100000000000) {
+                        updatePathParam("price", price);
+                        closeAllDropdowns();
+                      } else {
+                        triggerError("عدد وارد شده بیش از حد مجاز است.");
+                      }
+                    }}
+                  >
+                    تایید
+                    <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
+                  </button>
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
 
                   <div className={`recommended_div`}>
                   {priceRecommended1 ? (
@@ -1674,8 +2049,11 @@ const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
             </button>
           </div>
         )};
+        
+
 
       </nav>
     </div>
   );
 };
+

@@ -67,7 +67,7 @@ export function useValidatePathHome() {
               year: (val) => {
                 if (val === x) return 'e';
                 const num = Number(val);
-                return Number.isInteger(num) && num >= 1390 && num <= 1403;
+                return Number.isInteger(num) && num >= 1329 && num <= 1403;
               },
 
               face: (val) => {
@@ -135,7 +135,7 @@ export function useValidatePathHome() {
               year: (val) => {
                 if (val === x) return 'e';
                 const num = Number(val);
-                return Number.isInteger(num) && num >= 1390 && num <= 1403;
+                return Number.isInteger(num) && num >= 1329 && num <= 1403;
               },
 
               face: (val) => {
@@ -202,7 +202,7 @@ export function useValidatePathHome() {
               year: (val) => {
                 if (val === x) return 'e';
                 const num = Number(val);
-                return Number.isInteger(num) && num >= 1390 && num <= 1403;
+                return Number.isInteger(num) && num >= 1329 && num <= 1403;
               },
 
               face: (val) => {
@@ -272,7 +272,7 @@ export function useValidatePathHome() {
               year: (val) => {
                 if (val === x) return 'e';
                 const num = Number(val);
-                return Number.isInteger(num) && num >= 1390 && num <= 1403;
+                return Number.isInteger(num) && num >= 1329 && num <= 1403;
               },
 
               face: (val) => {
