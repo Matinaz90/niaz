@@ -50,7 +50,7 @@ export function useValidatePathHome() {
               },
 
         };
-      } else if(segments[1] == 'Aparteman'){
+      } else if(segments[1] == 'aparteman'){
         validators = {
               meter: (val) => {
                 if (val === x) return 'e';

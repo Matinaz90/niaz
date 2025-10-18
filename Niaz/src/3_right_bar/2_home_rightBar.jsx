@@ -20,6 +20,7 @@ export default function Home_RightBar() {
   const [HomeNumber, sethomeHomeNumber] = useState('');
   const [allHomes, setallHomes] = useState('');
   const [homeface, sethomeface] = useState('');
+  const [bahr, setbahr] = useState("");
   const [homeflorRooms, sethomeflorRooms] = useState('');
   const [homeCondition, sethomeCondition] = useState('');
   const [withStuffInhome, setwithStuffInhome] = useState("");
@@ -27,13 +28,13 @@ export default function Home_RightBar() {
   const [parking, setparking] = useState("");
   const [asansor, setasansor] = useState("");
   const [balkon, setbalkon] = useState("");
-  const [bahr, setbahr] = useState("");
   const [joinbuild, setjoinbuild] = useState("");
   const [joinbuildValue, setjoinbuildValue] = useState("");
   const [electrycityStrore, setelectrycityStrore] = useState("");
   const [waterStore, setwaterStore] = useState("");
   const [gasStore, setgasStore] = useState("");
   const [categorizestore, setcategorizestore] = useState("");
+  const [selectedpriceRent, setselectedpriceRent] = useState('');
 
   const yearListRef = useRef();
   const [showYearList, setShowYearList] = useState(false);
@@ -46,13 +47,11 @@ export default function Home_RightBar() {
   const [finalpagejoinbuild1Dropdown, setfinalpagejoinbuild1Dropdown] = useState(false);
   const [finalpagejoinbuild2Dropdown, setfinalpagejoinbuild2Dropdown] = useState(false);
   const [finalpagejoinbuild3Dropdown, setfinalpagejoinbuild3Dropdown] = useState(false);
-  const [finalpagejoinbuild4Dropdown, setfinalpagejoinbuild4Dropdown] = useState(false);
   const [finalpagejoinbuild5Dropdown, setfinalpagejoinbuild5Dropdown] = useState(false);
 
   const finalpagejoinbuild1Ref = useRef(null)
   const finalpagejoinbuild2Ref = useRef(null)
   const finalpagejoinbuild3Ref = useRef(null)
-  const finalpagejoinbuild4Ref = useRef(null)
   const finalpagejoinbuild5Ref = useRef(null)
 
   const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
@@ -72,7 +71,6 @@ export default function Home_RightBar() {
   const floorOptions = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
   const unitOptions = useMemo(() => Array.from({ length: 10 }, (_, i) => i + 1), []);
 
-  const [selectedpriceRent, setselectedpriceRent] = useState('')
   const empityValTosend = 'e'
   const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
   const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
@@ -102,24 +100,25 @@ export default function Home_RightBar() {
     setwaterStore('');
     setgasStore('');
     setcategorizestore('');
+    setselectedpriceRent('');
   };
 
   const closeAllDropdowns = () => {
-        setShowYearList(false);
-        setopenRoomDropdown(false);
-        setOpenDropdownFloars(null);
-        setShowJoinbuildDropdown(false);
-        setfinalpagejoinbuild1Dropdown(false);
-        setfinalpagejoinbuild2Dropdown(false);
-        setfinalpagejoinbuild3Dropdown(false);
-        setfinalpagejoinbuild4Dropdown(false);
-        setfinalpagejoinbuild5Dropdown(false);
+    setShowYearList(false);
+    setopenRoomDropdown(false);
+    setOpenDropdownFloars(null);
+    setShowJoinbuildDropdown(false);
+    setfinalpagejoinbuild5Dropdown(false);
+    setfinalpagejoinbuild1Dropdown(false);
+    setfinalpagejoinbuild2Dropdown(false);
+    setfinalpagejoinbuild3Dropdown(false);
   }
 
   useEffect(() => {
     if (href.includes('/home')) {
       if (href.includes('/joinbuild')) {
         if(href.includes('price:')){
+          finalPageSearchBarVal();
           setMode('finalpagejoinbuild');
         } else if (href.includes('joinbuildpersent:')) {
           setMode('pricehome');
@@ -130,9 +129,10 @@ export default function Home_RightBar() {
         } else {
           setMode('MeterageId');
         }
-      }  else if (href.includes('/Aparteman')) {
+      }  else if (href.includes('/aparteman')) {
         if(href.includes('price:')){
           setMode('finalpage');
+          finalPageSearchBarVal()
         }else if(href.includes('options:')){
           setMode('pricehome');
         }else if (href.includes('condition:')){
@@ -153,6 +153,7 @@ export default function Home_RightBar() {
       } else if (href.includes('/villa')) {
         if(href.includes('price:')){
           setMode('finalpage');
+          finalPageSearchBarVal()
         }else if(href.includes('options:')){
           setMode('pricehome');
         }else if (href.includes('condition:')){
@@ -171,6 +172,7 @@ export default function Home_RightBar() {
       } else if(href.includes('/rent')) {
         if(href.includes('pricerent:')){
           setMode('finalpage');
+          finalPageSearchBarVal()
         }else if(href.includes('options:')){
           setMode('pricehomerRent');
         }else if (href.includes('condition:')){
@@ -191,6 +193,7 @@ export default function Home_RightBar() {
       } else if (href.includes('/store')) {
         if(href.includes('price:')){
           setMode('finalpage');
+          finalPageSearchBarVal()
         } else if (href.includes('categorizestore:')) {
           setMode('pricehome');
         } else if (href.includes('condition:')){
@@ -285,7 +288,6 @@ export default function Home_RightBar() {
         finalpagejoinbuild1Ref,
         finalpagejoinbuild2Ref,
         finalpagejoinbuild3Ref,
-        finalpagejoinbuild4Ref,
         finalpagejoinbuild5Ref,
       ];
 
@@ -299,7 +301,6 @@ export default function Home_RightBar() {
         setfinalpagejoinbuild1Dropdown(false);
         setfinalpagejoinbuild2Dropdown(false);
         setfinalpagejoinbuild3Dropdown(false);
-        setfinalpagejoinbuild4Dropdown(false);
         setfinalpagejoinbuild5Dropdown(false);
       };
     };
@@ -399,7 +400,74 @@ export default function Home_RightBar() {
       setShowErrorText('');
     }, 2000);
   };
+  
+  const updatePathParam = (key, value) => {
+    const segments = href.split("/");
 
+    const updatedSegments = segments.map(seg => {
+      if (seg.startsWith(`${key}:`)) {
+        return `${key}:${value}`;
+      }
+      return seg;
+    });
+
+    const keyExists = segments.some(seg => seg.startsWith(`${key}:`));
+    if (!keyExists) updatedSegments.push(`${key}:${value}`);
+
+    const newPath = updatedSegments.join("/");
+    navigate(newPath);
+  };
+
+  const finalPageSearchBarVal = () => {
+    const getVal = (key) =>
+      href.split("/").find(seg => seg.startsWith(`${key}:`))?.split(":")[1] || null;
+
+    let price = getVal("price"); if (price == 'e') price = 0
+    let meter = getVal("meter"); if (meter == 'e') meter = 0
+    let faceSeg = getVal("face")?.split(",") || [];
+    let direction = faceSeg[0] || null;
+    let bahr = faceSeg[1] || null;
+
+    console.log(faceSeg)
+
+    if (href.includes('joinbuild')) {
+      const joinbuildval = getVal("joinbuildpersent");
+      setjoinbuildValue(joinbuildval);
+      setPrice(price);
+      setMeterage(meter);
+      sethomeface(direction);
+      setbahr(bahr);
+    } else if(href.includes('aparteman')){
+
+    } else if(href.includes('villa')){
+
+    } else if(href.includes('rent')){
+
+    } else if(href.includes('store')){
+  };
+
+const handleOpenDropdown = (dropdownRef, setDropdown, openValue = true) => {
+
+  if (!dropdownRef.current) return;
+
+  // Measure space
+  const inputRect = dropdownRef.current.parentNode.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+
+  const spaceBelow = viewportHeight - inputRect.bottom;
+  const spaceAbove = inputRect.top;
+
+  // Flip if not enough space below
+  if (spaceBelow < 250 && spaceAbove > spaceBelow) {
+    dropdownRef.current.classList.add("open-up");
+  } else {
+    dropdownRef.current.classList.remove("open-up");
+  }
+
+  setDropdown(openValue);
+};
+
+};
   return (
     <div id="rightBar" className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
       <nav className="right-bar-nav">
@@ -407,7 +475,7 @@ export default function Home_RightBar() {
           <div className='optionDiv'>
           <div className='optionDivchildFullScreen'>
               <a onClick={() => {AddGoogleLink('joinbuild');}}>مشارکت ساخت</a>
-              <a onClick={() => {AddGoogleLink('Aparteman');}}>اپارتمان</a>
+              <a onClick={() => {AddGoogleLink('aparteman');}}>اپارتمان</a>
               <a onClick={() => {AddGoogleLink('villa');}}>ویلایی</a>
               <a onClick={() => {AddGoogleLink('rent');}}>اجاره</a>
               <a onClick={() => {AddGoogleLink('store');}}>تجاری</a>
@@ -1325,15 +1393,205 @@ export default function Home_RightBar() {
             </button>
           </div>
         )}
+        
 
         {mode === 'finalpagejoinbuild' && (
           <div className='optionDiv'>
             
-            <div className='optionDivchild'>
+            <div className='optionDivchildfinalPage'>
 
-            <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+            <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagejoinbuild1Dropdown ? 'inputter' : ''}
+                id={finalpagejoinbuild2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`متراژ`}
+                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild2Dropdown(true)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpagejoinbuild2Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild2Ref}>
+
+                <div className='optionDiv'>
+                  
+                  <div className='optionDivchildfinalPage'>
+                  <p className="showInput">متراژ:</p>
+                  <input
+                    type="text"
+                    value={englishToPersianNumber(meterage)}
+                    onChange={(e) => handleChangeforOneNums(e, setMeterage)}
+                    inputMode="numeric"
+                  />
+                  <button
+                    className="next"
+                    disabled={meterage === '' || isNaN(Number(meterage))}
+                    onClick={() => {
+                      if (meterage >= 0 && meterage <= 10000) {
+                        updatePathParam("meter", meterage);
+                        closeAllDropdowns();
+                      } else {
+                        triggerError("عدد وارد شده بیش از حد مجاز است.");
+                      }
+                    }}
+                  >
+                    تایید
+                  <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
+                  </button>
+                </div>
+                </div>
+              </div>
+            </div>
+
+             <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpagejoinbuild3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder='جهت ساختمان / بحر'
+                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild3Dropdown(true)}}
+                inputMode="text"
+                readOnly
+              />
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpagejoinbuild3Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild3Ref}>
+                  <div className='optionDivchildfinalPage'>
+                  <p className="showInput">جهت ساختمان:</p>
+                  <div className="input-wrapper homeface-wrapper">
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => sethomeface('north')}
+                        checked={homeface === 'north'}
+                      />
+                      شمالی
+                    </label>
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => sethomeface('south')}
+                        checked={homeface === 'south'}
+                      />
+                      جنوبی
+                    </label>
+                  </div>
+
+                  <p className="showInput">بحر ملک:</p>
+                  <div className="input-wrapper homeface-wrapper">
+                    <div className="homeface-row">
+                      <label className="homeface-option">
+                        <input
+                          type="checkbox"
+                          onChange={() => setbahr('1')}
+                          checked={bahr == '1'}
+                        />
+                        ۱ بحر 
+                      </label>
+                      <label className="homeface-option">
+                        <input
+                          type="checkbox"
+                          onChange={() => setbahr('2')}
+                          checked={bahr == '2'}
+                        />
+                        ۲ بحر
+                      </label>
+                    </div>
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setbahr('3')}
+                        checked={bahr == '3'}
+                      />
+                      ۳ بحر
+                    </label>
+                  </div>
+
+                  <button
+                    className="next"
+                    disabled={!homeface || !bahr}
+                    onClick={() => {
+                      const val = homeface + "," + bahr
+                      updatePathParam("face", val);
+                    }}
+                  >
+                    تایید
+                  </button>
+                </div>
+              </div>
+            </div>
+
+             <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpagejoinbuild5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder='درصد مشارکت'
+                onClick={() => {closeAllDropdowns();setfinalpagejoinbuild5Dropdown(true)}}
+                inputMode="text"
+                readOnly
+              />
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpagejoinbuild5Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild5Ref}>
+                <div className='optionDiv'>
+                  
+                  <div className='optionDivchildfinalPage'>
+                  <p className="showInput">درصد مشارکت:</p>
+                  <div className="input-wrapper" style={{ position: 'relative' }}>
+                    <input
+                      id={showJoinbuildDropdown ? 'inputter' : ''}
+                      type="text"
+                      value={joinbuild}
+                      onChange={(e) => handleChangeforOneNums(e, setjoinbuild)}
+                      inputMode="text"
+                      onFocus={() => setShowJoinbuildDropdown(true)}
+                      readOnly
+                    />
+
+                    <div className={`year-dropdown ${showJoinbuildDropdown ? 'visible' : 'hidden'}`} ref={joinbuildDropdownref}>
+                      {[
+                        { key: '70-30', text: 'مالک ۳۰ / ۷۰ سازنده', value: '70-30' },
+                        { key: '60-40', text: 'مالک ۴۰ / ۶۰ سازنده', value: '60-40' },
+                        { key: '50-50', text: 'مالک ۵۰ / ۵۰ سازنده', value: '50-50' },
+                        { key: '40-60', text: 'مالک ۶۰ / ۴۰ سازنده', value: '40-60' },
+                        { key: '30-70', text: 'مالک ۷۰ / ۳۰ سازنده', value: '30-70' },
+                      ].map(({ key, text, value }) => (
+                        <div
+                          key={key}
+                          onClick={() => {
+                            setjoinbuild(text);
+                            setjoinbuildValue(value);
+                            setShowJoinbuildDropdown(false);
+                          }}
+                          className="conform_buttonYear"
+                        >
+                          {text}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    className="next"
+                    disabled={!joinbuild}
+                    onClick={() => {
+                        updatePathParam("joinbuildpersent", joinbuildValue);
+                        closeAllDropdowns();
+                    }}
+                  >
+                    تایید
+                  </button>
+                </div>
+                </div>
+              </div>
+              
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpagejoinbuild1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='قیمت'
                 onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild1Dropdown(true)}}
@@ -1341,8 +1599,10 @@ export default function Home_RightBar() {
                 readOnly
               />
 
-              <div className={`year-dropdown ${finalpagejoinbuild1Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild1Ref}>
-                <div className='optionDivchild'>
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpagejoinbuild1Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild1Ref}>
+                <div className='optionDivchildfinalPage'>
                   <p className="showInput">قیمت:</p>
                   <input
                     value={englishToPersianNumber(price)}
@@ -1363,7 +1623,8 @@ export default function Home_RightBar() {
                     }
                     onClick={() => {
                       if (price >= 0 && price <= 100000000000) {
-                        AddGoogleLink(`price:${price}`);
+                        updatePathParam("price", price);
+                        closeAllDropdowns();
                       } else {
                         triggerError("عدد وارد شده بیش از حد مجاز است.");
                       }
@@ -1405,62 +1666,6 @@ export default function Home_RightBar() {
                 </div>
               </div>
             </div> 
-
-            <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
-              <input
-                id={finalpagejoinbuild2Dropdown ? 'inputter' : ''}
-                type="text"
-                placeholder='درصد'
-                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild2Dropdown(true)}}
-                inputMode="text"
-                readOnly
-              />
-
-              <div className={`year-dropdown ${finalpagejoinbuild2Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild2Ref}>
-              </div>
-            </div>
-
-             <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
-              <input
-                id={finalpagejoinbuild3Dropdown ? 'inputter' : ''}
-                type="text"
-                placeholder='درصد'
-                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild3Dropdown(true)}}
-                inputMode="text"
-                readOnly
-              />
-
-              <div className={`year-dropdown ${finalpagejoinbuild3Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild3Ref}>
-              </div>
-            </div>
-
-             <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
-              <input
-                id={finalpagejoinbuild4Dropdown ? 'inputter' : ''}
-                type="text"
-                placeholder='درصد'
-                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild4Dropdown(true)}}
-                inputMode="text"
-                readOnly
-              />
-
-              <div className={`year-dropdown ${finalpagejoinbuild4Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild4Ref}>
-              </div>
-            </div>
-
-             <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
-              <input
-                id={finalpagejoinbuild5Dropdown ? 'inputter' : ''}
-                type="text"
-                placeholder='درصد'
-                onClick={() => {closeAllDropdowns(); setfinalpagejoinbuild5Dropdown(true)}}
-                inputMode="text"
-                readOnly
-              />
-
-              <div className={`year-dropdown ${finalpagejoinbuild5Dropdown ? 'visible' : 'hidden'}`} ref={finalpagejoinbuild5Ref}>
-              </div>
-            </div>
 
           </div>
 
