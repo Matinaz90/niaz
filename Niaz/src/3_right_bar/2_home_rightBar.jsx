@@ -323,6 +323,14 @@ export default function Home_RightBar() {
         finalpagejoinbuild2Ref,
         finalpagejoinbuild3Ref,
         finalpagejoinbuild5Ref,
+        finalpageaparteman1Ref,
+        finalpageaparteman2Ref,
+        finalpageaparteman3Ref,
+        finalpageaparteman4Ref,
+        finalpageaparteman5Ref,
+        finalpageaparteman6Ref,
+        finalpageaparteman7Ref,
+        finalpageaparteman8Ref,
       ];
 
       const clickedInside = refs.some(ref => ref.current?.contains(event.target));
@@ -336,6 +344,15 @@ export default function Home_RightBar() {
         setfinalpagejoinbuild2Dropdown(false);
         setfinalpagejoinbuild3Dropdown(false);
         setfinalpagejoinbuild5Dropdown(false);
+        setfinalpageaparteman1Dropdown(false);
+        setfinalpageaparteman2Dropdown(false);
+        setfinalpageaparteman3Dropdown(false);
+        setfinalpageaparteman4Dropdown(false);
+        setfinalpageaparteman5Dropdown(false);
+        setfinalpageaparteman6Dropdown(false);
+        setfinalpageaparteman7Dropdown(false);
+        setfinalpageaparteman8Dropdown(false);
+        finalPageSearchBarVal();
       };
     };
 
@@ -462,11 +479,9 @@ export default function Home_RightBar() {
     let direction = faceSeg[0] || null;
     let bahr = faceSeg[1] || null;
 
-    console.log(faceSeg)
-
     if (href.includes('joinbuild')) {
       const joinbuildval = getVal("joinbuildpersent");
-      const foundOption = joinbuildpersentoptions.find(opt => opt.value === joinbuildval);
+      const foundOption = joinbuildpersentoptions.find(opt => opt.value === joinbuildval) || '';
       setjoinbuild(foundOption.text);
       setPrice(price);
       setMeterage(meter);
@@ -489,7 +504,7 @@ export default function Home_RightBar() {
     val()
     setDropdownState(true);
   }
-  
+
   return (
     <div id="rightBar" className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
       <nav className="right-bar-nav">
@@ -1418,7 +1433,7 @@ export default function Home_RightBar() {
         {mode === 'finalpagejoinbuild' && (
           <div className='optionDiv'>
             
-            <div className='optionDivchildfinalPage'>
+            <div className='optionDivchildfinalPageMain'>
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
@@ -1573,7 +1588,7 @@ export default function Home_RightBar() {
                       readOnly
                     />
 
-                    <div className={`year-dropdown ${showJoinbuildDropdown ? 'visible' : 'hidden'}`} style={{ position: 'relative' }} ref={joinbuildDropdownref}>
+                    <div className={`year-dropdown-finalPage ${showJoinbuildDropdown ? 'visible' : 'hidden'}`} style={{ position: 'relative' }} ref={joinbuildDropdownref}>
                       {joinbuildpersentoptions.map(({ key, text, value }) => (
                         <div
                           key={key}
@@ -1697,7 +1712,7 @@ export default function Home_RightBar() {
         {mode === 'finalpageaparteman' && (
           <div className='optionDiv'>
             
-            <div className='optionDivchildfinalPageMain'>
+          <div className='optionDivchildfinalPageMain'>
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
@@ -1771,7 +1786,7 @@ export default function Home_RightBar() {
                     readOnly
                   />
 
-                  <div className={`homeNumbresInfloor ${openRoomDropdown ? 'visible' : ''}`} ref={divRoomDropdownRef}>
+                  <div className={`year-dropdown-finalPage ${openRoomDropdown ? 'visible' : ''}`} style={{ position: 'relative' }}  ref={divRoomDropdownRef}>
                     {unitOptions.map((roomsInHome) => (
                       <div
                         key={roomsInHome}
@@ -1812,74 +1827,59 @@ export default function Home_RightBar() {
               <input
                 id={finalpageaparteman3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
-                placeholder={`متراژ`}
-                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman2Ref, setfinalpageaparteman3Dropdown)}}
+                placeholder={`سال ساخت`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman3Ref, setfinalpageaparteman3Dropdown)}}
                 inputMode="text"
                 readOnly
               />      
 
               <span className="dropdown-arrow">{'\u2304'}</span>
 
-              <div className={`finalPage-dropdown ${finalpageaparteman3Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman2Ref}>
+              <div className={`finalPage-dropdown ${finalpageaparteman3Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman3Ref}>
+                <div className='optionDiv'>
+                  
+                  <div className='optionDivchildfinalPage'>
+                  <p className="showInput">سال ساخت:</p>
+                  <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+                    <input
+                      id={showYearList ? 'inputter' : ''}
+                      type="text"
+                      value={englishToPersianNumber(yearBuilt)}
+                      onChange={(e) => handleChangeforOneNums(e, setYearBuilt)}
+                      inputMode="numeric"
+                      onFocus={() => setShowYearList(true)}
+                      readOnly
+                    />
+                    <div className={`year-dropdown-finalPage ${showYearList ? 'visible' : ''}`}>
+                      {Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i).map((year) => (
+                        <div
+                          key={year}
+                          onClick={() => {
+                            setYearBuilt(String(year));
+                            setShowYearList(false);
+                          }}
+                          className="conform_buttonYear"
+                        >
+                          {englishToPersianNumber(year)}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <button
+                    className="next"
+                    disabled={!yearBuilt}
+                    onClick={() => {
+                      if (yearBuilt) {
+                        AddGoogleLink(`year:${yearBuilt}`);
+                      }
+                    }}
+                  >
+                    تایید
+                  </button>
+                  <button className='hideButton' onClick={() => {closeAllDropdowns();}}>پنهان کردن</button>
+                </div>
+                </div>
 
-                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
-
-              </div>
-            </div>
-
-            <div className="input-wrapper" style={{ position: 'relative' }}>
-              <input
-                id={finalpageaparteman4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
-                type="text"
-                placeholder={`متراژ`}
-                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman4Ref, setfinalpageaparteman4Dropdown)}}
-                inputMode="text"
-                readOnly
-              />      
-
-              <span className="dropdown-arrow">{'\u2304'}</span>
-
-              <div className={`finalPage-dropdown ${finalpageaparteman4Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman4Ref}>
-
-                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
-
-              </div>
-            </div>
-
-            <div className="input-wrapper" style={{ position: 'relative' }}>
-              <input
-                id={finalpageaparteman5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
-                type="text"
-                placeholder={`متراژ`}
-                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman5Ref, setfinalpageaparteman5Dropdown)}}
-                inputMode="text"
-                readOnly
-              />      
-
-              <span className="dropdown-arrow">{'\u2304'}</span>
-
-              <div className={`finalPage-dropdown ${finalpageaparteman5Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman2Ref}>
-
-                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
-
-              </div>
-            </div>
-
-            <div className="input-wrapper" style={{ position: 'relative' }}>
-              <input
-                id={finalpageaparteman6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
-                type="text"
-                placeholder={`متراژ`}
-                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman6Ref, setfinalpageaparteman6Dropdown)}}
-                inputMode="text"
-                readOnly
-              />      
-
-              <span className="dropdown-arrow">{'\u2304'}</span>
-
-              <div className={`finalPage-dropdown ${finalpageaparteman6Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman6Ref}>
-
-                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
 
               </div>
             </div>
@@ -1960,6 +1960,172 @@ export default function Home_RightBar() {
                   </button>
                   <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
                 </div>
+              </div>
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`متراژ`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman4Ref, setfinalpageaparteman4Dropdown)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman4Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman4Ref}>
+          
+                <div className='optionDiv'>
+                  
+                  <div className='optionDivchildfinalPage'>
+                    <p className="showInput showInputfloar">طبقه:</p>
+                  <div className="floor-info">
+                    <input
+                      type="text"
+                      id={showYearList ? 'inputter' : ''}
+                      value={englishToPersianNumber(HomeNumber)}
+                      onChange={(e) => handleChangeforOneNums(e, sethomeHomeNumber)}
+                      inputMode="numeric"
+                      onFocus={() => setOpenDropdownFloars('floor')}
+                      ref={div1Ref}
+                      readOnly
+                    />
+
+                  <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'floor' ? 'visible' : ''}`} ref={div1DropdownRef}>
+                    {floorOptionsPersian.map((HomeNumber) => (
+                      <div
+                        key={HomeNumber}
+                        onClick={() => {
+                          setOpenDropdownFloars(null);
+                          sethomeHomeNumber(String(HomeNumber));
+                        }}
+                        className="conform_buttonYear"
+                      >
+                        {englishToPersianNumber(HomeNumber)}
+                      </div>
+                    ))}
+                  </div>
+
+                    <p className="showInput">کل طبقات:</p>
+                  <div className="floor-info">
+                    <input
+                      type="text"
+                      id={showYearList ? 'inputter' : ''}
+                      value={englishToPersianNumber(allHomes)}
+                      onChange={(e) => handleChangeforOneNums(e, setallHomes)}
+                      inputMode="numeric"
+                      onFocus={() => setOpenDropdownFloars('all')}
+                      ref={div2Ref}
+                      readOnly
+                    />
+
+                  <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'all' ? 'visible' : ''}`} ref={div2DropdownRef}>
+                    {floorOptionsPersian.map((allHomes) => (
+                      <div
+                        key={allHomes}
+                        onClick={() => {
+                          setallHomes(String(allHomes));
+                          setOpenDropdownFloars(null);
+                        }}
+                        className="conform_buttonYear"
+                      >
+                        {englishToPersianNumber(allHomes)}
+                      </div>
+                    ))}
+                  </div>
+                  </div>
+
+                  <p className="showInput">تعداد واحد در طبقه :</p>
+                <div className="floor-info">
+                    <input
+                      type="text"
+                      id={showYearList ? 'inputter' : ''}
+                      value={englishToPersianNumber(homeflorRooms)}
+                      onChange={(e) => handleChangeforOneNums(e, sethomeflorRooms)}
+                      inputMode="numeric"
+                      onFocus={() => setOpenDropdownFloars('roomInFloar')}
+                      ref={div3Ref}
+                      readOnly
+                    />
+
+                      <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'roomInFloar' ? 'visible' : ''}`} ref={div3DropdownRef}>
+                        {unitOptionsPersian.map((homeflorRooms) => (
+                          <div
+                            key={homeflorRooms}
+                            onClick={() => {
+                              sethomeflorRooms(String(homeflorRooms));
+                              setOpenDropdownFloars(null);
+                            }}
+                            className="conform_buttonYear"
+                          >
+                            {englishToPersianNumber(homeflorRooms)}
+                          </div>
+                        ))}
+                      </div>
+                  </div>
+                </div>
+                  <button
+                    className="next"
+                    disabled={!(HomeNumber && allHomes && homeflorRooms)}
+                    onClick={() => {
+                      if (HomeNumber && allHomes && homeflorRooms) {
+                        if (HomeNumberserachBarVal - allHomesserachBarVal - 1 >= 0) {
+                          triggerError("انتخاب طبقه نامعتبر است.");
+                          return;
+                        }
+                        const val = `${HomeNumberserachBarVal},${allHomesserachBarVal},${homeflorRoomsserachBarVal}`;
+                        AddGoogleLink(`floor:${val}`);
+                      }
+                    }}
+                  >
+                    تایید
+                  <p className={`floarErrText ${showError ? "visible" : ""}`}>{showErrorText}</p>
+                  </button>
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+                </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`متراژ`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman5Ref, setfinalpageaparteman5Dropdown)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman5Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman2Ref}>
+
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+
+              </div>
+            </div>
+
+            <div className="input-wrapper" style={{ position: 'relative' }}>
+              <input
+                id={finalpageaparteman6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                type="text"
+                placeholder={`متراژ`}
+                onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman6Ref, setfinalpageaparteman6Dropdown)}}
+                inputMode="text"
+                readOnly
+              />      
+
+              <span className="dropdown-arrow">{'\u2304'}</span>
+
+              <div className={`finalPage-dropdown ${finalpageaparteman6Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman6Ref}>
+
+                  <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+
               </div>
             </div>
 
