@@ -479,7 +479,7 @@
 .finalPage-dropdown.visible {
   opacity: 1;
   visibility: visible;
-  max-height: 400px;
+  max-height: 600px;
 }
 
 .finalPage-dropdown::-webkit-scrollbar {
@@ -522,6 +522,44 @@
 .optionDivchildfinalPageMain::-webkit-scrollbar {
   width: 8px;
 }
+
+.optionDivchildOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+  scrollbar-gutter: stable; 
+  height: calc(100vh - 198px);
+  width: calc(100% + 8px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.optionDivchildOptions::-webkit-scrollbar {
+  width: 8px;
+}
+
+.optionDivchildOptionsfinalPage {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+  scrollbar-gutter: stable; 
+  height: calc(100vh);
+  max-height: 300px;
+  width: calc(100% + 8px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.optionDivchildOptionsfinalPage::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+
 
 .year-dropdown-finalPage {
   max-height: 0px;

@@ -37,6 +37,7 @@ export default function Home_RightBar() {
   const [selectedpriceRent, setselectedpriceRent] = useState('');
 
   const yearListRef = useRef();
+  const roomsInputRef = useRef();
   const [showYearList, setShowYearList] = useState(false);
   const [showOpenDropdownFloars, setOpenDropdownFloars] = useState(null);
   const [showError, setShowError] = useState(false);
@@ -311,7 +312,6 @@ export default function Home_RightBar() {
     const handleClick = (event) => {
       const refs = [
         joinbuildDropdownref,
-        yearListRef,
         div1Ref,
         div2Ref,
         div3Ref,
@@ -358,6 +358,36 @@ export default function Home_RightBar() {
 
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+
+    useEffect(() => {
+    const handleClick1 = (event) => {
+      const refs = [
+        joinbuildDropdownref,
+        yearListRef,
+        div1Ref,
+        div2Ref,
+        div3Ref,
+        div1DropdownRef,
+        div2DropdownRef,
+        div3DropdownRef,
+        divRoomDropdownRef,
+        roomsInputRef
+      ];
+
+      const clickedInside = refs.some(ref => ref.current?.contains(event.target));
+
+      if (!clickedInside) {
+        setShowYearList(false);
+        setopenRoomDropdown(false);
+        setOpenDropdownFloars(null);
+        setShowJoinbuildDropdown(false);
+      };
+    };
+
+    document.addEventListener('mousedown', handleClick1);
+    return () => document.removeEventListener('mousedown', handleClick1);
   }, []);
 
   const AddLikemilion = (price) => {
@@ -473,21 +503,46 @@ export default function Home_RightBar() {
     const getVal = (key) =>
       href.split("/").find(seg => seg.startsWith(`${key}:`))?.split(":")[1] || null;
 
-    let price = getVal("price"); if (price == 'e') price = 0
-    let meter = getVal("meter"); if (meter == 'e') meter = 0
+    let price = getVal("price"); if (price == 'e') price = '';
+    let meter = getVal("meter"); if (meter == 'e') meter = '';
     let faceSeg = getVal("face")?.split(",") || [];
     let direction = faceSeg[0] || null;
     let bahr = faceSeg[1] || null;
 
     if (href.includes('joinbuild')) {
-      const joinbuildval = getVal("joinbuildpersent");
-      const foundOption = joinbuildpersentoptions.find(opt => opt.value === joinbuildval) || '';
-      setjoinbuild(foundOption.text);
-      setPrice(price);
-      setMeterage(meter);
-      sethomeface(direction);
-      setbahr(bahr);
+        if(href.includes('price')){
+          const joinbuildval = getVal("joinbuildpersent");
+          const foundOption = joinbuildpersentoptions.find(opt => opt.value === joinbuildval) || '';
+          setjoinbuild(foundOption.text);
+          setPrice(price);
+          setMeterage(meter);
+          sethomeface(direction);
+          setbahr(bahr);
+        }
     } else if(href.includes('aparteman')){
+        if(href.includes('price')){
+        let rooms = getVal("rooms"); if (rooms == 'e') rooms = ''
+        let condition = getVal("condition"); if (rooms == 'e') condition = ''
+        let year = getVal("year"); if (year == 'e') year = ''
+
+        let flowaerFullVal = getVal("face")?.split(",") || []; if(flowaerFullVal == 'e') flowaerFullVal = []
+        const flower1 = flowaerFullVal[0] || null;
+        const flower2 = flowaerFullVal[1] || null;
+        const flower3 = flowaerFullVal[2] || null;
+
+        setPrice(price);
+        setMeterage(meter);
+        sethomeface(direction);
+        setbahr(bahr);
+        setroomsInHome(rooms);
+        sethomeCondition(condition)
+        setYearBuilt(year)
+
+        sethomeHomeNumber(flower1)
+        sethomeflorRooms(flower2)
+        sethomeHomeNumber(flower3)
+      }
+      
 
     } else if(href.includes('villa')){
 
@@ -1064,7 +1119,7 @@ export default function Home_RightBar() {
         {mode === 'options' && (
           <div className='optionDiv'>
             
-            <div className='optionDivchild'>
+            <div className='optionDivchildOptions'>
             <p className="showInput">مبله:</p>
             <div className="input-wrapper homeface-wrapper">
               <label className="homeface-option">
@@ -1776,10 +1831,12 @@ export default function Home_RightBar() {
                   
                   <div className='optionDivchildfinalPage'>
                   <p className="showInput">اتاق ها:</p>
+                  <div className="input-wrapper" style={{ position: 'relative' }} ref={roomsInputRef}>
                 <div className="floor-info">
                   <input
                     type="text"
                     value={englishToPersianNumber(roomsInHome)}
+                    id={openRoomDropdown ? 'inputter' : ''}
                     onChange={(e) => handleChangeforOneNums(e, setroomsInHome)}
                     inputMode="numeric"
                     onFocus={() => setopenRoomDropdown(true)}
@@ -1799,6 +1856,7 @@ export default function Home_RightBar() {
                         {englishToPersianNumber(roomsInHome)}
                       </div>
                     ))}
+                  </div>
                   </div>
                   </div>
 
@@ -1967,7 +2025,7 @@ export default function Home_RightBar() {
               <input
                 id={finalpageaparteman4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
-                placeholder={`متراژ`}
+                placeholder={`طبقه`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman4Ref, setfinalpageaparteman4Dropdown)}}
                 inputMode="text"
                 readOnly
@@ -1993,7 +2051,7 @@ export default function Home_RightBar() {
                       readOnly
                     />
 
-                  <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'floor' ? 'visible' : ''}`} ref={div1DropdownRef}>
+                  <div className={`year-dropdown-finalPage ${showOpenDropdownFloars === 'floor' ? 'visible' : ''}`} ref={div1DropdownRef}>
                     {floorOptionsPersian.map((HomeNumber) => (
                       <div
                         key={HomeNumber}
@@ -2021,7 +2079,7 @@ export default function Home_RightBar() {
                       readOnly
                     />
 
-                  <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'all' ? 'visible' : ''}`} ref={div2DropdownRef}>
+                  <div className={`year-dropdown-finalPage ${showOpenDropdownFloars === 'all' ? 'visible' : ''}`} ref={div2DropdownRef}>
                     {floorOptionsPersian.map((allHomes) => (
                       <div
                         key={allHomes}
@@ -2050,7 +2108,7 @@ export default function Home_RightBar() {
                       readOnly
                     />
 
-                      <div className={`homeNumbresInfloor ${showOpenDropdownFloars === 'roomInFloar' ? 'visible' : ''}`} ref={div3DropdownRef}>
+                      <div className={`year-dropdown-finalPage ${showOpenDropdownFloars === 'roomInFloar' ? 'visible' : ''}`} ref={div3DropdownRef}>
                         {unitOptionsPersian.map((homeflorRooms) => (
                           <div
                             key={homeflorRooms}
@@ -2095,7 +2153,7 @@ export default function Home_RightBar() {
               <input
                 id={finalpageaparteman5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
-                placeholder={`متراژ`}
+                placeholder={`وضعیت واحد`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman5Ref, setfinalpageaparteman5Dropdown)}}
                 inputMode="text"
                 readOnly
@@ -2103,9 +2161,64 @@ export default function Home_RightBar() {
 
               <span className="dropdown-arrow">{'\u2304'}</span>
 
-              <div className={`finalPage-dropdown ${finalpageaparteman5Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman2Ref}>
+              <div className={`finalPage-dropdown ${finalpageaparteman5Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman5Ref}>          
+                <div className='optionDiv'>
 
+                  <div className='optionDivchildfinalPage'>
+                  <p className="showInput">وضعیت واحد:</p>
+                  <div className="homeCondition">
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        checked={homeCondition === 'new'}
+                        onChange={() => sethomeCondition('new')}
+                      />
+                      نو
+                    </label>
+
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        checked={homeCondition === 'ok'}
+                        onChange={() => sethomeCondition('ok')}
+                      />
+                      باسازی شده
+                    </label>
+
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        checked={homeCondition === 'normal'}
+                        onChange={() => sethomeCondition('normal')}
+                      />
+                      معمولی
+                    </label>
+
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        checked={homeCondition === 'bad'}
+                        onChange={() => sethomeCondition('bad')}
+                      />
+                      نیاز به باسازی
+                    </label>
+                  </div>
+                  <button
+                    className="next"
+                    disabled={!homeCondition}
+                    onClick={() => {
+                      if (homeCondition) {
+                        AddGoogleLink(`condition:${homeCondition}`);
+                      }
+                    }}
+                  >
+                    تایید
+                  </button>
                   <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+                  </div>
+                
+                </div>
+
 
               </div>
             </div>
@@ -2114,7 +2227,7 @@ export default function Home_RightBar() {
               <input
                 id={finalpageaparteman6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
-                placeholder={`متراژ`}
+                placeholder={`جزئیات خانه`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman6Ref, setfinalpageaparteman6Dropdown)}}
                 inputMode="text"
                 readOnly
@@ -2123,8 +2236,135 @@ export default function Home_RightBar() {
               <span className="dropdown-arrow">{'\u2304'}</span>
 
               <div className={`finalPage-dropdown ${finalpageaparteman6Dropdown ? 'visible' : 'hidden'}`} ref={finalpageaparteman6Ref}>
+                <div className='optionDiv'>
+                  
+                  <div className='optionDivchildOptionsfinalPage'>
+                  <p className="showInput">مبله:</p>
+                  <div className="input-wrapper homeface-wrapper">
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setwithStuffInhome('Ft')}
+                        checked={withStuffInhome === 'Ft'}
+                      />
+                      هست
+                    </label>
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setwithStuffInhome('Ff')}
+                        checked={withStuffInhome === 'Ff'}
+                      />
+                      نیست
+                    </label>
+                  </div>
 
+                  <p className="showInput">پارکینگ:</p>
+                  <div className="input-wrapper homeface-wrapper">
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setparking('Pt')}
+                        checked={parking === 'Pt'}
+                      />
+                      دارد
+                    </label>
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setparking('Pf')}
+                        checked={parking === 'Pf'}
+                      />
+                      ندارد
+                    </label>
+                  </div>
+
+                  <p className="showInput">اسنسور:</p>
+                  <div className="input-wrapper homeface-wrapper">
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setasansor('Et')}
+                        checked={asansor === 'Et'}
+                      />
+                      دارد
+                    </label>
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setasansor('Ef')}
+                        checked={asansor === 'Ef'}
+
+                      />
+
+                      ندارد
+                    </label>
+                  </div>
+
+
+                  <p className="showInput">انباری:</p>
+                  <div className="input-wrapper homeface-wrapper">
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setanbary('St')}
+                        checked={anbary === 'St'}
+                      />
+                      دارد
+                    </label>
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setanbary('Sf')}
+                        checked={anbary === 'Sf'}
+                      />
+                      ندارد
+                    </label>
+                  </div>
+
+                  <p className="showInput">بالاکن:</p>
+                  <div className="input-wrapper homeface-wrapper">
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setbalkon('Bt')}
+                        checked={balkon === 'Bt'}
+                      />
+                      دارد
+                    </label>
+                    <label className="homeface-option">
+                      <input
+                        type="checkbox"
+                        onChange={() => setbalkon('Bf')}
+                        checked={balkon === 'Bf'}
+                      />
+                      ندارد
+                    </label>
+                  </div>
+
+                  <button
+                    className="next"
+                    disabled={
+                      !withStuffInhome ||
+                      !anbary ||
+                      !parking ||
+                      !asansor ||
+                      !balkon
+                    }
+                    onClick={() => {
+                      const options = `${withStuffInhome},${anbary},${parking},${asansor},${balkon}`
+                      if (withStuffInhome || anbary || parking || asansor || balkon) {
+                        AddGoogleLink(`options:${options}`);
+                      }
+                    }}
+                  >
+                    تایید
+                  </button>
                   <button className='hideButton' onClick={() => closeAllDropdowns()}>پنهان کردن</button>
+                  <div></div>
+
+                  </div>
+                </div>
 
               </div>
             </div>
