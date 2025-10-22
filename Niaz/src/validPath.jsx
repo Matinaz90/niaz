@@ -6,327 +6,102 @@ export function useValidatePathHome() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const x = 'e'; // special placeholder
+    const x = 'e';
 
-    let validators = {}
+    // 🧹 Normalize repeated slashes and trailing slash
+    let normalizedPath = location.pathname.replace(/\/{2,}/g, '/').replace(/\/$/, '');
+    if (normalizedPath !== location.pathname) {
+      navigate(normalizedPath, { replace: true });
+      return;
+    }
 
-    const segments = location.pathname.split('/').filter(Boolean);
+    const segments = normalizedPath.split('/').filter(Boolean);
 
-    if (segments[0] == 'home') {
-      if (segments[1] == 'joinbuild') {
-        validators = {
-              meter: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 100_000_000;
-              },
-
-              face: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-
-                const parts = val.split(',').map((v) => v.trim().toLowerCase());
-                if (parts.length !== 2) return false;
-
-                const [direction, bahr] = parts;
-                const allowedDirections = ['north', 'south'];
-                const allowedBahrs = ['1', '2', '3'];
-
-                return allowedDirections.includes(direction) && allowedBahrs.includes(bahr);
-              },
-
-              joinbuildpersent: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-                const allowed = ['70-30', '60-40', '50-50', '40-60', '30-70'];
-                return allowed.includes(val.trim());
-              },
-
-
-              price: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 100_000_000_000_000;
-              },
-
-        };
-      } else if(segments[1] == 'aparteman'){
-        validators = {
-              meter: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 100_000_000;
-              },
-
-              rooms: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 10;
-              },
-
-              year: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1329 && num <= 1403;
-              },
-
-              face: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-
-                const parts = val.split(',').map((v) => v.trim().toLowerCase());
-                if (parts.length !== 2) return false;
-
-                const [direction, bahr] = parts;
-                const allowedDirections = ['north', 'south'];
-                const allowedBahrs = ['1', '2', '3'];
-
-                return allowedDirections.includes(direction) && allowedBahrs.includes(bahr);
-              },
-
-              floor: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-                const parts = val.split(',').map((v) => Number(v.trim()));
-                if (parts.length !== 3) return false;
-                const [a, b, c] = parts;
-                return (
-                  Number.isInteger(a) && a >= 1 && a <= 30 &&
-                  Number.isInteger(b) && b >= 1 && b <= 30 &&
-                  Number.isInteger(c) && c >= 1 && c <= 10
-                );
-              },
-
-              condition: (val) => {
-                if (val === x) return 'e';
-                return ['ok', 'normal', 'bad', 'new'].includes(val.trim().toLowerCase());
-              },
-
-              options: (val) => {
-              if (val === x) return 'e';
-              if (typeof val !== 'string') return false;
-
-              const allowed = ['Ft', 'Ff', 'Pt', 'Pf', 'Et', 'Ef', 'St', 'Sf', 'Bt', 'Bf'];
-              const parts = val.split(',').map((v) => v.trim());
-              return parts.every((v) => allowed.includes(v));
-              },
-
-              price: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 100_000_000_000_000;
-              },
-
-        };
-      } else if(segments[1] == 'villa'){
-        validators = {
-              meter: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 100_000_000;
-              },
-
-              rooms: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 10;
-              },
-
-              year: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1329 && num <= 1403;
-              },
-
-              face: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-
-                const parts = val.split(',').map((v) => v.trim().toLowerCase());
-                if (parts.length !== 2) return false;
-
-                const [direction, bahr] = parts;
-                const allowedDirections = ['north', 'south'];
-                const allowedBahrs = ['1', '2', '3'];
-
-                return allowedDirections.includes(direction) && allowedBahrs.includes(bahr);
-              },
-
-              floor: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-                const parts = val.split(',').map((v) => Number(v.trim()));
-                if (parts.length !== 3) return false;
-                const [a, b, c] = parts;
-                return (
-                  Number.isInteger(a) && a >= 1 && a <= 30 &&
-                  Number.isInteger(b) && b >= 1 && b <= 30 &&
-                  Number.isInteger(c) && c >= 1 && c <= 10
-                );
-              },
-
-              condition: (val) => {
-                if (val === x) return 'e';
-                return ['ok', 'normal', 'bad', 'new'].includes(val.trim().toLowerCase());
-              },
-
-              options: (val) => {
-              if (val === x) return 'e';
-              if (typeof val !== 'string') return false;
-
-              const allowed = ['Ft', 'Ff', 'Pt', 'Pf', 'Et', 'Ef', 'St', 'Sf', 'Bt', 'Bf'];
-              const parts = val.split(',').map((v) => v.trim());
-              return parts.every((v) => allowed.includes(v));
-              },
-  
-              price: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 100_000_000_000_000;
-              },
-        };
-      } else if(segments[1] == 'rent'){
-        validators = {
-              meter: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 100_000_000;
-              },
-
-              rooms: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 10;
-              },
-
-              year: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1329 && num <= 1403;
-              },
-
-              face: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-
-                const parts = val.split(',').map((v) => v.trim().toLowerCase());
-                if (parts.length !== 2) return false;
-
-                const [direction, bahr] = parts;
-                const allowedDirections = ['north', 'south'];
-                const allowedBahrs = ['1', '2', '3'];
-
-                return allowedDirections.includes(direction) && allowedBahrs.includes(bahr);
-              },
-
-              floor: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-                const parts = val.split(',').map((v) => Number(v.trim()));
-                if (parts.length !== 3) return false;
-                const [a, b, c] = parts;
-                return (
-                  Number.isInteger(a) && a >= 1 && a <= 30 &&
-                  Number.isInteger(b) && b >= 1 && b <= 30 &&
-                  Number.isInteger(c) && c >= 1 && c <= 10
-                );
-              },
-
-              condition: (val) => {
-                if (val === x) return 'e';
-                return ['ok', 'normal', 'bad', 'new'].includes(val.trim().toLowerCase());
-              },
-
-              options: (val) => {
-              if (val === x) return 'e';
-              if (typeof val !== 'string') return false;
-
-              const allowed = ['Ft', 'Ff', 'Pt', 'Pf', 'Et', 'Ef', 'St', 'Sf', 'Bt', 'Bf'];
-              const parts = val.split(',').map((v) => v.trim());
-              return parts.every((v) => allowed.includes(v));
-              },
-
-
-              pricerent: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-
-                const parts = val.split(',').map((v) => Number(v.trim()));
-                if (parts.length !== 2) return false;
-
-                const [min, max] = parts;
-                return (
-                  Number.isInteger(min) && min >= 1 && min <= 1_000_000_000_000_000 &&
-                  Number.isInteger(max) && max >= 1 && max <= 1_000_000_000_000_000
-                );
-              },
-        };
-      } else if(segments[1] == 'store'){
-        validators = {
-              meter: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 100_000_000;
-              },
-
-              year: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1329 && num <= 1403;
-              },
-
-              face: (val) => {
-                if (val === x) return 'e';
-                if (typeof val !== 'string') return false;
-
-                const parts = val.split(',').map((v) => v.trim().toLowerCase());
-                if (parts.length !== 2) return false;
-
-                const [direction, bahr] = parts;
-                const allowedDirections = ['north', 'south'];
-                const allowedBahrs = ['1', '2', '3'];
-
-                return allowedDirections.includes(direction) && allowedBahrs.includes(bahr);
-              },
-
-              condition: (val) => {
-                if (val === x) return 'e';
-                return ['ok', 'normal', 'bad', 'new'].includes(val.trim().toLowerCase());
-              },
-
-              categorizestore:  (val) => {
-                if (val === x) return 'e';
-                return ['retail', 'service', 'food', 'workshop', 'office', 'medical', 'educational'].includes(val.trim().toLowerCase());
-              },
-
-
-              price: (val) => {
-                if (val === x) return 'e';
-                const num = Number(val);
-                return Number.isInteger(num) && num >= 1 && num <= 100_000_000_000_000;
-              },
-
-        };
-      }
+    // ✅ Base validators
+    const baseValidators = {
+      meter: (val) => val === x || (Number.isInteger(+val) && +val >= 1 && +val <= 100_000_000),
+      rooms: (val) => val === x || (Number.isInteger(+val) && +val >= 1 && +val <= 10),
+      year: (val) => val === x || (Number.isInteger(+val) && +val >= 1329 && +val <= 1403),
+      face: (val) => {
+        if (val === x) return true;
+        const [dir, bahr] = val.split(',').map((v) => v.trim().toLowerCase());
+        return (
+          ['north', 'south'].includes(dir) &&
+          ['1', '2', '3'].includes(bahr)
+        );
+      },
+      floor: (val) => {
+        if (val === x) return true;
+        const [a, b, c] = val.split(',').map(Number);
+        return (
+          [a, b, c].every(Number.isInteger) &&
+          a >= 1 && a <= 30 &&
+          b >= 1 && b <= 30 &&
+          c >= 1 && c <= 10
+        );
+      },
+      condition: (val) => val === x || ['ok', 'normal', 'bad', 'new'].includes(val.trim().toLowerCase()),
+      options: (val) => {
+        if (val === x) return true;
+        const allowed = ['Ft', 'Ff', 'Pt', 'Pf', 'Et', 'Ef', 'St', 'Sf', 'Bt', 'Bf'];
+        return val.split(',').every((v) => allowed.includes(v.trim()));
+      },
+      price: (val) => val === x || (Number.isInteger(+val) && +val >= 1 && +val <= 100_000_000_000_000),
+      pricerent: (val) => {
+        if (val === x) return true;
+        const [min, max] = val.split(',').map(Number);
+        return (
+          [min, max].every(Number.isInteger) &&
+          min >= 1 && max >= 1 &&
+          min <= 1_000_000_000_000_000 &&
+          max <= 1_000_000_000_000_000
+        );
+      },
+      joinbuildpersent: (val) => val === x || ['70-30', '60-40', '50-50', '40-60', '30-70'].includes(val.trim()),
+      categorizestore: (val) =>
+        val === x ||
+        ['retail', 'service', 'food', 'workshop', 'office', 'medical', 'educational'].includes(
+          val.trim().toLowerCase()
+        ),
     };
 
-    
+    // ✅ Define rules
+    const rules = {
+      joinbuild: ['meter', 'face', 'joinbuildpersent', 'price'],
+      aparteman: ['meter', 'rooms', 'year', 'face', 'floor', 'condition', 'options', 'price'],
+      villa: ['meter', 'rooms', 'year', 'face', 'floor', 'condition', 'options', 'price'],
+      rent: ['meter', 'rooms', 'year', 'face', 'floor', 'condition', 'options', 'pricerent'],
+      store: ['meter', 'year', 'face', 'condition', 'categorizestore', 'price'],
+    };
 
-    for (let i = 2; i < segments.length; i++) {
-      const [key, value] = segments[i].split(':');
-      const validate = validators[key];
+    if (segments[0] !== 'home' || !rules[segments[1]]) {
+      navigate('/home', { replace: true });
+      return;
+    }
 
-      if (!validate) {
-        console.warn(`No validator found for "${key}" — redirecting`);
-        navigate('/home');
-        return;
+    const expectedKeys = rules[segments[1]];
+
+    for (let i = 0; i < expectedKeys.length; i++) {
+      const key = expectedKeys[i];
+      const segment = segments.find((seg) => seg.startsWith(`${key}:`));
+
+      if (!segment) {
+        const laterExists = expectedKeys
+          .slice(i + 1)
+          .some((nextKey) => segments.some((seg) => seg.startsWith(`${nextKey}:`)));
+        if (laterExists) {
+          navigate('/home', { replace: true });
+        }
+        break;
       }
 
-      if (!validate(value)) {
-        console.warn(`Validation failed for "${key}" with value "${value}" — redirecting`);
-        navigate('/home');
+      const value = segment.split(':')[1];
+      const validate = baseValidators[key];
+      if (!validate?.(value)) {
+        navigate('/home', { replace: true });
         return;
       }
     }
   }, [location.pathname, navigate]);
 }
+
