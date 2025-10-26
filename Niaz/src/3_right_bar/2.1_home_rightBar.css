@@ -1,3 +1,5 @@
+@import url('../index.css'); 
+
 .right_bar{
     height: calc(100% - 56px);
     background-color: var(--layer3-bg-color);

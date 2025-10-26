@@ -1,0 +1,69 @@
+.BodyAddNiaz {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--layer3-bg-color);
+}
+
+.PlaceHolderBackground {
+  background-color: var(--layer2-bg-color);
+  position: absolute;
+  height: 80%;
+  width: 50%;
+  border-radius: 20px;
+}
+
+.PlaceHolder {
+  background-color: var(--layer1-importan-color);
+  position: relative;
+  height: 65%;
+  width: 42%;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  z-index: 2;
+  text-align: center;
+}
+
+.PlaceHolder h2 {
+  color: var(--text_muded_between);
+  font-size: 1.3rem;
+  position: absolute;
+  top: 0;
+  right: 30px;
+  left: 30px;
+}
+
+.PlaceHolder button {
+  background-color: var(--boeder-blue-color);
+  margin-top: 30px;
+  height: 40px;
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+  left: 30px;
+  color: var(--text_muded_between);
+  border-radius: 10px;
+  border: none;
+}
+
+.PlaceHolder input {
+  background-color: var(--layer2-bg-color);
+  color: var(--text);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+  direction: rtl;
+}
+
+.PlaceHolder input:focus {
+  border-color: var(--boeder-blue-color);
+  background-color: var(--hover-color);
+}
