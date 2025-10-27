@@ -65,5 +65,4 @@
 
 .PlaceHolder input:focus {
   border-color: var(--boeder-blue-color);
-  background-color: var(--hover-color);
 }

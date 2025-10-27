@@ -15,6 +15,10 @@ function Add_User(){
       
       <div className='PlaceHolder'>
         <h2>افزودن کاربر</h2>
+
+        <input placeholder='نام کاربری'></input>
+
+        <input placeholder='شماره تماس'></input>
  
         <button>ثبت</button>
       </div>

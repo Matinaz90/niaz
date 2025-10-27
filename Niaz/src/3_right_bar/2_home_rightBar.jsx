@@ -384,6 +384,7 @@ export default function Home_RightBar() {
       div1Ref,
       div2Ref,
       div3Ref,
+      yearListRef,
       div1DropdownRef,
       div2DropdownRef,
       div3DropdownRef,
@@ -450,7 +451,6 @@ export default function Home_RightBar() {
     document.removeEventListener('keydown', handleKeyDown);
   };
   }, []);
-
 
   useEffect(() => {
     const handleClick1 = (event) => {
@@ -1019,7 +1019,6 @@ export default function Home_RightBar() {
                 id={showYearList ? 'inputter' : ''}
                 type="text"
                 value={englishToPersianNumber(yearBuilt)}
-                onChange={(e) => handleChangeforOneNums(e, setYearBuilt)}
                 inputMode="numeric"
                 onFocus={() => setShowYearList(true)}
                 readOnly
@@ -1615,7 +1614,7 @@ export default function Home_RightBar() {
             
             <div className='optionDivchild'>
             <p className="showInput">درصد مشارکت:</p>
-            <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+            <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
                 id={showJoinbuildDropdown ? 'inputter' : ''}
                 type="text"
