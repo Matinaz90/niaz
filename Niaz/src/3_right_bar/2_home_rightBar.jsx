@@ -38,6 +38,7 @@ export default function Home_RightBar() {
 
   const yearListRef = useRef();
   const roomsInputRef = useRef();
+  const closeDownButtons = useRef();
   const [showYearList, setShowYearList] = useState(false);
   const [showOpenDropdownFloars, setOpenDropdownFloars] = useState(null);
   const [showError, setShowError] = useState(false);
@@ -401,6 +402,7 @@ export default function Home_RightBar() {
       finalpageaparteman6Ref,
       finalpageaparteman7Ref,
       finalpageaparteman8Ref,
+      closeDownButtons,
       finalpagevilla1Ref,
       finalpagevilla2Ref,
       finalpagevilla3Ref,
@@ -421,7 +423,7 @@ export default function Home_RightBar() {
       finalpagestore3Ref,
       finalpagestore4Ref,
       finalpagestore5Ref,
-      finalpagestore6Ref
+      finalpagestore6Ref,
     ];
 
     const handleClick = (event) => {
@@ -464,7 +466,8 @@ export default function Home_RightBar() {
         div2DropdownRef,
         div3DropdownRef,
         divRoomDropdownRef,
-        roomsInputRef
+        roomsInputRef,
+        closeDownButtons,
       ];
 
       const clickedInside = refs.some(ref => ref.current?.contains(event.target));
@@ -2120,7 +2123,7 @@ export default function Home_RightBar() {
                   >
                     تایید
                   </button>
-                  <button className='hideButton' onClick={() => {closeAllDropdowns();}}>پنهان کردن</button>
+                  <button className='hideButton' ref={closeDownButtons}  onClick={() => {closeAllDropdowns();}}>پنهان کردن</button>
                 </div>
                 </div>
 
