@@ -16,7 +16,7 @@ function Top_bar_left(){
             <option> تنظیمات</option>
             <option> ویرایش پروفایل</option>
             <option> شماره دوم</option> */}
-        <h2 id='add_user' onClick={() =>navigate("/adduser")} className='add_user'>ورود</h2>
+        <h2 id='add_user' onClick={() =>navigate("/adduser")} className='add_user'>ورود/ ثبت نام</h2>
         </div>
     )
 }

@@ -1,3 +1,10 @@
+.centerDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 .BodyAddNiaz {
   display: flex;
   justify-content: center;
@@ -42,12 +49,13 @@
   margin-top: 30px;
   height: 40px;
   position: absolute;
-  bottom: 10px;
+  bottom: 40px;
   right: 30px;
   left: 30px;
   color: var(--text_muded_between);
   border-radius: 10px;
   border: none;
+  cursor: pointer;
 }
 
 .PlaceHolder input {
@@ -65,4 +73,48 @@
 
 .PlaceHolder input:focus {
   border-color: var(--boeder-blue-color);
+}
+
+.sendCodeProblem{
+  color: #ff3333;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  bottom: 80px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.sendCodeProblem.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.loginInTextfirst{
+  font-size: 13px;
+  font-weight: bold;
+  position: absolute;
+  bottom: -4px;
+  left: 40px;
+
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;  
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.loginInTextlast{
+  font-size: 13px;
+  font-weight: bold;
+  position: absolute;
+  bottom: -4px;
+  right: 40px;
+
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;  
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }

@@ -36,7 +36,6 @@ export default function Home_RightBar() {
   const [categorizestore, setcategorizestore] = useState("");
   const [selectedpriceRent, setselectedpriceRent] = useState('');
 
-  const yearListRef = useRef();
   const roomsInputRef = useRef();
   const closeDownButtons = useRef();
   const [showYearList, setShowYearList] = useState(false);
@@ -385,7 +384,6 @@ export default function Home_RightBar() {
       div1Ref,
       div2Ref,
       div3Ref,
-      yearListRef,
       div1DropdownRef,
       div2DropdownRef,
       div3DropdownRef,
@@ -458,7 +456,6 @@ export default function Home_RightBar() {
     const handleClick1 = (event) => {
       const refs = [
         joinbuildDropdownref,
-        yearListRef,
         div1Ref,
         div2Ref,
         div3Ref,
@@ -1017,7 +1014,7 @@ export default function Home_RightBar() {
             
             <div className='optionDivchild'>
             <p className="showInput">سال ساخت:</p>
-            <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+            <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
                 id={showYearList ? 'inputter' : ''}
                 type="text"
@@ -2086,7 +2083,7 @@ export default function Home_RightBar() {
                   
                   <div className='optionDivchildfinalPage'>
                   <p className="showInput">سال ساخت:</p>
-                  <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+                  <div className="input-wrapper" style={{ position: 'relative' }}>
                     <input
                       id={showYearList ? 'inputter' : ''}
                       type="text"
@@ -2123,7 +2120,7 @@ export default function Home_RightBar() {
                   >
                     تایید
                   </button>
-                  <button className='hideButton' ref={closeDownButtons}  onClick={() => {closeAllDropdowns();}}>پنهان کردن</button>
+                  <button className='hideButton' onClick={() => {closeAllDropdowns();}}>پنهان کردن</button>
                 </div>
                 </div>
 
@@ -2784,7 +2781,7 @@ export default function Home_RightBar() {
                   
                   <div className='optionDivchildfinalPage'>
                   <p className="showInput">سال ساخت:</p>
-                  <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+                  <div className="input-wrapper" style={{ position: 'relative' }}>
                     <input
                       id={showYearList ? 'inputter' : ''}
                       type="text"
@@ -3353,7 +3350,7 @@ export default function Home_RightBar() {
                   
                   <div className='optionDivchildfinalPage'>
                   <p className="showInput">سال ساخت:</p>
-                  <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+                  <div className="input-wrapper" style={{ position: 'relative' }}>
                     <input
                       id={showYearList ? 'inputter' : ''}
                       type="text"
@@ -4011,7 +4008,7 @@ export default function Home_RightBar() {
                   
                   <div className='optionDivchildfinalPage'>
                   <p className="showInput">سال ساخت:</p>
-                  <div className="input-wrapper" style={{ position: 'relative' }} ref={yearListRef}>
+                  <div className="input-wrapper" style={{ position: 'relative' }}>
                     <input
                       id={showYearList ? 'inputter' : ''}
                       type="text"
