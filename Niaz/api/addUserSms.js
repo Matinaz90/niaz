@@ -1,20 +1,20 @@
-let inTime = false;
+let inTime = true;
 
 function startTimer() {
   inTime = true;
   let seconds = 0;
   const interval = setInterval(() => {
     seconds += 1;
-    if (seconds >= 60) {
+    if (seconds >= 120) {
       clearInterval(interval);
-      inTime = false;
+      // inTime = false;
     }
-  }, 1000);
+  }, 10000);
 }
 
 async function AddUser(number, userName) {
   try {
-    const val = await fetch("https://localhost:443/smsSend", {
+    const res = await fetch("https://localhost:443/smsSend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -22,40 +22,40 @@ async function AddUser(number, userName) {
         name: userName,
       }),
     });
-  } catch {
-    return false;
+
+    if (!res.ok) {
+      return { ok: false };
+    }
+
+    startTimer();
+
+    return { ok: true };
+  } catch (error) {
+    return { ok: false };
   }
-  startTimer();
-  return true
 }
 
 async function CheckCode(number, userName, CodeEntered) {
   try {
-    if (!inTime) return false;
+
+
+    if (!inTime) return { ok: false };
     
     const res = await fetch("https://localhost:443/checkloginCode", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        phone: number,
         name: userName,
-        code: CodeEntered,
+        phone: number,
+        code: String(CodeEntered),
       }),
     });
 
-    if (!res.ok) return false;
+    if (!res.ok) return { ok: false };
 
-    const isValid = await res.json();
-
-    if (isValid) {
-      console.log("✅ Correct code, proceed to signup");
-      return true;
-    } else {
-      return false;
-    }
+    return { ok: true }
   } catch (err) {
-    console.error(err);
-    return false;
+    return { ok: false };
   }
 }
 

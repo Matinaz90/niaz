@@ -47,6 +47,18 @@ function Add_User(){
     if (extraFunc) extraFunc(englishVal);
   };
 
+  const handleChangeforEnterCode = (e, setter, extraFunc) => {
+    const raw = persianToEnglishNumber(e.target.value)
+
+    const filtered = raw
+    .split('')
+    .filter(ch => englishNums.includes(ch) || persianNums.includes(ch))
+    .join('');
+
+    setter(persianToEnglishNumber(filtered));
+    if (extraFunc) extraFunc(englishVal);
+  };
+
   const cheackNameVal = (raw) => { 
     const s = raw.normalize('NFKC');
 
@@ -117,11 +129,9 @@ function Add_User(){
           
           <div className='PlaceHolder'>
 
-            <input value={englishToPersianNumber(secretCode)} onChange={(e) => handleChangeforOneNums(e, setsecretCode)} placeholder="کد ورود"></input>
+            <input value={englishToPersianNumber(secretCode)} onChange={(e) => handleChangeforEnterCode(e, setsecretCode)} placeholder="کد ورود"></input>
     
-            <button onClick={() => {const cheacked = CheckCode(secretCode); if(cheacked == true){
-              
-            }}}>ثبت</button>
+            <button onClick={() => {CheckCode(numVal, userName, String(secretCode));}}>ثبت</button>
             <p className='loginInTextfirst' onClick={() => setmode('Number')}>تغییر مشخصات</p>
             <p className='loginInTextlast'>ارسال مجدد کد</p>
           </div>
