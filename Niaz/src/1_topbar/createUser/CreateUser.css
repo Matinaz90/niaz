@@ -37,9 +37,9 @@
 
 .PlaceHolder h2 {
   color: var(--text_muded_between);
-  font-size: 1.3rem;
+  font-size: var(--text-font-large);
   position: absolute;
-  top: 0;
+  top: 10px;
   right: 30px;
   left: 30px;
 }
@@ -64,7 +64,7 @@
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 13px;
-  font-size: 16px;
+  font-size: var(--text-font-middle);
   margin-bottom: 20px;
   outline: none;
   transition: border-color 0.2s, background-color 0.2s;
@@ -77,7 +77,7 @@
 
 .sendCodeProblem{
   color: #ff3333;
-  font-size: 12px;
+  font-size: var(--text-font-small);
   font-weight: bold;
   position: absolute;
   bottom: 80px;
@@ -92,10 +92,10 @@
 }
 
 .loginInTextfirst{
-  font-size: 13px;
+  font-size: var(--text-font-small);
   font-weight: bold;
   position: absolute;
-  bottom: -4px;
+  bottom: 9px;
   left: 40px;
 
   color: #007bff;
@@ -106,10 +106,10 @@
 }
 
 .loginInTextlast{
-  font-size: 13px;
+  font-size: var(--text-font-small);
   font-weight: bold;
   position: absolute;
-  bottom: -4px;
+  bottom: 9px;
   right: 40px;
 
   color: #007bff;
@@ -122,3 +122,73 @@
 
 
 
+.end-container {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.portal {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #fff, #aaa, #000);
+  border-radius: 50%;
+  box-shadow: 0 0 40px #fff;
+  animation: portalExpand 1.6s ease-out forwards;
+}
+
+.portal-close {
+  position: absolute;
+  width: 200vw;
+  height: 200vh;
+  background: radial-gradient(circle, #000, #000, #000);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  animation: portalCloseAnim 1.6s ease-in forwards;
+  animation-delay: 2.7s;
+}
+
+.message {
+  position: absolute;
+  font-size: 48px;
+  color: var(--text);
+  opacity: 0;
+  animation: messageReveal 2s forwards ease-out;
+  animation-delay: 1s;
+  text-shadow: 0 0 10px white;
+  direction: rtl;
+  font-weight: 500;
+}
+
+.fadeout {
+  animation: fadeoutAnim 0.8s forwards;
+}
+
+@keyframes portalExpand {
+  0%   { transform: scale(0.1); opacity: 0; }
+  40%  { transform: scale(8); opacity: 1; }
+  70%  { transform: scale(12); opacity: 1; }
+  100% { transform: scale(20); opacity: 0.9; }
+}
+
+@keyframes messageReveal {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes portalCloseAnim {
+  0%   { transform: scale(0.1); opacity: 0; }
+  50%  { opacity: 1; }
+  100% { transform: scale(3); opacity: 1; }
+}
+
+@keyframes fadeoutAnim {
+  to { opacity: 0; }
+}

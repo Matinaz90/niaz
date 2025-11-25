@@ -26,7 +26,7 @@ function Home() {
   return (
     <>
         <div className='tobbar_countainer'   style={{
-        gridTemplateColumns: `340px 1fr ${width * 0.3 + 42}px 100px 1fr 150px`
+        gridTemplateColumns: `250px 1fr ${width * 0.3 + 42}px 100px 1fr 150px`
         }}>
         <Top_bar_left></Top_bar_left><div></div><Top_bar_middle></Top_bar_middle><SlideModeChanger></SlideModeChanger><div></div><Top_bar_right></Top_bar_right>
         </div>
@@ -41,9 +41,9 @@ function Home() {
             </div>
         </div>
 
-        <div id="products_cointainer" className={`products_cointainer ${isRightBarOpen ? 'open' : ''}`}>
+        {/* <div id="products_cointainer" className={`products_cointainer ${isRightBarOpen ? 'open' : ''}`}>
         <Product></Product><Product></Product><Product></Product><Product></Product><Product></Product>
-        </div>
+        </div> */}
         
         <div></div>
     </>

@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useState  } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './CreateUser.css'
 import { AddUser, CheckCode } from "../../../api/addUserSms";
 
@@ -7,10 +7,12 @@ import { AddUser, CheckCode } from "../../../api/addUserSms";
 function Add_User(){
 
   const [mode, setmode] = useState('Number')
+  const navigate = useNavigate();
   
   const [userName, setuserName] = useState("")
   const [numVal, setnumVal] = useState('');
   const [secretCode, setsecretCode] = useState('');
+  const [fadeOut, setFadeOut] = useState(false);
 
   const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
   const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
@@ -95,6 +97,35 @@ function Add_User(){
     setmode('verfySms');
   }
 
+  const checkCode = async () => {
+    if (userName == '' || numVal == '' || secretCode == ''){
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 3000);
+      return;
+    }
+    
+    const { ok } = (await CheckCode(numVal, userName, String(secretCode))) || {};
+    const el = document.querySelector('.sendCodeProblem');
+
+    if (!ok) {
+      if (!el) return;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 3000);
+      return;
+    }
+
+    setmode('welcomePage');
+    startEndingReveal();
+  }
+
+
+  const startEndingReveal = () => {
+    setTimeout(() => setFadeOut(true), 4200);
+
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 5000);
+  };
 
   return (
     <div className='BodyAddNiaz'>
@@ -119,6 +150,7 @@ function Add_User(){
             </div>
             <button onClick={() => sendCode()}>ثبت</button>
             <p className='loginInTextfirst'>ورود به حساب</p>
+            <p className='loginInTextlast' onClick={() =>navigate("/")}>بازگشت</p>
           </div>
         </>
       )}
@@ -130,10 +162,26 @@ function Add_User(){
           <div className='PlaceHolder'>
 
             <input value={englishToPersianNumber(secretCode)} onChange={(e) => handleChangeforEnterCode(e, setsecretCode)} placeholder="کد ورود"></input>
-    
-            <button onClick={() => {CheckCode(numVal, userName, String(secretCode));}}>ثبت</button>
-            <p className='loginInTextfirst' onClick={() => setmode('Number')}>تغییر مشخصات</p>
-            <p className='loginInTextlast'>ارسال مجدد کد</p>
+
+            <p className='sendCodeProblem'>
+              ارسال ناموفق بود؛ دوباره روی «ثبت» بزنید
+            </p>
+            <button onClick={() => checkCode()}>ثبت</button>
+            <p className='loginInTextfirst' onClick={() => {setmode('Number'), setsecretCode('n')}}>تغییر مشخصات و ارسال مجدد کد</p>
+            <p className='loginInTextlast' onClick={() =>navigate("/")}>بازگشت</p>
+          </div>
+        </>
+      )}
+
+      {mode === 'welcomePage' && (
+        <>
+        <div>
+
+            <div className={`end-container ${fadeOut ? "fadeout" : ""}`}>
+              <div className="portal"></div>
+              <div className="portal-close"></div>
+              <div className="message">به نیاز خوش آمدید</div>
+            </div>
           </div>
         </>
       )}

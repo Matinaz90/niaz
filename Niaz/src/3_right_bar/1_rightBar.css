@@ -32,9 +32,10 @@
 
 .right-bar-link {
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: var(--text-font-middle);
   padding: 10px 15px;
   border-radius: 8px;
+  font-weight: bold;
   color: var(--text_muded_between);
   background-color: var(--layer2-bg-color);
   transition: background 0.2s;

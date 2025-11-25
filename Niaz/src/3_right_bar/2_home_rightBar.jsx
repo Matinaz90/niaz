@@ -38,6 +38,7 @@ export default function Home_RightBar() {
 
   const roomsInputRef = useRef();
   const closeDownButtons = useRef();
+  const refYear = useRef();
   const [showYearList, setShowYearList] = useState(false);
   const [showOpenDropdownFloars, setOpenDropdownFloars] = useState(null);
   const [showError, setShowError] = useState(false);
@@ -384,6 +385,7 @@ export default function Home_RightBar() {
       div1Ref,
       div2Ref,
       div3Ref,
+      refYear,
       div1DropdownRef,
       div2DropdownRef,
       div3DropdownRef,
@@ -459,6 +461,7 @@ export default function Home_RightBar() {
         div1Ref,
         div2Ref,
         div3Ref,
+        refYear,
         div1DropdownRef,
         div2DropdownRef,
         div3DropdownRef,
@@ -757,6 +760,10 @@ export default function Home_RightBar() {
               <a onClick={() => {AddGoogleLink('rent');}}>اجاره</a>
               <a onClick={() => {AddGoogleLink('store');}}>تجاری</a>
             </div>
+
+            <button className="oneBack" onClick={() =>navigate("/")}>
+             بازگشت 
+            </button>
           </div>
         )}
 
@@ -1016,18 +1023,19 @@ export default function Home_RightBar() {
             <p className="showInput">سال ساخت:</p>
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={showYearList ? 'inputter' : ''}
+                id={showYearList ? 'inputter' : undefined}
                 type="text"
                 value={englishToPersianNumber(yearBuilt)}
                 inputMode="numeric"
-                onFocus={() => setShowYearList(true)}
                 readOnly
+                onClick={() => setShowYearList(true)}
               />
-              <div className={`year-dropdown ${showYearList ? 'visible' : 'hidden'}`}>
+              <div className={`year-dropdown ${showYearList ? 'visible' : 'hidden'}`} ref={refYear}>
                 {Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i).map((year) => (
                   <div
                     key={year}
                     onClick={() => {
+                      console.log(year)
                       setYearBuilt(String(year));
                       setShowYearList(false);
                     }}
@@ -1040,7 +1048,6 @@ export default function Home_RightBar() {
             </div>
             <button
               className="next"
-              disabled={!yearBuilt}
               onClick={() => {
                 if (yearBuilt) {
                   AddGoogleLink(`year:${yearBuilt}`);

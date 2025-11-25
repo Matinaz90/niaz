@@ -263,7 +263,7 @@ function CityDropdown() {
 
     return (
         <>
-            <button ref={divXRef} className='city_but' id='openCityButton' onClick={openCity}>استان</button>
+            <button ref={divXRef} className='city_button' id='openCityButton' onClick={openCity}>استان</button>
             <div ref={divYRef} className="cityselected" id="maincityBlock">
             <div className="city-scroll-content">
                 <button className='clearAllCityBut' onClick={clearAllCityLocalHost}>پاک کردن همه</button>
