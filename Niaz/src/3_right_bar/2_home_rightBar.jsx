@@ -1436,8 +1436,7 @@ export default function Home_RightBar() {
             </div>
 
             <button className='ignoreVal' onClick={() => AddGoogleLink(`options:${empityValTosend}`)}>نادیده گرفتن</button>
-            <button className="oneBack_options" onClick={trimPathToRoot}>بازگشت</button>
-            <div className='oneBack_options_parents'></div>
+            <button className="oneBack" onClick={trimPathToRoot}>بازگشت</button>
           </div>
         )}
 

@@ -1,155 +1,115 @@
 @import url('../index.css');
 
 /* =========================
-   RIGHT SIDEBAR
+   GLOBAL SCROLLBAR
+=========================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--text-muted);
+  border-radius: 4px;
+}
+.scrollable {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+}
+
+/* =========================
+   RIGHT BAR
 =========================== */
 .right_bar {
+  height: calc(100% - 56px);
+  background-color: var(--layer3-bg-color);
   position: fixed;
   top: 56px;
   right: 0;
   width: 0;
-  height: calc(100% - 56px);
-  background-color: var(--layer3-bg-color);
+  transition: width 0.3s ease;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
   direction: rtl;
-  transition: width 0.3s ease;
-  z-index: 100;
 }
 
-#rightBar.open {
-  width: 20%;
-}
+#rightBar.open { width: 20%; }
 
-/* =========================
-   RIGHT BAR NAV LINKS
-=========================== */
-.right-bar-nav a {
-  display: block;
-  text-decoration: none;
-  font-size: var(--text-font-middle);
-  padding: 12px 16px;
-  border-radius: 8px;
-  color: var(--text_muded_between);
-  background-color: var(--layer2-bg-color);
-  transition: background 0.2s;
-  cursor: pointer;
-}
-
-.right-bar-nav a:hover {
-  background-color: var(--layer1-importan-color);
-}
-
-/* =========================
-   INPUT FIELDS
-=========================== */
+.right-bar-nav a,
 .right-bar-nav input[type="number"],
 .right-bar-nav input[type="text"] {
-  padding: 12px 16px;
-  border: 1px solid transparent;
+  display: block;
+  font-size: var(--text-font-middle);
+  border-radius: 8px;
   background-color: var(--layer2-bg-color);
   color: var(--text_muded_between);
-  font-size: var(--text-font-middle);
-  outline: none;
-  border-radius: 8px;
-  width: calc(100% - 32px - 2px);
-  transition: border 0.2s;
+  transition: all 0.2s ease;
 }
 
-.right-bar-nav input[type="text"] {
+.right-bar-nav a {
+  text-decoration: none;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+.right-bar-nav a:hover { background-color: var(--layer1-importan-color); }
+
+.right-bar-nav input {
+  padding: 12px 16px;
+  outline: none;
+  border: 1px solid transparent;
+  width: calc(100% - 34px);
   margin-bottom: 3px;
 }
-
 .right-bar-nav input[type="number"]:focus {
   border: 1px solid var(--boeder-blue-color);
 }
 
 /* =========================
-   LABELS / SHOW INPUTS
+   SHOW INPUT & PLACEHOLDER
 =========================== */
 .showInput {
   display: block;
-  text-decoration: none;
   font-size: var(--text-font-middle);
-  padding: 0px 10px;
-  margin-top: 5px;
-  margin-bottom: 4px;
+  padding: 0 10px;
+  margin: 5px 0 4px 0;
   border-radius: 8px;
   color: var(--text_muded_between);
   transition: background 0.2s;
 }
+.showInputfloar { margin-bottom: -8px; }
 
-.showInputfloar {
-  margin-bottom: -8px;
-}
-
-/* =========================
-   SPECIAL INPUTS / PLACEHOLDER
-=========================== */
 #inputter {
-  border: 1px solid var(--boeder-blue-color);
-  border-bottom: none;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   display: none;
+  border: 1px solid var(--boeder-blue-color);
+  border-radius: 0 0 8px 8px;
 }
 
-#closedInputPlacefolder {
-  cursor: pointer;
-}
-
+#closedInputPlacefolder { cursor: pointer; }
 #closedInputPlacefolder::placeholder {
   font-size: var(--text-font-middle);
   font-weight: bold;
   color: var(--text_muded_between);
 }
 
-/* =========================
-   DROPDOWN ARROW
-=========================== */
 .dropdown-arrow {
   position: absolute;
-  color: var(--text_muded_between);
-  font-size: var(--text-font-middle);
-  font-weight: bold;
   top: 10px;
   left: 18px;
-  pointer-events: none;
-}
-
-/* =========================
-   PRICE DISPLAY
-=========================== */
-.priceDisplay {
-  margin-top: -4px;
   font-size: var(--text-font-middle);
   color: var(--text_muded_between);
-  margin-right: 4%;
-  margin-bottom: 0;
-}
-
-/* =========================
-   RECOMMENDED DIV
-=========================== */
-.recommended_div {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 8px;
-}
-
-.recommended_div button {
-  margin-left: 8%;
-  margin-right: 8%;
+  font-weight: bold;
+  pointer-events: none;
 }
 
 /* =========================
    BUTTONS
 =========================== */
-.conform_buttonYear {
-  padding: 6px 10px;
+.next, .conform_buttonYear, .hideButton, .oneBack, .oneBack_options {
+  border-radius: 8px;
+  font-size: var(--text-font-middle);
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .next {
@@ -157,149 +117,109 @@
   color: var(--text);
   border: none;
   padding: 10px 20px;
-  border-radius: 8px;
-  font-size: var(--text-font-middle);
-  cursor: pointer;
   position: relative;
-  transition: 0.03s;
 }
-
-.next:hover {
-  padding: 8px 20px;
-  font-size: var(--text-font-middle);
-}
+.next:hover { padding: 8px 20px; }
 
 .hideButton {
   background-color: var(--layer2-bg-color);
   color: var(--text_muded_between);
   border: none;
-  padding: 0px 0px;
-  border-radius: 8px;
-  font-size: var(--text-font-small);
+  padding: 0;
   margin-top: -7px;
-  cursor: pointer;
-  position: relative;
 }
+.hideButton:hover { background-color: var(--layer1-importan-color); }
 
-.hideButton:hover {
-  background-color: var(--layer1-importan-color);
-}
-
-.ignoreVal {
-  position: absolute;
-  bottom: 80px;
-  padding: 2px 18px;
-  right: 20px;
-  left: 30px;
-  color: var(--text-muted);
-  background: var(--layer2-bg-color);
-  border: 1px solid var(--layer1-importan-color);
-  border-radius: 10px;
-  font-size: var(--text-font-small);
-  font-weight: 500;
-  text-align: center;
-  backdrop-filter: blur(6px);
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
-
-.ignoreVal:hover {
-  border: 1px solid var(--boeder-blue-color);
-}
-
-/* =========================
-   ONE BACK BUTTON
-=========================== */
-.oneBack {
+.oneBack, .oneBack_options {
   background-color: transparent;
   color: var(--text-muted);
   border: 2px solid var(--text-muted);
   padding: 10px 20px;
-  border-radius: 8px;
-  font-size: var(--text-font-middle);
-  cursor: pointer;
-  transition: all 0.2s ease;
   position: absolute;
   bottom: 10px;
   right: 10px;
   left: 20px;
   z-index: 20;
 }
-
-.oneBack:hover {
-  border-color: var(--boeder-blue-color);
-}
+.oneBack:hover, .oneBack_options:hover { border-color: var(--boeder-blue-color); }
 
 /* =========================
-   FLOOR ERROR TEXT
+   IGNORE VAL & ERROR TEXT
 =========================== */
-.floarErrText {
+.ignoreVal, .floarErrText {
   position: absolute;
-  top: -20px;
-  right: 0;
-  left: 0;
-  height: 60px;
-  color: #ff181c;
-  background: rgba(255, 77, 80, 0.32);
-  border: 1px solid rgba(255, 77, 79, 0.4);
   border-radius: 10px;
-  font-size: var(--text-font-small);
-  font-weight: bold;
   text-align: center;
   backdrop-filter: blur(6px);
-  box-shadow: 0 2px 6px rgba(255, 0, 0, 0.1);
-  transition: all 0.5s ease;
-  display: none;
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
+  transition: all 0.25s ease;
+  font-weight: 500;
+  font-size: var(--text-font-small);
+  cursor: pointer;
 }
-
-.floarErrText.visible {
-  display: flex;
+.ignoreVal {
+  bottom: 80px;
+  left: 30px;
+  right: 20px;
+  padding: 2px 18px;
+  background: var(--layer2-bg-color);
+  border: 1px solid var(--layer1-importan-color);
+  color: var(--text-muted);
 }
+.ignoreVal:hover { border-color: var(--boeder-blue-color); }
 
-/* =========================
-   YEAR DROPDOWN
-=========================== */
-.year-dropdown {
-  position: absolute;
-  top: 100%;
+.floarErrText {
+  top: -20px;
   left: 0;
   right: 0;
-  max-height: 0;
-  overflow-y: auto;
+  height: 60px;
+  background: rgba(255,77,80,0.32);
+  border: 1px solid rgba(255,77,79,0.4);
+  color: #ff181c;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(255,0,0,0.1);
+  font-weight: bold;
+}
+.floarErrText.visible { display: flex; }
+
+/* =========================
+   DROPDOWNS
+=========================== */
+.year-dropdown,
+.year-dropdown-finalPage,
+.finalPage-dropdown,
+.homeNumbresInfloor {
+  position: absolute;
+  left: 0;
+  right: 0;
   background-color: var(--layer2-bg-color);
   border: 1px solid var(--boeder-blue-color);
   border-radius: 8px;
-  z-index: 10;
   font-size: var(--text-font-small);
   color: var(--text_muded_between);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-  transition: 0.4s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
+  transition: all 0.4s ease;
+  max-height: 0;
+  z-index: 10;
 }
-
-.year-dropdown.visible {
+.year-dropdown.visible,
+.year-dropdown-finalPage.visible,
+.finalPage-dropdown.visible,
+.homeNumbresInfloor.visible {
   opacity: 1;
   visibility: visible;
-  max-height: 280px;
 }
-
-.year-dropdown::-webkit-scrollbar {
-  width: 6px;
-}
-
-.year-dropdown::-webkit-scrollbar-thumb {
-  background-color: var(--text-muted);
-  border-radius: 4px;
-}
+.year-dropdown { top: 100%; }
+.year-dropdown-finalPage { max-height: 130px; }
+.finalPage-dropdown { z-index: 1000000; max-height: 600px; padding: 0 10px; top:0; }
+.homeNumbresInfloor { top: 0; }
 
 /* =========================
-   HOME FACE WRAPPER
+   HOME FACE & CONDITION
 =========================== */
 .homeface-wrapper {
   display: flex;
@@ -309,7 +229,6 @@
   background-color: var(--layer2-bg-color);
   border-radius: 8px;
 }
-
 .homeface-option {
   display: flex;
   align-items: center;
@@ -318,67 +237,16 @@
   gap: 6px;
   cursor: pointer;
 }
-
 .homeface-option input {
   width: 16px;
   height: 16px;
-  cursor: pointer;
   accent-color: var(--main-blue-color);
+  cursor: pointer;
 }
-
-.homeCondition {
-  display: grid;
-  font-size: 14px;
-  color: var(--text_muded_between);
-  gap: 8px;
-}
-
-.floor-info {
-  position: relative;
-}
+.homeCondition { display: grid; font-size: 14px; color: var(--text_muded_between); gap: 8px; }
 
 /* =========================
-   HOME NUMBERS IN FLOOR
-=========================== */
-.homeNumbresInfloor {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  max-height: 0;
-  overflow-y: auto;
-  background-color: var(--layer2-bg-color);
-  border: 1px solid var(--boeder-blue-color);
-  border-radius: 8px;
-  z-index: 10;
-  font-size: var(--text-font-small);
-  color: var(--text_muded_between);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-  transition: 0.2s;
-  opacity: 0;
-  visibility: hidden;
-  will-change: visibility;
-}
-
-.homeNumbresInfloor.visible {
-  opacity: 1;
-  visibility: visible;
-  max-height: 280px;
-}
-
-.homeNumbresInfloor::-webkit-scrollbar {
-  width: 6px;
-}
-
-.homeNumbresInfloor::-webkit-scrollbar-thumb {
-  background-color: var(--text-muted);
-  border-radius: 4px;
-}
-
-/* =========================
-   OPTION DIV CHILDREN
+   OPTION DIVS
 =========================== */
 .optionDivchild,
 .optionDivchildFullScreen,
@@ -389,80 +257,18 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-  scrollbar-gutter: stable;
   scroll-behavior: smooth;
-}
-
-.optionDivchild {
-  height: calc(100vh - 201px);
-  padding-bottom: 5px;
   width: calc(100% + 8px);
 }
-
-.optionDivchildFullScreen {
-  height: calc(100vh - 145px);
-  overflow-y: auto;
-  padding-bottom: 5px;
-  width: calc(100% + 8px);
-}
-
-.optionDivchildfinalPageMain {
-  height: calc(100vh - 150px);
-  width: calc(100% + 8px);
-  overflow-y: auto;
-  gap: 15px;
-}
-
-.optionDivchildOptions {
-  height: calc(100vh - 198px);
-  width: calc(100% + 8px);
-  overflow-y: auto;
-  gap: 15px;
-}
-
-.optionDivchildOptionsfinalPage {
-  height: calc(100vh);
-  max-height: 300px;
-  width: calc(100% + 8px);
-  overflow-y: auto;
-  gap: 15px;
-}
-
-/* Scrollbar Webkit */
-.optionDivchild::-webkit-scrollbar,
-.optionDivchildFullScreen::-webkit-scrollbar,
-.optionDivchildfinalPage::-webkit-scrollbar,
-.optionDivchildfinalPageMain::-webkit-scrollbar,
-.optionDivchildOptions::-webkit-scrollbar,
-.optionDivchildOptionsfinalPage::-webkit-scrollbar {
-  width: 8px;
-}
+.optionDivchild { height: calc(100vh - 201px); padding-bottom: 5px; }
+.optionDivchildFullScreen { height: calc(100vh - 145px); padding-bottom: 5px; overflow-y: auto; }
+.optionDivchildfinalPageMain { height: calc(100vh - 150px); overflow-y: auto; gap: 15px; }
+.optionDivchildOptions { height: calc(100vh - 198px); overflow-y: auto; gap: 15px; }
+.optionDivchildOptionsfinalPage { height: 100vh; max-height: 300px; overflow-y: auto; gap: 15px; }
 
 /* =========================
-   ONE BACK OPTIONS
+   ONE BACK OPTION PARENT
 =========================== */
-.oneBack_options {
-  background-color: transparent;
-  color: var(--text-muted);
-  border: 2px solid var(--text-muted);
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: var(--text-font-middle);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  left: 20px;
-  z-index: 10000;
-}
-
-.oneBack_options:hover {
-  border-color: var(--boeder-blue-color);
-}
-
 .oneBack_options_parents {
   background-color: var(--layer3-bg-color);
   height: 80px;
@@ -472,79 +278,4 @@
   left: 20px;
   right: 0;
   z-index: 100;
-}
-
-/* =========================
-   FINAL PAGE DROPDOWN
-=========================== */
-.finalPage-dropdown {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  background-color: var(--layer3-bg-color);
-  border: 1px solid var(--boeder-blue-color);
-  border-radius: 8px;
-  z-index: 1000000;
-  font-size: var(--text-font-small);
-  color: var(--text_muded_between);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-  padding: 0 10px;
-  opacity: 0;
-  visibility: hidden;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 0.4s, max-height 0.4s;
-}
-
-.finalPage-dropdown.visible {
-  opacity: 1;
-  visibility: visible;
-  max-height: 600px;
-}
-
-.finalPage-dropdown::-webkit-scrollbar {
-  width: 6px;
-}
-
-.finalPage-dropdown::-webkit-scrollbar-thumb {
-  background-color: var(--text-muted);
-  border-radius: 4px;
-}
-
-/* =========================
-   YEAR DROPDOWN FINAL PAGE
-=========================== */
-.year-dropdown-finalPage {
-  max-height: 0;
-  overflow-y: auto;
-  background-color: var(--layer2-bg-color);
-  border: 1px solid var(--boeder-blue-color);
-  border-radius: 8px;
-  z-index: 10;
-  font-size: var(--text-font-small);
-  color: var(--text_muded_between);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-  transition: 0.4s;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.year-dropdown-finalPage.visible {
-  opacity: 1;
-  visibility: visible;
-  max-height: 130px;
-}
-
-.year-dropdown-finalPage::-webkit-scrollbar {
-  width: 6px;
-}
-
-.year-dropdown-finalPage::-webkit-scrollbar-thumb {
-  background-color: var(--text-muted);
-  border-radius: 4px;
 }
