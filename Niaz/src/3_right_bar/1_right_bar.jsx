@@ -1,10 +1,13 @@
 import { ref, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useGlobal } from "../GlobalContext";
 import'./1_rightBar.css'
+import { useGlobal } from "../GlobalContext";
+
 
 function Right_bar(){
-    const { openRightBar, setopenRightBar } = useGlobal();
+
+  const { openRightBar, setOpenRightBar } = useGlobal();
+
 
     return(
         <div id='rightBar' className={`right_bar ${openRightBar ? 'open' : ''}`}>

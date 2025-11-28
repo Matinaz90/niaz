@@ -7,7 +7,7 @@
     top: 56px;
     right: 0;
     width: 0;
-    transition: width 0.3s ease;
+    transition: width 0.2s ease;
     overflow: hidden;
     z-index: 100;
     display: flex;

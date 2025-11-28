@@ -2100,7 +2100,7 @@ export default function Home_RightBar() {
                       onFocus={() => setShowYearList(true)}
                       readOnly
                     />
-                    <div className={`year-dropdown-finalPage ${showYearList ? 'visible' : ''}`}>
+                    <div className={`year-dropdown-finalPage ${showYearList ? 'visible' : ''}`} ref={refYear}>
                       {Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i).map((year) => (
                         <div
                           key={year}
@@ -2798,7 +2798,7 @@ export default function Home_RightBar() {
                       onFocus={() => setShowYearList(true)}
                       readOnly
                     />
-                    <div className={`year-dropdown-finalPage ${showYearList ? 'visible' : ''}`}>
+                    <div className={`year-dropdown-finalPage ${showYearList ? 'visible' : ''}`} ref={refYear}>
                       {Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i).map((year) => (
                         <div
                           key={year}
@@ -3367,7 +3367,7 @@ export default function Home_RightBar() {
                       onFocus={() => setShowYearList(true)}
                       readOnly
                     />
-                    <div className={`year-dropdown-finalPage ${showYearList ? 'visible' : ''}`}>
+                    <div className={`year-dropdown-finalPage ${showYearList ? 'visible' : ''}`} ref={refYear}>
                       {Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i).map((year) => (
                         <div
                           key={year}
@@ -4025,7 +4025,7 @@ export default function Home_RightBar() {
                       onFocus={() => setShowYearList(true)}
                       readOnly
                     />
-                    <div className={`year-dropdown-finalPage ${showYearList ? 'visible' : ''}`}>
+                    <div className={`year-dropdown-finalPage ${showYearList ? 'visible' : ''}`} ref={refYear}>
                       {Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i).map((year) => (
                         <div
                           key={year}

@@ -10,7 +10,6 @@ import Home_RightBar from "../3_right_bar/2_home_rightBar.jsx"
 
 function Home() {
   const [width, setWidth] = useState(window.innerWidth)
-  const [isRightBarOpen, setIsRightBarOpen] = useState();
 
   useEffect(() => {
         const resize = () => {
@@ -40,7 +39,7 @@ function Home() {
 
         <div className='gradient-border' id="gradient-border">
         </div>
-        <div className={`blur_rightBarOpen ${isRightBarOpen ? 'open' : ''}`}></div>
+        <div className={`blur_rightBarOpen`}></div>
 
           <div className="content-box">
               <img src="/Untitled-1.png" className="image_mainPage"></img>
