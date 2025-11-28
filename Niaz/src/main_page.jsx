@@ -6,7 +6,6 @@ import Top_bar_middle from './1_topbar/2_top_bar_middle.jsx'
 import Top_bar_right from './1_topbar/3_top_bar_right.jsx'
 import SlideModeChanger from './1_topbar/2.5_slideModeChanger.jsx'
 import Product from "./2_product/product.jsx";
-import Right_bar from "./3_right_bar/1_right_bar.jsx";
 
 function Main_page() {
 

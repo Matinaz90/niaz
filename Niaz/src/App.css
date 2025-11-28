@@ -8,21 +8,37 @@
     border-radius: 12px;
     display: inline-block;
     width: calc(100% - 46px);
-    height: 400px;
     margin-right: 20px;
     margin-left: 20px;
     transition: width 0.3s ease;
 }
 
-.gradient-border.open {
-    width: calc(80% - 46px);
+.blur_rightBarOpen {
+  position: fixed;
+  inset: 0;
+  transition: 0.25s ease;
+  pointer-events: none;
 }
+
+.blur_rightBarOpen.open {
+  display: block;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
+}
+
+.blur_rightBarOpen.closed {
+  display: none;
+}
+
 
 .content-box {
     background-color: var(--layer2-bg-color); /* match your dark theme */
     color: white;
     padding: 16px;
     border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .image_mainPage{

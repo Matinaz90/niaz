@@ -4,9 +4,9 @@
 :root{
     --main-webiste-color: hsl(23, 99%, 50%);
     --main-webiste-color-hover: hsl(23, 99%, 50%);
-    --layer3-bg-color: hsl(0, 0%, 10%);
+    --layer3-bg-color: hsl(0, 0%, 0%);
     --layer2-bg-color: hsl(0, 0%, 5%);
-    --layer1-importan-color: hsl(0, 0%, 0%);
+    --layer1-importan-color: hsl(0, 0%, 10%);
 
 
     --border-color: hsl(0, 0%, 30%);
@@ -47,6 +47,7 @@ body{
   -ms-user-select: none;     /* Internet Explorer/Edge */
   user-select: none;  
   width: 100%;
+  scroll-behavior: smooth;
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -68,3 +69,4 @@ img {
   -o-user-drag: none;       /* Opera */
   user-drag: none;          /* Standard */
 }
+

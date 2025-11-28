@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useValidatePathHome } from "../validPath.jsx";
 import './2.1_home_rightBar.css';
+import { useGlobal } from "../GlobalContext";
 
 export default function Home_RightBar() {
   useValidatePathHome()
@@ -9,6 +10,7 @@ export default function Home_RightBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const href = location.pathname;
+  const { openRightBar, setopenRightBar } = useGlobal();
 
   const [price, setPrice] = useState('');
   const [price2, setPrice2] = useState('');
@@ -122,7 +124,6 @@ export default function Home_RightBar() {
   const finalpagestore5Ref = useRef(null);
   const finalpagestore6Ref = useRef(null);
 
-  const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
   const divXRef = useRef(null);
 
   const div1Ref = useRef(null);
@@ -749,7 +750,7 @@ export default function Home_RightBar() {
   }
 
   return (
-    <div id="rightBar" className={`right_bar ${isRightBarOpen ? 'open' : ''}`}>
+    <div id="rightBar" className={`right_bar ${openRightBar ? 'open' : ''}`}>
       <nav className="right-bar-nav">
         {mode === 'default' && (
           <div className='optionDiv'>
@@ -762,7 +763,7 @@ export default function Home_RightBar() {
             </div>
 
             <button className="oneBack" onClick={() =>navigate("/")}>
-             بازگشت 
+             صفحه اصلی 
             </button>
           </div>
         )}

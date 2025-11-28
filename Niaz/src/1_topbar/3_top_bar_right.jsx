@@ -1,12 +1,10 @@
 import './top_bar.css'
 import CityDropdown from './4_city_dropdown'
-import { RightBarConfig } from '../3_right_bar/1_right_bar';
+import { useGlobal } from "../GlobalContext";
+
 
 function Top_bar_right(){
-
-    const handleClick = () => {
-        RightBarConfig(); 
-    };
+    const { openRightBar, setopenRightBar } = useGlobal();
 
     return(
         <div className='top_rightbar_countaner'>
@@ -17,7 +15,7 @@ function Top_bar_right(){
         id="hamburgurMenu"
         className="hamburgurImage"
         src="/hamburger-menu-light.png"
-        onClick={handleClick}
+        onClick={() => setopenRightBar(true)}
         />
         </div>
     )

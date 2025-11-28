@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { GlobalProvider } from "./GlobalContext";
 import './index.css'
 
 import Main_page from './main_page.jsx'
@@ -8,8 +9,6 @@ import Home from './home/home.jsx'
 import Car from './car/car.jsx'
 import Employ from './employ/employ.jsx'
 import Add_User from "./1_topbar/createUser/CreateUser.jsx";
-
-
 
 const router = createBrowserRouter([
   {
@@ -36,6 +35,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <GlobalProvider>
+      <RouterProvider router={router} />
+    </GlobalProvider>
   </React.StrictMode>
 );

@@ -6,11 +6,11 @@ import Top_bar_middle from '../1_topbar/2_top_bar_middle.jsx'
 import Top_bar_right from '../1_topbar/3_top_bar_right.jsx'
 import SlideModeChanger from '../1_topbar/2.5_slideModeChanger.jsx'
 import Product from "../2_product/product.jsx";
-import Home_RightBar from "../3_right_bar/2_home_rightBar.jsx";
+import Home_RightBar from "../3_right_bar/2_home_rightBar.jsx"
 
 function Home() {
   const [width, setWidth] = useState(window.innerWidth)
-  const isRightBarOpen = localStorage.getItem('rightBarOpen') === 'true';
+  const [isRightBarOpen, setIsRightBarOpen] = useState();
 
   useEffect(() => {
         const resize = () => {
@@ -21,7 +21,10 @@ function Home() {
         return () => {
         window.removeEventListener("resize", resize);
         };
+
+
   }, []);
+
 
   return (
     <>
@@ -35,15 +38,17 @@ function Home() {
 
         <Filter_chip_bar></Filter_chip_bar>
 
-        <div className={`gradient-border ${isRightBarOpen ? 'open' : ''}`} id="gradient-border">
-            <div className="content-box">
-                <img src="/Untitled-1.png" className="image_mainPage"></img>
-            </div>
+        <div className='gradient-border' id="gradient-border">
         </div>
+        <div className={`blur_rightBarOpen ${isRightBarOpen ? 'open' : ''}`}></div>
 
-        {/* <div id="products_cointainer" className={`products_cointainer ${isRightBarOpen ? 'open' : ''}`}>
+          <div className="content-box">
+              <img src="/Untitled-1.png" className="image_mainPage"></img>
+          </div>
+
+        <div id="products_cointainer" className="products_cointainer">
         <Product></Product><Product></Product><Product></Product><Product></Product><Product></Product>
-        </div> */}
+        </div>
         
         <div></div>
     </>
