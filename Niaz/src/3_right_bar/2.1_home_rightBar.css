@@ -1,24 +1,27 @@
 @import url('../index.css'); 
 
 .right_bar{
-    height: calc(100% - 56px);
-    background-color: var(--layer3-bg-color);
-    position: fixed;
-    top: 56px;
-    right: 0;
-    width: 0;
-    transition: width 0.3s ease;
-    z-index: 1002;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    direction: rtl;
+  height: calc(100%);
+  background-color: var(--layer3-bg-color);
+  position: fixed;
+  top: 0px;
+  right: 0;
+  width: 0;
+  transition: width 0.2s ease;
+  z-index: 1002;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  direction: rtl;
+  overflow: hidden;
 }
 
 #rightBar.open {
   width: 20%;
+
 }
+
 .right-bar-nav a {
   display: block;
   text-decoration: none;

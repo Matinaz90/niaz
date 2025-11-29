@@ -7,7 +7,6 @@ import Top_bar_right from './1_topbar/3_top_bar_right.jsx'
 import SlideModeChanger from './1_topbar/2.5_slideModeChanger.jsx'
 import Right_bar from './3_right_bar/1_right_bar.jsx'
 import Product from "./2_product/product.jsx";
-import { useGlobal } from "./GlobalContext";
 
 function Main_page() {
 
@@ -38,7 +37,6 @@ function Main_page() {
 
         <div className='gradient-border' id="gradient-border">
         </div>
-        <div className={`blur_rightBarOpen`}></div>
 
           <div className="content-box">
               <img src="/Untitled-1.png" className="image_mainPage"></img>

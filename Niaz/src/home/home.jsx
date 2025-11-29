@@ -37,9 +37,7 @@ function Home() {
 
         <Filter_chip_bar></Filter_chip_bar>
 
-        <div className='gradient-border' id="gradient-border">
-        </div>
-        <div className={`blur_rightBarOpen`}></div>
+        <div className='gradient-border' id="gradient-border"></div>
 
           <div className="content-box">
               <img src="/Untitled-1.png" className="image_mainPage"></img>

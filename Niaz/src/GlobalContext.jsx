@@ -8,7 +8,10 @@ export function GlobalProvider({ children }) {
   useEffect(() => {
     const handleClick = (e) => {
       const bar = document.getElementById("rightBar");
-      if (bar && !bar.contains(e.target)) setOpenRightBar(false);
+      if (bar && !bar.contains(e.target)) {
+        setOpenRightBar(false);
+        document.getElementById('blur_rightBarOpen').style.display = 'none';
+      };
     };
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);

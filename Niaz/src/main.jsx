@@ -37,6 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <GlobalProvider>
       <RouterProvider router={router} />
+      <div className="blur_rightBarOpen" id="blur_rightBarOpen"></div>
     </GlobalProvider>
   </React.StrictMode>
 );

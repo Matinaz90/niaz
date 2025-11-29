@@ -18,19 +18,11 @@
   inset: 0;
   transition: 0.25s ease;
   pointer-events: none;
-}
-
-.blur_rightBarOpen.open {
-  display: block;
-  backdrop-filter: blur(10px);
-  background: rgba(0, 0, 0, 0.4);
-  pointer-events: auto;
-}
-
-.blur_rightBarOpen.closed {
   display: none;
+  background: hsla(0, 0%, 0%, 0.5);
+  pointer-events: auto;
+  z-index: 1001;
 }
-
 
 .content-box {
     background-color: var(--layer2-bg-color); /* match your dark theme */
@@ -44,5 +36,5 @@
 .image_mainPage{
     width: 100%;
     height: auto;
-    max-height: 400px;
+    max-height: 500px;
 }
