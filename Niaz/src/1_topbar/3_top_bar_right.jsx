@@ -8,6 +8,7 @@ function Top_bar_right() {
 
 const handleClick = () => {
     document.getElementById('blur_rightBarOpen').style.display = 'block';
+    // document.body.style.overflow = 'hidden';
     setOpenRightBar(true);
 };
 

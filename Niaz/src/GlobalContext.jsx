@@ -17,6 +17,10 @@ export function GlobalProvider({ children }) {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  useEffect(() => {
+  document.body.style.overflow = openRightBar ? 'hidden' : 'auto';
+  }, [openRightBar]);
+
   return (
     <GlobalContext.Provider value={{ openRightBar, setOpenRightBar }}>
       {children}

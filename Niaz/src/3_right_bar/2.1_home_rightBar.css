@@ -19,7 +19,16 @@
 
 #rightBar.open {
   width: 20%;
+}
 
+.right-bar-nav {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 30px);
+  gap: 12px;
+  padding: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 
 .right-bar-nav a {
@@ -32,6 +41,7 @@
   background-color: var(--layer2-bg-color);
   transition: background 0.2s;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .right-bar-nav a:hover {

@@ -2,24 +2,6 @@
 
 
 
-.right-bar-nav {
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - 30px);
-  gap: 12px;
-  padding: 10px;
-  margin-left: 10px;
-  margin-top: 10px;
-}
 
-.right-bar-link {
-  text-decoration: none;
-  font-size: var(--text-font-middle);
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-weight: bold;
-  color: var(--text_muded_between);
-  background-color: var(--layer2-bg-color);
-  transition: background 0.2s;
-}
+
 

@@ -1,6 +1,6 @@
 import { ref, useState } from 'react';
 import { Link } from 'react-router-dom';
-import'./1_rightBar.css'
+import'./2_home_rightBar'
 import { useGlobal } from "../GlobalContext";
 
 
