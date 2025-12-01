@@ -5,6 +5,7 @@ import { GlobalProvider } from "./GlobalContext";
 import './index.css'
 
 import Main_page from './main_page.jsx'
+import Main_page_teach from './main_page_teach.jsx'
 import Home from './home/home.jsx'
 import Car from './car/car.jsx'
 import Employ from './employ/employ.jsx'
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: '/adduser',
     element: <Add_User />,
+  },
+  {
+    path: '/teach',
+    element: <Main_page_teach />,
   }
 ]);
 
@@ -37,7 +42,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <GlobalProvider>
       <RouterProvider router={router} />
-      <div className="blur_rightBarOpen" id="blur_rightBarOpen"></div>
+      <div id="blur_rightBarOpen" className='blur_rightBarOpen'></div>
+      <div id="exitBtn" className="exit-btn">✕</div>
     </GlobalProvider>
   </React.StrictMode>
 );

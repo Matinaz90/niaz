@@ -1,5 +1,4 @@
-import { ref, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import'./2_home_rightBar'
 import { useGlobal } from "../GlobalContext";
 
@@ -7,14 +6,29 @@ import { useGlobal } from "../GlobalContext";
 function Right_bar(){
 
   const { openRightBar, setOpenRightBar } = useGlobal();
-
+  const navigate = useNavigate();
 
     return(
         <div id='rightBar' className={`right_bar ${openRightBar ? 'open' : ''}`}>
           <nav className="right-bar-nav">
-            <Link to="/home" className="right-bar-link">خانه</Link>
-            <Link to="/car" className="right-bar-link">ماشین</Link>
-            <Link to="/employ" className="right-bar-link">استخدام</Link>
+            <div className='optionDiv'>
+              <div className='optionDivchildFullScreen'>
+                <a 
+                  className="right-bar-link"
+                  onClick={() => navigate("/home")}
+                >خانه</a>
+
+                <a 
+                  className="right-bar-link"
+                  onClick={() => navigate("/car")}
+                >ماشین</a>
+
+                <a 
+                  className="right-bar-link"
+                  onClick={() => navigate("/employ")}
+                >استخدام</a>
+              </div>
+            </div>
           </nav>
         </div>
     )

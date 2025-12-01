@@ -69,7 +69,7 @@ export function useValidatePathHome() {
     const rules = {
       joinbuild: ['meter', 'face', 'joinbuildpersent', 'price'],
       aparteman: ['meter', 'rooms', 'year', 'face', 'floor', 'condition', 'options', 'price'],
-      villa: ['meter', 'rooms', 'year', 'face', 'floor', 'condition', 'options', 'price'],
+      villa: ['meter', 'rooms', 'year', 'face', 'condition', 'options', 'price'],
       rent: ['meter', 'rooms', 'year', 'face', 'floor', 'condition', 'options', 'pricerent'],
       store: ['meter', 'year', 'face', 'condition', 'categorizestore', 'price'],
     };

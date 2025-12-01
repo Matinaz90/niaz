@@ -13,14 +13,14 @@ function Main_page() {
   const [width, setWidth] = useState(window.innerWidth)
 
   useEffect(() => {
-        const resize = () => {
-        setWidth(window.innerWidth);
-        };
+    let timeout;
+    const handleResize = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => setWidth(window.innerWidth), 100);
+    };
 
-        window.addEventListener("resize", resize);
-        return () => {
-        window.removeEventListener("resize", resize);
-        };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (

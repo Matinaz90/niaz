@@ -528,7 +528,7 @@
   scrollbar-width: thin;
   scrollbar-color: var(--text-muted) transparent;
   scrollbar-gutter: stable; 
-  height: calc(100vh - 150px);
+  height: calc(100vh - 100px);
   width: calc(100% + 8px);
   overflow-y: auto;
   scroll-behavior: smooth;
@@ -545,7 +545,7 @@
   scrollbar-width: thin;
   scrollbar-color: var(--text-muted) transparent;
   scrollbar-gutter: stable; 
-  height: calc(100vh - 198px);
+  height: calc(100vh - 143px);
   width: calc(100% + 8px);
   overflow-y: auto;
   scroll-behavior: smooth;

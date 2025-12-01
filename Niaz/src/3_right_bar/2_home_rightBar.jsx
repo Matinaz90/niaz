@@ -379,111 +379,107 @@ export default function Home_RightBar() {
     setpriceRecommended2(englishToPersianNumber(price) + ' میلیارد');
   };
 
-  useEffect(() => {
+  const allRefs = [
+  joinbuildDropdownref,
+  div1Ref,
+  div2Ref,
+  div3Ref,
+  refYear,
+  div1DropdownRef,
+  div2DropdownRef,
+  div3DropdownRef,
+  divRoomDropdownRef,
+  finalpagejoinbuild1Ref,
+  finalpagejoinbuild2Ref,
+  finalpagejoinbuild3Ref,
+  finalpagejoinbuild5Ref,
+  finalpageaparteman1Ref,
+  finalpageaparteman2Ref,
+  finalpageaparteman3Ref,
+  finalpageaparteman4Ref,
+  finalpageaparteman5Ref,
+  finalpageaparteman6Ref,
+  finalpageaparteman7Ref,
+  finalpageaparteman8Ref,
+  closeDownButtons,
+  finalpagevilla1Ref,
+  finalpagevilla2Ref,
+  finalpagevilla3Ref,
+  finalpagevilla4Ref,
+  finalpagevilla5Ref,
+  finalpagevilla6Ref,
+  finalpagevilla7Ref,
+  finalpagerent1Ref,
+  finalpagerent2Ref,
+  finalpagerent3Ref,
+  finalpagerent4Ref,
+  finalpagerent5Ref,
+  finalpagerent6Ref,
+  finalpagerent7Ref,
+  finalpagerent8Ref,
+  finalpagestore1Ref,
+  finalpagestore2Ref,
+  finalpagestore3Ref,
+  finalpagestore4Ref,
+  finalpagestore5Ref,
+  finalpagestore6Ref,
+  ];
 
-    const refs = [
-      joinbuildDropdownref,
-      div1Ref,
-      div2Ref,
-      div3Ref,
-      refYear,
-      div1DropdownRef,
-      div2DropdownRef,
-      div3DropdownRef,
-      divRoomDropdownRef,
-      finalpagejoinbuild1Ref,
-      finalpagejoinbuild2Ref,
-      finalpagejoinbuild3Ref,
-      finalpagejoinbuild5Ref,
-      finalpageaparteman1Ref,
-      finalpageaparteman2Ref,
-      finalpageaparteman3Ref,
-      finalpageaparteman4Ref,
-      finalpageaparteman5Ref,
-      finalpageaparteman6Ref,
-      finalpageaparteman7Ref,
-      finalpageaparteman8Ref,
-      closeDownButtons,
-      finalpagevilla1Ref,
-      finalpagevilla2Ref,
-      finalpagevilla3Ref,
-      finalpagevilla4Ref,
-      finalpagevilla5Ref,
-      finalpagevilla6Ref,
-      finalpagevilla7Ref,
-      finalpagerent1Ref,
-      finalpagerent2Ref,
-      finalpagerent3Ref,
-      finalpagerent4Ref,
-      finalpagerent5Ref,
-      finalpagerent6Ref,
-      finalpagerent7Ref,
-      finalpagerent8Ref,
-      finalpagestore1Ref,
-      finalpagestore2Ref,
-      finalpagestore3Ref,
-      finalpagestore4Ref,
-      finalpagestore5Ref,
-      finalpagestore6Ref,
-    ];
+  useEffect(() => {
+    const isInsideAnyRef = (target) =>
+      allRefs.some(ref => ref.current?.contains(target));
+
+    const handleClickOutside = (event) => {
+      if (!isInsideAnyRef(event.target)) {
+        closeAllDropdowns();
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape" && !isInsideAnyRef(event.target)) {
+        closeAllDropdowns();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [allRefs]);
+
+  const smallRefs = [
+  joinbuildDropdownref,
+  div1Ref,
+  div2Ref,
+  div3Ref,
+  refYear,
+  div1DropdownRef,
+  div2DropdownRef,
+  div3DropdownRef,
+  divRoomDropdownRef,
+  roomsInputRef,
+  closeDownButtons,
+  ];
+
+  useEffect(() => {
+    const isInside = (target) =>
+      smallRefs.some(ref => ref.current?.contains(target));
 
     const handleClick = (event) => {
-
-      const clickedInside = refs.some(ref => ref.current?.contains(event.target));
-
-      if (!clickedInside) {
-        closeAllDropdowns()
-      };
-    };
-
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-
-        const clickedInside = refs.some(ref => ref.current?.contains(event.target));
-
-        if (!clickedInside) {
-          closeAllDropdowns()
-        };
-      };
-    };
-
-    document.addEventListener('mousedown', handleClick);
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-    document.removeEventListener('mousedown', handleClick);
-    document.removeEventListener('keydown', handleKeyDown);
-  };
-  }, []);
-
-  useEffect(() => {
-    const handleClick1 = (event) => {
-      const refs = [
-        joinbuildDropdownref,
-        div1Ref,
-        div2Ref,
-        div3Ref,
-        refYear,
-        div1DropdownRef,
-        div2DropdownRef,
-        div3DropdownRef,
-        divRoomDropdownRef,
-        roomsInputRef,
-        closeDownButtons,
-      ];
-
-      const clickedInside = refs.some(ref => ref.current?.contains(event.target));
-
-      if (!clickedInside) {
+      if (!isInside(event.target)) {
         setShowYearList(false);
         setopenRoomDropdown(false);
         setOpenDropdownFloars(null);
         setShowJoinbuildDropdown(false);
-      };
+      }
     };
 
-    document.addEventListener('mousedown', handleClick1);
-    return () => document.removeEventListener('mousedown', handleClick1);
-  }, []);
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [smallRefs]);
 
   const AddLikemilion = (price) => {
     if(price == 0) return
@@ -4404,4 +4400,3 @@ export default function Home_RightBar() {
     </div>
   );
 };
-

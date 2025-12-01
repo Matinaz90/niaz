@@ -4,7 +4,7 @@
 
 .gradient-border {
     margin-top: 10px;
-    padding: 3px; /* thickness of border */
+    padding: 3px;
     border-radius: 12px;
     display: inline-block;
     width: calc(100% - 46px);
@@ -15,28 +15,73 @@
 
 .blur_rightBarOpen {
   position: fixed;
-  inset: 0;
-  transition: 0.25s ease;
-  pointer-events: none;
-  display: none;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 0px;
+  transition: width 0.3s ease;
   backdrop-filter: blur(5px);
   background: rgba(0, 0, 0, 0.3);
   pointer-events: auto;
+  display: block;
   z-index: 1001;
-  touch-action: none;
+  overflow: hidden;
 }
 
+.blur_rightBarOpen.open {
+  width: 100%;
+ }
+
+.exit-btn {
+  position: fixed;
+  top: 20px;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  border: 2px solid var(--layer3-bg-color);
+  background: var(--layer2-bg-color);
+  
+  color: var(--text, #fff);
+  font-size: 20px;
+  font-weight: bold;
+  
+  box-shadow: 0 0 8px #0003;
+  cursor: pointer;
+  z-index: 0;
+
+  transition: width .25s ease, right .25s ease, background .2s, box-shadow .2s;
+  opacity: 0;
+}
+
+.exit-btn.open {
+  right: calc(20% + 10px);
+  opacity: 1;
+  z-index: 1001;
+}
+
+.exit-btn:hover {
+  background: var(--layer3-bg-color);
+  box-shadow: 0 0 12px #0005;
+}
+
+
+
 .content-box {
-    background-color: var(--layer2-bg-color); /* match your dark theme */
-    color: white;
-    padding: 16px;
-    border-radius: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
+  background-color: var(--layer2-bg-color);
+  color: white;
+  padding: 16px;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .image_mainPage{
-    width: 100%;
-    height: auto;
-    max-height: 500px;
+  width: 100%;
+  height: auto;
+  max-height: 500px;
 }
