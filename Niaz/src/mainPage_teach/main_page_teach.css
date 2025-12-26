@@ -1,0 +1,68 @@
+.teach_buttons_div{
+  width: 60%;
+  height: 100px;
+  position: fixed;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: var(--layer1-importan-color);
+  display: block;
+  color: var(--text);
+  font-size: var(--text-font-large);
+  font-weight: bold; 
+  text-align: end;
+}
+  
+.teach_buttons_div_right{
+  top: 90px; 
+  right: 7.5%; 
+}
+
+.teach_buttons_div_middle{
+  top: 120px; 
+  right: 20%;
+  left: 20%;
+}
+
+.teach_buttons_div_left{
+  top: 90px; 
+  left: 17%; 
+}
+
+.teach_img {
+  z-index: 1001;
+  position: absolute;
+  transform: rotate(-53deg) scaleY(-1) scale(0.6);
+  display: block;
+}
+
+
+.teach_img_right{
+  top: -10px;
+  right: -135px;
+}
+
+.teach_img_middle{
+  top: -36px;
+  right: 50%;
+  left: 50%; 
+  rotate: -36deg;  
+  scale: 5;
+}
+
+.teach_img_left{
+  top: -10px;
+  left: -135px;
+  transform: rotate(-127deg) scaleY(1) scale(0.6);
+}
+
+.teach_buttons_div button{
+  width: 26%;
+  height: 40px;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  border-radius: 10px;
+  background-color: var(--text_muded_between);
+  border: 2px solid var(--layer2-bg-color);
+  cursor: pointer;
+}

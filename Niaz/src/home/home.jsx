@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import '../App.css'
 import Top_bar_left from '../1_topbar/1_top_bar_left.jsx'
 import Filter_chip_bar from "../1_topbar/1.5_filter-chip-bar.jsx";
 import Top_bar_middle from '../1_topbar/2_top_bar_middle.jsx'
@@ -7,6 +6,8 @@ import Top_bar_right from '../1_topbar/3_top_bar_right.jsx'
 import SlideModeChanger from '../1_topbar/2.5_slideModeChanger.jsx'
 import Product from "../2_product/product.jsx";
 import Home_RightBar from "../3_right_bar/2_home_rightBar.jsx"
+
+// for css becouse this is a global file i didnot add it will becouse mesy becouse i should import every file
 
 function Home() {
   const [width, setWidth] = useState(window.innerWidth)

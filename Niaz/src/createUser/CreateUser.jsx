@@ -1,18 +1,19 @@
 import { useState  } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './CreateUser.css'
-import { AddUser, CheckCode } from "../../../api/addUserSms";
+import { AddUsersignUp, AddUserLogin, CheckCode } from "../../api/User_add";
 
 
 function Add_User(){
 
-  const [mode, setmode] = useState('Number')
+  const [mode, setmode] = useState('Number_signUp')
   const navigate = useNavigate();
   
   const [userName, setuserName] = useState("")
   const [numVal, setnumVal] = useState('');
   const [secretCode, setsecretCode] = useState('');
   const [fadeOut, setFadeOut] = useState(false);
+  const [loginType, setloginType] = useState(false)
 
   const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
   const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
@@ -30,7 +31,6 @@ function Add_User(){
       return index > -1 ? persianNums[index] : ch;
     }).join("");
   };
-
 
   const handleChangeforOneNums = (e, setter, extraFunc) => {
     const raw = persianToEnglishNumber(e.target.value)
@@ -75,7 +75,8 @@ function Add_User(){
     setnumVal(s.length > num ? s.slice(-num) : s);
   }
 
-  const sendCode = async () => {
+  const sendCodeSignUp = async () => {
+    const el = document.querySelector('.sendCodeProblem');
 
     if (userName == '' || numVal == ''){
       el.classList.add('show');
@@ -84,8 +85,29 @@ function Add_User(){
     }
 
     
-    const { ok } = (await AddUser(numVal, userName)) || {};
+    const { ok } = (await AddUsersignUp(numVal, userName)) || {};
+
+    if (!ok) {
+      if (!el) return;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 3000);
+      return;
+    }
+
+    setmode('verfySms');
+  }
+
+  const sendCodeLogin = async () => {
     const el = document.querySelector('.sendCodeProblem');
+
+    if (numVal == ''){
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 3000);
+      return;
+    }
+
+    
+    const { ok } = (await AddUserLogin(numVal)) || {};
 
     if (!ok) {
       if (!el) return;
@@ -98,14 +120,14 @@ function Add_User(){
   }
 
   const checkCode = async () => {
-    if (userName == '' || numVal == '' || secretCode == ''){
+    const el = document.querySelector('.sendCodeProblem');
+    if (numVal == '' || secretCode == ''){
       el.classList.add('show');
       setTimeout(() => el.classList.remove('show'), 3000);
       return;
     }
     
-    const { ok } = (await CheckCode(numVal, userName, String(secretCode))) || {};
-    const el = document.querySelector('.sendCodeProblem');
+    const { ok } = (await CheckCode(numVal, '', String(secretCode), loginType)) || {};
 
     if (!ok) {
       if (!el) return;
@@ -123,13 +145,13 @@ function Add_User(){
     setTimeout(() => setFadeOut(true), 4200);
 
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = "/teach";
     }, 5000);
   };
 
   return (
     <div className='BodyAddNiaz'>
-      {mode === 'Number' && (
+      {mode === 'Number_signUp' && (
         <>
           <div className='PlaceHolderBackground'></div>
           
@@ -144,13 +166,37 @@ function Add_User(){
             <div className='centerDiv'>
 
               <p className='sendCodeProblem'>
-                ارسال ناموفق بود؛ دوباره روی «ثبت» بزنید
+               .ارسال ناموفق بود؛ دوباره روی «ثبت» بزنید
               </p>
 
             </div>
-            <button onClick={() => sendCode()}>ثبت</button>
-            <p className='loginInTextfirst'>ورود به حساب</p>
+            <button onClick={() => sendCodeSignUp()}>ثبت</button>
+            <p className='loginInTextfirst' onClick={() => {setmode('Number_Login'), setloginType(true)}}>ورود به حساب</p>
             <p className='loginInTextlast' onClick={() =>navigate("/")}>بازگشت</p>
+          </div>
+        </>
+      )}
+      
+      {mode === 'Number_Login' && (
+        <>
+          <div className='PlaceHolderBackground'></div>
+          
+          <div className='PlaceHolder'>
+            <h2>ورود</h2>
+
+            <input inputMode="numeric" value={englishToPersianNumber(numVal)} onChange={(e) => {handleChangeforOneNums(e, setnumVal, numCheackfunc(e.target.value, 11)) }} placeholder='شماره تماس'></input>
+
+
+            <div className='centerDiv'>
+
+              <p className='sendCodeProblem'>
+               .ارسال ناموفق بود؛ دوباره روی «ثبت» بزنید
+              </p>
+
+            </div>
+            <button onClick={() => sendCodeLogin()}>ورود</button>
+            <p className='loginInTextfirst' onClick={() => {setmode('Number_signUp'), setloginType(false)}}>ثبت نام</p>
+            <p className='loginInTextlast' onClick={() =>navigate('/')}>بازگشت</p>
           </div>
         </>
       )}
@@ -164,10 +210,10 @@ function Add_User(){
             <input value={englishToPersianNumber(secretCode)} onChange={(e) => handleChangeforEnterCode(e, setsecretCode)} placeholder="کد ورود"></input>
 
             <p className='sendCodeProblem'>
-              ارسال ناموفق بود؛ دوباره روی «ثبت» بزنید
+              .ارسال ناموفق بود؛ دوباره روی «ثبت» بزنید
             </p>
             <button onClick={() => checkCode()}>ثبت</button>
-            <p className='loginInTextfirst' onClick={() => {setmode('Number'), setsecretCode('n')}}>تغییر مشخصات و ارسال مجدد کد</p>
+            <p className='loginInTextfirst' onClick={() => {loginType ? setmode('Number_Login') : setmode('Number_signUp'), setsecretCode('')}}>تغییر مشخصات و ارسال مجدد کد</p>
             <p className='loginInTextlast' onClick={() =>navigate("/")}>بازگشت</p>
           </div>
         </>

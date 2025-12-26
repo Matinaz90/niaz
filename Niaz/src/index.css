@@ -48,6 +48,7 @@ body{
   user-select: none;  
   width: 100%;
   scroll-behavior: smooth;
+  position: relative;
 }
 
 input[type=number]::-webkit-inner-spin-button,

@@ -74,7 +74,7 @@ export function useValidatePathHome() {
       store: ['meter', 'year', 'face', 'condition', 'categorizestore', 'price'],
     };
 
-    if (segments[0] !== 'home' || !rules[segments[1]]) {
+    if (segments[0] == 'home' || !rules[segments[1]]) {
       navigate('/home', { replace: true });
       return;
     }

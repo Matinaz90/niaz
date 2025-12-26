@@ -5,11 +5,12 @@ import { GlobalProvider } from "./GlobalContext";
 import './index.css'
 
 import Main_page from './main_page.jsx'
-import Main_page_teach from './main_page_teach.jsx'
+import Main_page_teach from './mainPage_teach/main_page_teach.jsx'
 import Home from './home/home.jsx'
 import Car from './car/car.jsx'
 import Employ from './employ/employ.jsx'
-import Add_User from "./1_topbar/createUser/CreateUser.jsx";
+import Add_User from "./createUser/CreateUser.jsx";
+import AddNiaz from "./addNiaz/AddNiaz.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: '/teach',
     element: <Main_page_teach />,
+  },
+  {
+    path: '/addniaz',
+    element: <AddNiaz />,
   }
 ]);
 

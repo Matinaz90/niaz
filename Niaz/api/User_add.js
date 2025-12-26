@@ -8,13 +8,14 @@ function startTimer() {
     if (seconds >= 120) {
       clearInterval(interval);
       // inTime = false;
+      // should this change
     }
   }, 10000);
 }
 
-async function AddUser(number, userName) {
+async function AddUsersignUp(number, userName) {
   try {
-    const res = await fetch("https://localhost:443/smsSend", {
+    const res = await fetch("http://localhost:443/smsSend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -35,19 +36,42 @@ async function AddUser(number, userName) {
   }
 }
 
-async function CheckCode(number, userName, CodeEntered) {
+async function AddUserLogin(number) {
+  try {
+    const res = await fetch("http://localhost:443/smsSend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        phone: number,
+      }),
+    });
+
+    if (!res.ok) {
+      return { ok: false };
+    }
+
+    startTimer();
+
+    return { ok: true };
+  } catch (error) {
+    return { ok: false };
+  }
+}
+
+async function CheckCode(number, userName, CodeEntered, logintype) {
   try {
 
 
     if (!inTime) return { ok: false };
     
-    const res = await fetch("https://localhost:443/checkloginCode", {
+    const res = await fetch("http://localhost:443/checkloginCode", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: userName,
         phone: number,
         code: String(CodeEntered),
+        logintype: logintype,
       }),
     });
 
@@ -59,4 +83,4 @@ async function CheckCode(number, userName, CodeEntered) {
   }
 }
 
-export { AddUser, CheckCode };
+export { AddUsersignUp, AddUserLogin, CheckCode };
