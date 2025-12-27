@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { GlobalProvider } from "./GlobalContext";
+import { Navigate } from 'react-router-dom';
 import './index.css'
 
 import Main_page from './main_page.jsx'
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
   {
     path: '/addniaz',
     element: <AddNiaz />,
-  }
+  },
+  {
+    path: '*',
+    element: <Navigate to="/" replace />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

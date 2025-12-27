@@ -1,11 +1,9 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useValidatePathHome } from "../validPath.jsx";
 import './2.1_home_rightBar.css';
 import { useGlobal } from "../GlobalContext";
 
 export default function Home_RightBar() {
-  useValidatePathHome()
   const [mode, setMode] = useState('default');
   const navigate = useNavigate();
   const location = useLocation();

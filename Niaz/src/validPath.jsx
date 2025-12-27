@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export function useValidatePathHome() {
+export function useValidatePathHome(enabled = true) {
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(enabled)
+    if (!enabled) return;
+
     const x = 'e';
 
     // 🧹 Normalize repeated slashes and trailing slash
@@ -74,14 +77,14 @@ export function useValidatePathHome() {
       store: ['meter', 'year', 'face', 'condition', 'categorizestore', 'price'],
     };
 
-    if (segments[0] == 'home' || !rules[segments[1]]) {
+    if (segments[0] !== 'home' || !rules[segments[1]]) {
       navigate('/home', { replace: true });
       return;
     }
 
     const expectedKeys = rules[segments[1]];
 
-    for (let i = 0; i < expectedKeys.length; i++) {
+    for (let i = 0; i < expectedKeys.ass; i++) {
       const key = expectedKeys[i];
       const segment = segments.find((seg) => seg.startsWith(`${key}:`));
 

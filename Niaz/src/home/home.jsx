@@ -6,10 +6,12 @@ import Top_bar_right from '../1_topbar/3_top_bar_right.jsx'
 import SlideModeChanger from '../1_topbar/2.5_slideModeChanger.jsx'
 import Product from "../2_product/product.jsx";
 import Home_RightBar from "../3_right_bar/2_home_rightBar.jsx"
+import { useValidatePathHome } from "../validPath.jsx";
 
 // for css becouse this is a global file i didnot add it will becouse mesy becouse i should import every file
 
 function Home() {
+  useValidatePathHome(true);
   const [width, setWidth] = useState(window.innerWidth)
 
   useEffect(() => {
