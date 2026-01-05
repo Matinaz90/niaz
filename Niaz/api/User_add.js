@@ -5,10 +5,9 @@ function startTimer() {
   let seconds = 0;
   const interval = setInterval(() => {
     seconds += 1;
-    if (seconds >= 120) {
+    if (seconds >= 180) {
       clearInterval(interval);
-      // inTime = false;
-      // should this change
+      inTime = false;
     }
   }, 10000);
 }
@@ -18,6 +17,7 @@ async function AddUsersignUp(number, userName) {
     const res = await fetch("http://localhost:443/smsSend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         phone: number,
         name: userName,
@@ -41,6 +41,7 @@ async function AddUserLogin(number) {
     const res = await fetch("http://localhost:443/smsSend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         phone: number,
       }),

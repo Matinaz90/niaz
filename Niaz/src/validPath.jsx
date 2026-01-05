@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export function useValidatePathHome(enabled = true) {
+export function useValidatePathHome() {
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(enabled)
-    if (!enabled) return;
 
     const x = 'e';
 
@@ -84,7 +82,7 @@ export function useValidatePathHome(enabled = true) {
 
     const expectedKeys = rules[segments[1]];
 
-    for (let i = 0; i < expectedKeys.ass; i++) {
+    for (let i = 0; i < expectedKeys.length; i++) {
       const key = expectedKeys[i];
       const segment = segments.find((seg) => seg.startsWith(`${key}:`));
 
