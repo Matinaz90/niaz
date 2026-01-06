@@ -1,8 +1,9 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 
 const GlobalContext = createContext();
 
 export function GlobalProvider({ children }) {
+  const lastEscTimeRef = useRef(0);
   const [openRightBar, setOpenRightBar] = useState(false);
 
   useEffect(() => {
@@ -14,15 +15,26 @@ export function GlobalProvider({ children }) {
       };
     };
 
-    const handleEscape = (event) => {
-      if (event.key === "Escape") {
+    const handleEscape = (e) => {
+      if (e.key !== "Escape") return;
+
+      const now = Date.now();
+
+      if (now - lastEscTimeRef.current <= 300) {
+        // ✅ DOUBLE ESC
         setOpenRightBar(false);
+        lastEscTimeRef.current = 0; // reset
+      } else {
+        // ✅ FIRST ESC
+        lastEscTimeRef.current = now;
       }
     };
 
     document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleEscape);
     return () => {
       document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleEscape);
     
     }
   }, []);
