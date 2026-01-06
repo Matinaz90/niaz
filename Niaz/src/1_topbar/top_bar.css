@@ -239,20 +239,26 @@ max-width: 600px;
 
 .top_rightbar_countaner{
   display: grid;
-  grid-template-columns: 100px 44px;
-  justify-content: end;
-  align-items: end;
+  grid-template-columns: 1fr 55px;
+  align-items: center;
 }
 
 .top_leftbar_countaner{
   display: grid;
   grid-template-columns: 88px 1fr ;
-  align-items: end;
+  align-items: center;
   position: relative;
   height: 44px;
 }
 
-.city_button{
+.hamburgurImage {
+  height: 32px;
+  margin-left: 7px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.city_button {
   display: inline-block;  
   padding: 6px 12px;
   font-size: var(--text-font-middle);
@@ -270,203 +276,45 @@ max-width: 600px;
   transition: 0.3s;
   border: 1px solid transparent;
   box-sizing: border-box;
-  margin-right: 14px;
+  z-index: 2;
 }
-
-.city_but:hover {
+.city_button:hover {
   background-color: var(--layer1-importan-color);
-
 }
 
-
-.cityselected {
-  position: absolute;
-  top: 50px;
-  right: 100px;
-  width: 210px;
-  max-height: 70vh;
-  background: var(--layer2-bg-color);
-  border-radius: 8px;
-  padding-bottom: 50px; /* space for bottom button */
-  overflow: hidden; /* stop outer scroll */
-  display: flex;
-  flex-direction: column;
-
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.cityselected.open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.clearAllCityBut {
-  background-color: hsl(0, 100%, 41%); /* strong red */
-  border: none;
-  color: var(--text);
-  font-size: var(--text-font-small);
-  padding: 10px 12px;
-  border-radius: 6px;
-  width: 100%;
-  max-width: 200px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.clearAllCityBut:hover {
-  background-color: hsl(0, 100%, 36%);
-}
-
-.serchInCitys {
-  width: 100%;
-  max-width: 150px;
-  display: block;
-  padding: 8px 10px;
-  font-size: var(--text-font-small);
-  border: 1px solid var(--layer1-importan-color);
-  border-radius: 6px;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.serchInCitys:focus {
-  border-color: var(--boeder-blue-color);
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
-.city-scroll-content {
-  overflow-y: auto;
-  flex: 1;
-  padding: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.citylocotionchild {
-  flex: 1 1 300px;
-  background-color: var(--layer2-bg-color);
-  padding: 12px;
-  border: 1px solid var(--layer2-bg-color);
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-.citylocotionchild button {
-  width: 100%;
-  background-color: var(--boeder-blue-color);
-  color: var(--text);
-  border: none;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: background-color 0.25s ease;
-}
-
-.citylocotionchild button:hover {
-  background-color: #0056b3;
-}
-
-.city-label {
-  display: none;
-  margin-bottom: 6px;
-  cursor: pointer;
-  padding-left: 4px;
-  color: var(--text);
-  text-align: end;
-  grid-template-columns: 20px 1fr;
-  transition: background-color 0.2s ease;
-}
-
-.city-label input[type="checkbox"] {
-  transform: scale(1.1);
-  cursor: pointer;
-  margin-bottom: 50%;
-  margin-top: 50%;
-  transition: transform 0.2s ease;
-  transition: visibility 0.3s, opacity 0.3s ease;
-
-}
-
-.city-label-serch {
-  margin-bottom: 6px;
-  cursor: pointer;
-  padding-left: 4px;
+.cityDropdown{
+  position: fixed;
   display: grid;
-  color: var(--text);
-  text-align: end;
-  grid-template-columns: 20px 1fr;
-  transition: background-color 0.2s ease;
-}
+  gap: 2px;
+  height: 70%;
+  background-color:var(--layer2-bg-color);
+  width: 20%;
+  top: 80px;
+  right: 40%;
 
-.city-label-serch input[type="checkbox"] {
-  margin-bottom: 6px;
-  cursor: pointer;
-  padding-left: 4px;
-  color: var(--text);
-  text-align: end;
-  grid-template-columns: 20px 1fr;
-  transition: background-color 0.2s ease;
-}
 
-.fixed-bottom-button {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background-color: var(--layer2-bg-color);
-  border: none;
-  border-top: 1px solid var();
-  padding-top: 8.7px;
-}
+  overflow: scroll;
+  scrollbar-width: thin;           
+  scrollbar-color: #555 transparent; 
+  scroll-behavior: smooth;
 
-.conformCity {
-  width: 90px;
-  height: 32px;
-  background-color: hsl(88, 100%, 28%);
-  color: var(--text);
-  border: none;
-  border-radius: 6px;
-  margin: 0 10px 12px 16px; /* more natural spacing */
-  font-size: var(--text-font-small);
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.conformCity:hover {
-  background-color: hsl(88, 100%, 23%);
-}
-
-.deconformCity {
-  width: 60px;
-  height: 32px;
-  background-color: hsl(0, 100%, 41%);
-  color: var(--text);
-  border: none;
-  border-radius: 6px;
-  margin: 0px 20px 12px 12px;
-  font-size: var(--text-font-small);
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.deconformCity:hover {
-  background-color: hsl(0, 100%, 36%);
+  align-items: flex-start;
 }
 
 
-.hamburgurImage {
-  height: 32px;
-  justify-self: start;
-  justify-content: end;
-  align-items: end;
-  margin-bottom: 6.3px;
-  transition: all 0.2s ease;
-  cursor: pointer;
+.cityDropdown::-webkit-scrollbar {
+  width: 8px;          /* scrollbar thickness */
+}
+
+.cityDropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cityDropdown::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+}
+
+.cityDropdown::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
 }
