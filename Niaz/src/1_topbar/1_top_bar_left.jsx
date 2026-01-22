@@ -44,7 +44,7 @@ function Top_bar_left(){
             <img className='niazImage' src='/2.png'  onClick={() =>navigate("/")}/>
                 
 
-            <dev ref={refSetting}>
+            <div ref={refSetting}>
                 <h2
                     id="add_user"
                     className="add_user"
@@ -58,12 +58,12 @@ function Top_bar_left(){
                     {isloggedin ? "پنل کاربری" : "ورود / ثبت نام"}
                 </h2>
 
-                <dev className='setting' style={{ display: settingOpenOrClose ? 'inline-block' : 'none' }} >    
+                <div className='setting' style={{ display: settingOpenOrClose ? 'inline-block' : 'none' }} >    
                         <h2 className='setting_options'> افزودن اگهی</h2>
                         <h2 className='setting_options'> ویرایش پروفایل</h2>
                         <h2 className='setting_options'> خروج</h2>
-                </dev>
-            </dev>
+                </div>
+            </div>
         </div>
     )
 }

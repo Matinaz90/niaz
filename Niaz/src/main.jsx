@@ -52,7 +52,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <GlobalProvider>
       <RouterProvider router={router} />
-      <div id="exitBtn" className="exit-btn"><dev className='inner-exit-btn'>✕</dev></div>
+      <div id="exitBtn" className="exit-btn"><div className='inner-exit-btn'>✕</div></div>
       <div id="blur_rightBarOpen" className='blur_rightBarOpen'></div>
     </GlobalProvider>
   </React.StrictMode>

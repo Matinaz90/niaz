@@ -98,25 +98,20 @@ function CityDropdown() {
     }
     
     const localHostUpdate = (val, city) => {
+        const InnerCityDev = document.getElementById('InnerCity');
         if(val.includes('همه ی شهرهای')){
             if(cityVal.includes(val)){
                 const updated = cityVal.filter(item => item != val);
-                const element = document.getElementById('InnerCity');
-                if (element) {
-                element.style.display = 'none';
-                } 
+
+                InnerCityDev.style.display = 'grid'
                 setcityVal(updated);
                 return
             }
    
             const updated = cityVal.filter(item => !locations[city].includes(item)); 
-                const element = document.getElementById('InnerCity');
-            if (element) {
-                element.style.display = 'none';
-            } 
             const updated2 = [...updated,  val];
 
-            //idk what to do
+            InnerCityDev.style.display = 'none'
             
             setcityVal(updated2);
             return
