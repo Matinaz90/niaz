@@ -268,8 +268,6 @@
   font-size: var(--text-font-small);
   color: var(--text_muded_between);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
   transition: 0.4s;
   opacity: 0;
   visibility: hidden;
@@ -279,15 +277,6 @@
   opacity: 1;
   visibility: visible;
   max-height: 280px;
-}
-
-.year-dropdown::-webkit-scrollbar {
-  width: 6px;
-}
-
-.year-dropdown::-webkit-scrollbar-thumb {
-  background-color: var(--text-muted);
-  border-radius: 4px;
 }
 
 .conform_buttonYear {
@@ -348,8 +337,6 @@
   font-size: var(--text-font-small);
   color: var(--text_muded_between);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
   transition: 0.2s;
   opacity: 1;
   visibility: hidden;
@@ -368,31 +355,20 @@
   flex-direction: column;
   gap: 1rem;
   padding-bottom: 5px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
   width: calc(100% + 8px);
 
-}
-
-.optionDivchild::-webkit-scrollbar {
-  width: 8px;
 }
 
 .optionDivchildFullScreen{
-  height: calc(100vh - 145px);
+  height: 100%;
   overflow-y: auto;
-  display: flex; 
+  display: flex;
+  overflow-y: auto;
   flex-direction: column;
   gap: 1rem;
   padding-bottom: 5px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
   width: calc(100% + 8px);
 
-}
-
-.optionDivchildFullScreen::-webkit-scrollbar {
-  width: 8px;
 }
 
 .homeNumbresInfloor {
@@ -409,8 +385,6 @@
   font-size: var(--text-font-small);
   color: var(--text_muded_between);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
   transition: 0.2s;
   opacity: 0;
   visibility: hidden;
@@ -421,16 +395,6 @@
   visibility: visible;
   max-height: 280px;
 }
-
-.homeNumbresInfloor::-webkit-scrollbar {
-  width: 6px;
-}
-
-.homeNumbresInfloor::-webkit-scrollbar-thumb {
-  background-color: var(--text-muted);
-  border-radius: 4px;
-}
-
 
 .oneBack_options{
   background-color: transparent;
@@ -477,8 +441,6 @@
   font-size: var(--text-font-small);
   color: var(--text_muded_between);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
   
   padding: 0 10px;
 
@@ -497,82 +459,43 @@
   max-height: 600px;
 }
 
-.finalPage-dropdown::-webkit-scrollbar {
-  width: 6px;
-}
-
-.finalPage-dropdown::-webkit-scrollbar-thumb {
-  background-color: var(--text-muted);
-  border-radius: 4px;
-}
-
 .optionDivchildfinalPage {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 15px;
   padding-bottom: 5px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-  scrollbar-gutter: stable; 
-  scroll-behavior: smooth;
-}
-
-.optionDivchildfinalPage::-webkit-scrollbar {
-  width: 8px;
+  height: calc(100vh - 35px);
+  overflow-y: auto;
 }
 
 .optionDivchildfinalPageMain {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-  scrollbar-gutter: stable; 
   height: calc(100vh - 100px);
   width: calc(100% + 8px);
   overflow-y: auto;
-  scroll-behavior: smooth;
 }
 
-.optionDivchildfinalPageMain::-webkit-scrollbar {
-  width: 8px;
-}
 
 .optionDivchildOptions {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-  scrollbar-gutter: stable; 
   height: calc(100vh - 143px);
   width: calc(100% + 8px);
   overflow-y: auto;
-  scroll-behavior: smooth;
-}
-
-.optionDivchildOptions::-webkit-scrollbar {
-  width: 8px;
 }
 
 .optionDivchildOptionsfinalPage {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-  scrollbar-gutter: stable; 
   height: calc(100vh);
   max-height: 300px;
   width: calc(100% + 8px);
   overflow-y: auto;
-  scroll-behavior: smooth;
 }
-
-.optionDivchildOptionsfinalPage::-webkit-scrollbar {
-  width: 8px;
-}
-
 
 
 
@@ -580,14 +503,12 @@
   max-height: 0px;
   overflow-y: auto;
   background-color: var(--layer2-bg-color);
-  border: 1px solid var(--boeder-blue-color);
+  border: 1px solid var(--boeder  -blue-color);
   border-radius: 8px;
   z-index: 10;
   font-size: var(--text-font-small);
   color: var(--text_muded_between);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
   transition: 0.4s;
   opacity: 0;
   visibility: hidden;
@@ -597,13 +518,4 @@
   opacity: 1;
   visibility: visible;
   max-height: 130px;
-}
-
-.year-dropdown-finalPage::-webkit-scrollbar {
-  width: 6px;
-}
-
-.year-dropdown-finalPage::-webkit-scrollbar-thumb {
-  background-color: var(--text-muted);
-  border-radius: 4px;
 }

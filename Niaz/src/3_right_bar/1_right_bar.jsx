@@ -12,7 +12,7 @@ function Right_bar(){
         <div id='rightBar' className={`right_bar ${openRightBar ? 'open' : ''}`}>
           <nav className="right-bar-nav">
             <div className='optionDiv'>
-              <div className='optionDivchildFullScreen'>
+              <div className='optionDivchildfinalPage'>
                 <a 
                   className="right-bar-link"
                   onClick={() => navigate("/home")}

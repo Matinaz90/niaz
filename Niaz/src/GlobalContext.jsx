@@ -5,13 +5,17 @@ const GlobalContext = createContext();
 export function GlobalProvider({ children }) {
   const lastEscTimeRef = useRef(0);
   const [openRightBar, setOpenRightBar] = useState(false);
+  const [OpenCity, setOpenCity] = useState(false);
 
   useEffect(() => {
     const handleClick = (e) => {
       const bar = document.getElementById("rightBar");
+      const cityDropdown = document.getElementById("cityDropdown");
+      if (cityDropdown && !cityDropdown.contains(e.target)) {
+        setOpenCity(false);
+      };
       if (bar && !bar.contains(e.target)) {
         setOpenRightBar(false);
-
       };
     };
 
@@ -43,19 +47,26 @@ export function GlobalProvider({ children }) {
   useEffect(() => {
   const exitBtn = document.getElementById("exitBtn");
   const blur = document.getElementById("blur_rightBarOpen");
+  const blur_city = document.getElementById("blur_rightBarOpen-city");
 
-  if (!exitBtn || !blur) return;
+  if (!exitBtn || !blur || !blur_city) return;
 
   exitBtn.classList[openRightBar ? "add" : "remove"]("open");
+
   blur.classList[openRightBar ? "add" : "remove"]("open");
-}, [openRightBar]);
+  blur_city.classList[OpenCity ? "add" : "remove"]("open");
+}, [openRightBar, OpenCity]);
 
   useEffect(() => {
-  document.body.style.overflow = openRightBar ? 'hidden' : 'auto';
-  }, [openRightBar]);
+    if(openRightBar || OpenCity){
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [openRightBar, OpenCity]);
 
   return (
-    <GlobalContext.Provider value={{ openRightBar, setOpenRightBar }}>
+    <GlobalContext.Provider value={{ openRightBar, setOpenRightBar, OpenCity, setOpenCity }}>
       {children}
     </GlobalContext.Provider>
   );
