@@ -28,6 +28,7 @@ function Top_bar_middle(){
             <input
                 style={{ width: `${width * 0.3}px` }}
                 type="text"
+                id="SearchBar"
                 placeholder="... دنبال چی میگردی"
                 className="search-input"
             />

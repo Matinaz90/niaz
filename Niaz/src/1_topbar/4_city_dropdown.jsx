@@ -1,13 +1,12 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState } from 'react';
 import './top_bar.css';
-import { useGlobal } from "../GlobalContext";
 
 function CityDropdown() {
     
     const [cityVal, setcityVal] = useState([]);
-    const [ButtonCityVal, setButtonCityVal] = useState([]);
-    const { OpenCity, setOpenCity } = useGlobal();
-    const isMounted = useRef(false);
+    const [OpenCity, setOpenCity] = useState();
+    const [openCities, setOpenCities] = useState([]);
+    const [AllCityes, setAllCityes] = useState([]);
     
     const locations = {
         "همدان": ["همه ی شهرهای همدان", "ملایر", "نهاوند", "لالجین", "تویسرکان", "سرکان", "اسد آباد", "کبودرآهنگ", "فرسفج", "سامن"],
@@ -43,165 +42,140 @@ function CityDropdown() {
         "قم": ["همه ی شهرهای قم", "سلفچگان", "کهک"]
     };
 
-    useEffect(() => {
+    const OpenCityFunc = () => {
+        setOpenCity(true)
 
-        if(!OpenCity){
-
-            localStorage.setItem("cityval", JSON.stringify(cityVal))
-
-            document.getElementById('cityDropdown').style.display = "none"
-        } else if (OpenCity) {
-
-            const storedCity = localStorage.getItem("cityval")
-            
-            setcityVal(storedCity ? JSON.parse(storedCity) : []);
-
-            document.querySelectorAll(`.cityOuterCityDiv`).forEach(el => {
-                el.style.display = "none";
-            });
-            setButtonCityVal([])
-
-            document.querySelectorAll(`.cityInnerCityDiv`).forEach(el => {
-                el.style.display = "grid";
-            });
-
-            const ALLCityVals = cityVal.filter(item => item.includes("همه ی شهرهای"));
-
-            ALLCityVals.forEach(item => {
-                const cityKey = item.replace('همه ی شهرهای ', '');
-                document.querySelectorAll(`.${cityKey}`).forEach(el => {
-                    el.style.display = "none";
-                })
-            })
-
-            document.getElementById('cityDropdown').style.display = "grid"
+        const Cityes = localStorage.getItem('SelectedCityes');
+        if (Cityes) {
+            setcityVal(JSON.parse(Cityes));
         }
-
-    }, [OpenCity])
+    }
 
     const OpenInnerCity = (city) => {
-        if(ButtonCityVal.includes(city)){
-            document.querySelectorAll(`.${city}2`).forEach(el => {
-                el.style.display = "none";
-            });
-            const updated = ButtonCityVal.filter(item => item !== city) 
-            setButtonCityVal(updated);
-            return
-        }
-
-        document.querySelectorAll(`.${city}2`).forEach(el => {
-            el.style.display = "flex";
-        });
-
-        const updated = [...ButtonCityVal, city];
-        setButtonCityVal(updated);
+        setOpenCities(prev => 
+            prev.includes(city) ? 
+            prev.filter(c => c != city) :
+            [...prev , city] 
+        )
     }
     
     const localHostUpdate = (val, city) => {
-        const InnerCityDev = document.getElementById('InnerCity');
-        if(val.includes('همه ی شهرهای')){
-            if(cityVal.includes(val)){
-                const updated = cityVal.filter(item => item != val);
+        let MiddleUpdate = cityVal
+        let AllCityUpdate = AllCityes
+        let AllCityInners = []
 
-                InnerCityDev.style.display = 'grid'
-                setcityVal(updated);
-                return
-            }
-   
-            const updated = cityVal.filter(item => !locations[city].includes(item)); 
-            const updated2 = [...updated,  val];
+        if (val.includes('همه ی شهرهای')){
+            AllCityUpdate.includes(city) ? 
+            AllCityUpdate = AllCityUpdate.filter(c => c != city) :
+            AllCityUpdate = [...AllCityUpdate , city]
 
-            InnerCityDev.style.display = 'none'
+            MiddleUpdate.includes(val) ?
+            MiddleUpdate = cityVal.filter(c => c != val) : 
+            MiddleUpdate = [...cityVal, val]
             
-            setcityVal(updated2);
-            return
+            AllCityInners = verifyCitySelection(val , city)
+            
+            if(AllCityInners){
+                MiddleUpdate = MiddleUpdate.filter(val2 => !AllCityInners.includes(val2))
+            }
+            setAllCityes(AllCityUpdate)
+        } else {
+            MiddleUpdate.includes(val) ?
+            MiddleUpdate = MiddleUpdate.filter(c => c != val) : 
+            MiddleUpdate = [...MiddleUpdate, val]
         }
 
-        if(cityVal.includes(val)){
-            const updated = cityVal.filter(item => item !== val);
-            setcityVal(updated);
-            return
+        setcityVal(MiddleUpdate)
+    }
+
+    const verifyCitySelection = (CityWithAllBehind, AllCityUpdate) => {
+        let locationsVals = []
+        let CityWithAllArray = [CityWithAllBehind]
+        let AllCityUpdateArray = [AllCityUpdate]
+        const hasAllCities = CityWithAllArray.some(item => item.includes("همه ی شهرهای"));
+        if(hasAllCities){
+            AllCityUpdateArray.forEach(val => {
+                locationsVals = [...locationsVals, ...locations[val].slice(1)]
+            });
+
+            return locationsVals
         }
-
-        const updated = [...cityVal, val];
-
-        setcityVal(updated);
     }
 
     const saveCity = () => {
-        let allInvalidItems = [];
-        const hasAllCities = cityVal.some(item => item.includes("همه ی شهرهای"));
-        if(hasAllCities){
-            const ALLCityVals = cityVal.filter(item => item.includes("همه ی شهرهای"));
-            ALLCityVals.forEach(item => {
-                const cityKey = item.replace('همه ی شهرهای ', '');
-                const invalidVal = locations[cityKey].slice(1);
-                allInvalidItems = [...allInvalidItems , ...invalidVal]
-            })
-
-            const updated = cityVal.filter(item => !allInvalidItems.includes(item));
-
-            setcityVal(updated)
+        let AllCityInners = verifyCitySelection(`همه ی شهرهای ${AllCityes}`, AllCityes);
+        if(AllCityInners){
+            MiddleUpdate = MiddleUpdate.filter(val2 => !AllCityInners.includes(val2))
         }
 
-        setOpenCity(false)
+        setAllCityes(AllCityUpdate);
+
+        localStorage.setItem('SelectedCityes',JSON.stringify(cityVal));
+        setOpenCity(false);
     }
 
     const cancleButton = () => {
-        setOpenCity(false)
+        const Cityes = localStorage.getItem('SelectedCityes');
+        if (Cityes) {
+            setcityVal(JSON.parse(Cityes));
+        }
     }
 
     return(
         <>
-            <h2 id="city_button" className="city_button" onClick={() =>{setOpenCity(true)}}>منطقه</h2>
-            <div className='cityDropdown' id='cityDropdown'>
-                <div className='cityDropdownTwo' id='cityDropdownTwo'>
+            <h2 id="city_button" className="city_button" onClick={() => OpenCityFunc(true)}>منطقه</h2>
+            <div className={`cityDropdown ${OpenCity ? 'open' : ''}`} id='cityDropdown'>
+                <div className={`cityDropdownTwo ${OpenCity ? 'open' : ''}`} id='cityDropdownTwo'>
                     {Object.keys(locations).map(city => (
                         <div className='cityOnButtonDiv' key={city}>
                             <button className='cityInnerButton' onClick={() => OpenInnerCity(city)} key={city}>
                                 {city}
                             </button>
 
-                            <div className={`cityOuterCityDiv ${city}2`}>
+                            {openCities.includes(city) && (
                                 
-
-                                <div className={`cityUpperCityDiv`}>
-                                    <div
-                                        className={`cityInnerCityDiv AllCity${city}`}
-                                        onClick={() => localHostUpdate(`همه ی شهرهای ${city}`, city)}
-                                    >
-                                        <div >
-                                            {`همه ی شهرهای ${city}`}
-                                            <input key={`همه ی شهرهای ${city}`} id={`همه ی شهرهای ${city}`} checked={cityVal.includes(`همه ی شهرهای ${city}`)} readOnly  className='cheackBoxCity' type='checkbox'></input>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className={`cityUpperCityDiv`} id='InnerCity'>
-                                    {locations[city].slice(1).map(innerCity => (
+                                <div className={`cityOuterCityDiv ${city}2`}>
+                                    <div className={`cityUpperCityDiv`}>
                                         <div
-                                        className={`cityInnerCityDiv ${city}`}
-                                        key={innerCity}
-                                        onClick={() => localHostUpdate(innerCity, city)}
+                                            className={`cityInnerCityDiv AllCity${city}`}
+                                            onClick={() => localHostUpdate(`همه ی شهرهای ${city}`, city)}
                                         >
                                             <div >
-                                                {innerCity}
-                                                <input key={innerCity} id={innerCity} checked={cityVal.includes(innerCity)} readOnly  className='cheackBoxCity' type='checkbox'></input>
+                                                {`همه ی شهرهای ${city}`}
+                                                <input key={`همه ی شهرهای ${city}`} id={`همه ی شهرهای ${city}`} checked={cityVal.includes(`همه ی شهرهای ${city}`)} readOnly  className='cheackBoxCity' type='checkbox'></input>
                                             </div>
                                         </div>
+                                    </div>
 
-                                    ))}
+                                    {!AllCityes.includes(`${city}`) && (
+                                        <div className={`cityUpperCityDiv`} id='InnerCity'>
+                                        {locations[city].slice(1).map(innerCity => (
+                                            <div
+                                            className={`cityInnerCityDiv ${city}`}
+                                            key={innerCity}
+                                            onClick={() => localHostUpdate(innerCity, city)}
+                                            >
+                                                <div >
+                                                    {innerCity}
+                                                    <input key={innerCity} id={innerCity} checked={cityVal.includes(innerCity)} readOnly  className='cheackBoxCity' type='checkbox'></input>
+                                                </div>
+                                            </div>
+
+                                        ))}
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
+                            )}    
                         
-                    </div>
+                        </div>
                     ))}
                 </div>
-                    <button className='city_cancellation' onClick={() => cancleButton()}>لغو</button>
-                    <button className='city_conform' onClick={() => saveCity()}>تایید</button>
+
+                <button className='city_cancellation' onClick={() => cancleButton()}>لغو</button>
+                <button className='city_conform' onClick={() => saveCity()}>تایید</button>
             </div>
 
-        <div id="blur_rightBarOpen-city" className='blur_rightBarOpen'></div>
+        <div id="blur_rightBarOpen-city" className={`blur_rightBarOpen ${OpenCity ? 'open' : ''}`}></div>
         </>
     );
 }
