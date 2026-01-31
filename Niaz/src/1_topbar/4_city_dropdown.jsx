@@ -49,6 +49,11 @@ function CityDropdown() {
         if (Cityes) {
             setcityVal(JSON.parse(Cityes));
         }
+
+        const AllCityes = localStorage.getItem('AllSelectedCityes');
+        if (AllCityes) {
+            setAllCityes(JSON.parse(AllCityes));
+        }
     }
 
     const OpenInnerCity = (city) => {
@@ -93,9 +98,10 @@ function CityDropdown() {
         let CityWithAllArray = [CityWithAllBehind]
         let AllCityUpdateArray = [AllCityUpdate]
         const hasAllCities = CityWithAllArray.some(item => item.includes("همه ی شهرهای"));
-        if(hasAllCities){
+        if(hasAllCities ){
             AllCityUpdateArray.forEach(val => {
-                locationsVals = [...locationsVals, ...locations[val].slice(1)]
+                const localtionsVals = locations[val] ? locations[val].slice(1) : []
+                locationsVals = [...locationsVals, ...localtionsVals]
             });
 
             return locationsVals
@@ -103,15 +109,19 @@ function CityDropdown() {
     }
 
     const saveCity = () => {
+        let MiddleUpdate = cityVal
         let AllCityInners = verifyCitySelection(`همه ی شهرهای ${AllCityes}`, AllCityes);
         if(AllCityInners){
             MiddleUpdate = MiddleUpdate.filter(val2 => !AllCityInners.includes(val2))
         }
 
-        setAllCityes(AllCityUpdate);
+        setcityVal(MiddleUpdate);
 
-        localStorage.setItem('SelectedCityes',JSON.stringify(cityVal));
+        
+        localStorage.setItem('SelectedCityes',JSON.stringify(MiddleUpdate));
+        localStorage.setItem('AllSelectedCityes',JSON.stringify(AllCityes));
         setOpenCity(false);
+        setOpenCities([])
     }
 
     const cancleButton = () => {
@@ -119,6 +129,12 @@ function CityDropdown() {
         if (Cityes) {
             setcityVal(JSON.parse(Cityes));
         }
+        const AllCityes = localStorage.getItem('AllSelectedCityes');
+        if (AllCityes) {
+            setAllCityes(JSON.parse(AllCityes));
+        }
+        setOpenCity(false);
+        setOpenCities([]);
     }
 
     return(
