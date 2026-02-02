@@ -787,6 +787,7 @@ export default function Home_RightBar() {
               type="text"
               inputMode="numeric"
               ref={divXRef}
+              
             />
 
             <p id="priceDisplay" className="priceDisplay">
