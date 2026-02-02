@@ -47,7 +47,7 @@ function Home() {
           </div>
 
         <div id="products_cointainer" className="products_cointainer">
-        <Product></Product><Product></Product><Product></Product><Product></Product><Product></Product>
+        <Product></Product>
         </div>
         
         <div></div>

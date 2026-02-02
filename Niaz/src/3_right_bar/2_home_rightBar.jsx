@@ -1692,7 +1692,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagejoinbuild2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagejoinbuild2Dropdown ? 'inputter' : 'closedInputPlacefolder'} 
                 type="text"
                 placeholder={`متراژ`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagejoinbuild2Ref, setfinalpagejoinbuild2Dropdown)}}
@@ -1737,7 +1737,7 @@ export default function Home_RightBar() {
 
              <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagejoinbuild3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagejoinbuild3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='جهت ساختمان / بحر'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagejoinbuild3Ref, setfinalpagejoinbuild3Dropdown)}}
@@ -1816,7 +1816,7 @@ export default function Home_RightBar() {
 
              <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagejoinbuild5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagejoinbuild5Dropdown ? 'inputter' :   'closedInputPlacefolder'}
                 type="text"
                 placeholder='درصد مشارکت'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagejoinbuild5Ref, setfinalpagejoinbuild5Dropdown)}}
@@ -1879,7 +1879,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagejoinbuild1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagejoinbuild1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='قیمت'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagejoinbuild1Ref, setfinalpagejoinbuild1Dropdown)}}
@@ -1971,7 +1971,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpageaparteman1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpageaparteman1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`متراژ`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman1Ref, setfinalpageaparteman1Dropdown)}}
@@ -2016,7 +2016,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpageaparteman2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpageaparteman2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`اتاق`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman2Ref, setfinalpageaparteman2Dropdown)}}
@@ -2084,7 +2084,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpageaparteman3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpageaparteman3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`سال ساخت`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman3Ref, setfinalpageaparteman3Dropdown)}}
@@ -2146,7 +2146,7 @@ export default function Home_RightBar() {
 
              <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpageaparteman7Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpageaparteman7Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='جهت ساختمان / بحر'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman7Ref, setfinalpageaparteman7Dropdown)}}
@@ -2226,7 +2226,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpageaparteman4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpageaparteman4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`طبقه`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman4Ref, setfinalpageaparteman4Dropdown)}}
@@ -2355,7 +2355,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpageaparteman5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpageaparteman5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`وضعیت واحد`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman5Ref, setfinalpageaparteman5Dropdown)}}
@@ -2430,7 +2430,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpageaparteman6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpageaparteman6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`جزئیات خانه`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman6Ref, setfinalpageaparteman6Dropdown)}}
@@ -2577,7 +2577,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpageaparteman8Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpageaparteman8Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='قیمت'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpageaparteman8Ref, setfinalpageaparteman8Dropdown)}}
@@ -2669,7 +2669,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagevilla1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagevilla1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`متراژ`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagevilla1Ref, setfinalpagevilla1Dropdown)}}
@@ -2714,7 +2714,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagevilla2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagevilla2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`اتاق`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagevilla2Ref, setfinalpagevilla2Dropdown)}}
@@ -2782,7 +2782,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagevilla3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagevilla3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`سال ساخت`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagevilla3Ref, setfinalpagevilla3Dropdown)}}
@@ -2844,7 +2844,7 @@ export default function Home_RightBar() {
 
              <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagevilla4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagevilla4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='جهت ساختمان / بحر'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagevilla4Ref, setfinalpagevilla4Dropdown)}}
@@ -2924,7 +2924,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagevilla5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagevilla5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`وضعیت واحد`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagevilla5Ref, setfinalpagevilla5Dropdown)}}
@@ -2999,7 +2999,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagevilla6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagevilla6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`جزئیات خانه`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagevilla6Ref, setfinalpagevilla6Dropdown)}}
@@ -3146,7 +3146,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagevilla7Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagevilla7Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='قیمت'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagevilla7Ref, setfinalpagevilla7Dropdown)}}
@@ -3238,7 +3238,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagerent1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagerent1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`متراژ`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagerent1Ref, setfinalpagerent1Dropdown)}}
@@ -3283,7 +3283,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagerent2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagerent2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`اتاق`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagerent2Ref, setfinalpagerent2Dropdown)}}
@@ -3351,7 +3351,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagerent3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagerent3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`سال ساخت`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagerent3Ref, setfinalpagerent3Dropdown)}}
@@ -3413,7 +3413,7 @@ export default function Home_RightBar() {
 
              <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagerent4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagerent4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='جهت ساختمان / بحر'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagerent4Ref, setfinalpagerent4Dropdown)}}
@@ -3493,7 +3493,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagerent5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagerent5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`طبقه`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagerent5Ref, setfinalpagerent5Dropdown)}}
@@ -3622,7 +3622,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagerent6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagerent6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`وضعیت واحد`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagerent6Ref, setfinalpagerent6Dropdown)}}
@@ -3697,7 +3697,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagerent7Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagerent7Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`جزئیات خانه`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagerent7Ref, setfinalpagerent7Dropdown)}}
@@ -3844,7 +3844,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagerent8Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagerent8Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='قیمت'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagerent8Ref, setfinalpagerent8Dropdown)}}
@@ -3964,7 +3964,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagestore1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagestore1Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`متراژ`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagestore1Ref, setfinalpagestore1Dropdown)}}
@@ -4009,7 +4009,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagestore2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagestore2Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`سال ساخت`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagestore2Ref, setfinalpagestore2Dropdown)}}
@@ -4071,7 +4071,7 @@ export default function Home_RightBar() {
 
              <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagestore3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagestore3Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='جهت ساختمان / بحر'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagestore3Ref, setfinalpagestore3Dropdown)}}
@@ -4151,7 +4151,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagestore4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagestore4Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder={`وضعیت واحد`}
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagestore4Ref, setfinalpagestore4Dropdown)}}
@@ -4226,7 +4226,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagestore5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagestore5Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='کاربری مغازه'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagestore5Ref, setfinalpagestore5Dropdown)}}
@@ -4323,7 +4323,7 @@ export default function Home_RightBar() {
 
             <div className="input-wrapper" style={{ position: 'relative' }}>
               <input
-                id={finalpagestore6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
+                className={finalpagestore6Dropdown ? 'inputter' : 'closedInputPlacefolder'}
                 type="text"
                 placeholder='قیمت'
                 onClick={() => {openDropdown(closeAllDropdowns, finalpagestore6Ref, setfinalpagestore6Dropdown)}}

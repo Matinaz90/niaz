@@ -21,6 +21,7 @@
 
 #rightBar.open {
   width: 20%;
+  min-width: 220px;
 }
 
 .right-bar-nav {
@@ -92,7 +93,7 @@
  margin-bottom: -8px;
 }
 
-#inputter {
+.inputter {
   border-bottom: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -100,11 +101,11 @@
   border-bottom: none;
   display: none;
 }
-#closedInputPlacefolder{
+.closedInputPlacefolder{
   cursor: pointer;
 }
 
-#closedInputPlacefolder::placeholder {
+.closedInputPlacefolder::placeholder {
   font-size: var(--text-font-middle);
   font-weight: bold;
   color: var(--text_muded_between);
@@ -151,7 +152,7 @@
 }
 
 .next {
-  background-color: var(--boeder-blue-color);         /* Primary blue */
+  background-color: var(--boeder-blue-color);
   color: var(--text);
   border: none;
   padding: 10px 20px;
@@ -159,11 +160,14 @@
   font-size: var(--text-font-middle);
   cursor: pointer;
   position: relative;
-  transition: 0.03s;
+  
+  /* Smooth transition for background color */
+  transition: background-color 0.2s ease;
 }
+
 .next:hover {
-  padding: 8px 20px;
-  font-size: var(--text-font-middle);
+  /* Slightly lighter or darker blue depending on your preference */
+  filter: brightness(1.1);
 }
 
 .hideButton{

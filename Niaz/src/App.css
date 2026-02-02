@@ -90,3 +90,36 @@
   max-height: 500px;
 }
 
+
+@media (max-width: 1000px) {
+  .exit-btn.open {
+    right: calc(25% + 10px); /* change 20% to something else */
+  }
+}
+
+/* Example: for very small screens */
+@media (max-width: 850px) {
+  .exit-btn.open {
+    right: calc(30% + 10px);
+  }
+}
+
+/* Example: for very small screens */
+@media (max-width: 700px) {
+  .exit-btn.open {
+    right: calc(35% + 10px);
+  }
+}
+
+@media (max-width: 600px) {
+  .exit-btn.open {
+    right: calc(40% + 10px);
+  }
+}
+
+
+@media (max-width: 530px) {
+  .exit-btn.open {
+    right: calc(45% + 10px);
+  }
+}
