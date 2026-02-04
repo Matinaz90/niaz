@@ -9,19 +9,19 @@
   padding: 0;
   margin: 0;
   right: 0;
+  display: none;
   transition: width 0.2s ease;
   z-index: 1002;
-  display: flex;
   flex-direction: column;
   gap: 16px;
   direction: rtl;
-  overflow: auto;
   align-items: center;
 }
 
 #rightBar.open {
   width: 20%;
   min-width: 220px;
+  display: flex;
 }
 
 .right-bar-nav {
@@ -358,28 +358,59 @@
 
 
 .optionDivchild{
-  height: calc(100vh - 140px); /* 100px accounts for footer height + some padding */
+  height: calc(100vh - 140px);
   display: flex; 
   flex-direction: column;
   overflow: auto;
   gap: 1rem;
   padding-bottom: 5px;
   width: calc(100% - 20px);
-  padding-left: 10px;
-  padding-right: 10px;
-
 }
 
 .optionDivchildFullScreen{
   height: 100%;
   overflow-y: auto;
   display: flex;
-  overflow-y: auto;
   flex-direction: column;
   gap: 1rem;
   padding-bottom: 5px;
-  width: calc(100% + 0px);
+  width: calc(100% - 20px);
 
+}
+
+.optionDivchildOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: calc(100vh - 143px);
+  width: calc(100% - 20px);
+  overflow-y: auto;
+}
+
+.optionDivchildOptionsfinalPage {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: calc(100vh);
+  max-height: 300px;
+  width: calc(100% - 20px);
+  overflow-y: auto;
+}
+
+.optionDivchildfinalPage {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  width: calc(100% - 20px);
+}
+
+.optionDivchildfinalPageMain {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: calc(100vh - 100px);
 }
 
 .homeNumbresInfloor {
@@ -470,41 +501,6 @@
   max-height: 600px;
   overflow: visible;
 }
-
-.optionDivchildfinalPage {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.optionDivchildfinalPageMain {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  height: calc(100vh - 100px);
-  overflow-y: auto;
-}
-
-
-.optionDivchildOptions {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  height: calc(100vh - 143px);
-  width: calc(100% + 8px);
-  overflow-y: auto;
-}
-
-.optionDivchildOptionsfinalPage {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  height: calc(100vh);
-  max-height: 300px;
-  width: calc(100% + 8px);
-  overflow-y: auto;
-}
-
 
 
 .year-dropdown-finalPage {

@@ -1,0 +1,61 @@
+@import url('../index.css'); 
+
+.mainAddNiazdiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+}
+
+.createNiazStartButtons{
+  color: var(--text_muded_between);
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+  
+  height: 80%;
+  min-height: 230px;
+  background-color: var(--layer2-bg-color);
+  padding: 20px;
+  width: 80%;
+  justify-items: center;
+  min-width: 250px;
+  align-items: center;
+  position: relative;
+  gap: 20px;
+}
+
+.createNiazStartButtons p {
+  text-align: end;
+  width: 78%;
+  font-size: var(--text-font-large);
+  font-weight: bold;
+}
+
+.createNiazStartButtons a {
+  display: grid;
+  font-weight: bold;
+  position: relative;
+  padding-right: 30px;
+  font-size: var(--text-font-middle);
+  padding-bottom: 1.5%;
+  padding-top: 1.5%;
+  text-align: end;
+  width: calc(75% - 30px);
+  background-color: var(--layer1-importan-color);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.createNiazStartButtons a:hover{
+  scale: 1.03;
+}
+
+.createNiazStartArrow{
+  position: absolute;
+  height: 10px;
+  top: calc(50% - 5px);
+  left: 10px;
+  rotate: 180deg;
+}

@@ -760,14 +760,12 @@ export default function Home_RightBar() {
       <nav className="right-bar-nav">
         {mode === 'default' && (
           <div className='optionDiv'>     
-            <div className='optionDivchildfinalPageMain'>
-              <div className='optionDivchildFullScreen'>
-                <a onClick={() => {AddGoogleLink('joinbuild');}}>مشارکت ساخت</a>
-                <a onClick={() => {AddGoogleLink('aparteman');}}>اپارتمان</a>
-                <a onClick={() => {AddGoogleLink('villa');}}>ویلایی</a>
-                <a onClick={() => {AddGoogleLink('rent');}}>اجاره</a>
-                <a onClick={() => {AddGoogleLink('store');}}>تجاری</a>
-              </div>
+            <div className='optionDivchildFullScreen'>
+              <a onClick={() => {AddGoogleLink('joinbuild');}}>مشارکت ساخت</a>
+              <a onClick={() => {AddGoogleLink('aparteman');}}>اپارتمان</a>
+              <a onClick={() => {AddGoogleLink('villa');}}>ویلایی</a>
+              <a onClick={() => {AddGoogleLink('rent');}}>اجاره</a>
+              <a onClick={() => {AddGoogleLink('store');}}>تجاری</a>
             </div>
 
             <button className="oneBack" onClick={() =>navigate("/")}>
