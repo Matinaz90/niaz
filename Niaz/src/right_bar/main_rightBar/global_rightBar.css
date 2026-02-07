@@ -1,0 +1,78 @@
+.blur{
+    position: fixed;
+    display: grid;
+    width: 100%;
+    left: 0;
+    top: 0px;
+    height: 100%;
+    backdrop-filter: var(--blur_color);
+    background-color: var(--back_ground_blur);
+    z-index: 999;
+    display: none;
+}
+
+.blur.open{
+    display: grid;
+}
+
+.Right_Bar_strucher{
+    display: flex;
+    width: 0px;
+    height: 100%;
+    flex-direction: column;
+    
+    position: absolute;
+    top: 0px;
+    right: 0;
+    background-color: var(--layer3-bg-color);
+    z-index: 120;
+    padding-left: 10px;
+    padding-right: 2px;
+    overflow: auto;
+}
+
+.Right_Bar_strucher.open{
+    width: 20%;
+    min-width: 180px;
+}
+
+.buttons {
+    display: grid;
+    background-color: var(--layer2-bg-color);
+    z-index: 140;
+    display: block;
+    width: calc(100% - 30px);
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+    margin-top: 20px;
+    color: var(--text_muded_between);
+    font-weight: bold;
+    font-size: var(--text-font-middle);
+    text-align: end;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.buttons:first-child{
+    margin-top: 30px;
+}
+
+.buttons:last-child{
+    margin-bottom: 30px;
+}
+
+.rightArrow{
+    filter: var(--items-colors);
+    width: 20px;
+    height: 40px;
+    rotate: 90deg;
+    position: absolute;
+    top: calc(50% - 13px);
+    bottom: calc(50% - 10px);
+    left: 10px;
+    object-fit: cover;
+    object-position: 100% top;
+}

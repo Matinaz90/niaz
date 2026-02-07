@@ -18,6 +18,9 @@
     --text_muded_between: hsl(0, 0%, 85%);
     --text-muted: hsl(0, 0%, 75%);
 
+    --back_ground_blur: hsla(0, 0%, 0%, 0.318);
+    --blur_color: blur(20px);
+
     --text-font-small: clamp(10px, 11px + 0.357vw, 16px);
     --text-font-middle: clamp(13px, 11px + 0.595vw, 22px);
     --text-font-large: clamp(18px, 13px + 1.19vw, 32px);
@@ -25,6 +28,8 @@
     --text-font-family: 'Vazirmatn', sans-serif;
 
     --dark-white-sensor: hsl(0, 0%, 88%);
+
+    --items-colors: invert(100%);
 }
 
 * {
@@ -34,7 +39,7 @@
   scrollbar-width: thin;           
   scrollbar-color: var(--text_muded_between) transparent; 
   scroll-behavior: smooth;
-  scrollbar-gutter: stable; 
+  scrollbar-gutter: stable;
 }
 
 *::-webkit-scrollbar {
@@ -51,7 +56,7 @@
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: var(--text_muded_between);
+  background-color: var(--layer1-importan-color);
 }
 
 body{
@@ -63,10 +68,13 @@ body{
   -moz-user-select: none;    /* Firefox */
   -ms-user-select: none;     /* Internet Explorer/Edge */
   user-select: none;  
-  width: 100%;
   scroll-behavior: smooth;
   position: relative;
+
+  overflow: hidden;
+
 }
+
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {

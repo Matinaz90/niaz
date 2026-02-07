@@ -3,14 +3,14 @@
 
 
 .gradient-border {
-    margin-top: 10px;
-    padding: 3px;
-    border-radius: 12px;
-    display: inline-block;
-    width: calc(100% - 46px);
-    margin-right: 20px;
-    margin-left: 20px;
-    transition: width 0.3s ease;
+  margin-top: 10px;
+  padding: 3px;
+  border-radius: 12px;
+  display: inline-block;
+  width: calc(100% - 46px);
+  margin-right: 20px;
+  margin-left: 20px;
+  transition: width 0.3s ease;
 }
 
 .blur_rightBarOpen {
