@@ -15,6 +15,32 @@
     display: grid;
 }
 
+.exitButtonDiv{
+    width: 20%;
+    min-width: 180px;
+    height: 0;
+    position: relative;
+    right: 0;
+    position: absolute;
+    display: flex;
+}
+
+.exitButtontext{
+    position: absolute;
+    top: 15px;
+    left: -75px;
+    background-color: var(--layer2-bg-color);
+    z-index: 1000;
+    width: 45px;
+    height: 45px;
+    border-radius: 100px;
+    color: var(--text_muded_between);
+    font-size: calc(var(--text-font-large)  + 5px);
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
 .Right_Bar_strucher{
     display: flex;
     width: 0px;
@@ -54,6 +80,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     position: relative;
+    cursor: pointer;
 }
 
 .buttons:first-child{
@@ -64,15 +91,135 @@
     margin-bottom: 30px;
 }
 
+.buttons:hover img {
+    rotate: 180deg;
+}
+
 .rightArrow{
     filter: var(--items-colors);
-    width: 20px;
-    height: 40px;
-    rotate: 90deg;
+    width: 15px;
+    height: 15px;
     position: absolute;
-    top: calc(50% - 13px);
-    bottom: calc(50% - 10px);
-    left: 10px;
+    rotate: 90deg;
+    top: calc(50% - 7.5px);
+    left: 15px;
     object-fit: cover;
     object-position: 100% top;
+    transition: 0.2s;
+}
+
+.inputsDiv {
+    margin-top: 10px;
+}
+
+.foldingDiv{
+    position: relative;
+    display: flex;
+    z-index: 140;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-left: 10px;
+    margin-top: 20px;
+    width: calc(100% - 30px);
+    background-color: var(--layer2-bg-color);
+
+    padding: 10px;
+    gap: 10px;
+    transition: 0.4s;
+    color: var(--text_muded_between);
+    font-weight: bold;
+    font-size: var(--text-font-middle);
+    text-align: end;
+    border-radius: 5px;
+    max-height: 50px;
+    padding-top: 45px;
+    padding-bottom: 10px;
+}
+
+.foldingDiv.open{
+    max-height: 120px;
+    padding-bottom: 50px;
+}
+
+.rightArrowRightBar{
+  transition: transform 0.25s ease;
+  filter: var(--items-colors);
+  width: 16px;
+  rotate: 90deg;
+  position: absolute;
+  left: 20px;
+  transition: 0.4s;
+}
+
+.rightArrowRightBar.open{
+  rotate: 270deg;
+}
+
+.ClickInputs{
+    background-color: var(--layer2-bg-color);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--text-font-middle);
+    font-weight: bold;
+     margin-bottom: 3px;
+}
+
+.ClickInputs.open{
+    border-bottom: 1px solid var(--border-color);
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+    height: 45px;
+}
+
+.ClickInputsText{
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.inputs {
+    background-color: var(--layer1-importan-color);
+    width: calc(100% - 32px);
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 10px;
+    color: var(--text_muded_between);
+    font-weight: bold;
+    font-size: var(--text-font-middle);
+    text-align: end;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: text;
+    border: 1px solid transparent;
+    transition: 0.2s;
+    outline: none;
+    margin-top: 10px;
+}
+
+.inputs:focus {
+    outline: none;
+    border: 1px solid var(--text_muded_between);
+}
+
+.applyButton{
+    background-color: var(--boeder-blue-color);
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    position: absolute;
+    bottom: 10px;
+    left: 30px;
+    right: 30px;
+    font-size: var(--text-font-small);
+    font-weight: bold;
+    color: var(--text_muded_between);
 }

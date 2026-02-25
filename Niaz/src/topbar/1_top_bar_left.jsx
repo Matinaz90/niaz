@@ -44,16 +44,16 @@ function Top_bar_left(){
             <img className='niazImage' src='/2.png'  onClick={() =>navigate("/")}/>
                 
 
-            <div ref={refSetting}>
+            <div className='rightArrowTopBarDiv' ref={refSetting}>
                 <h2
                     id="add_user"
-                    className="add_user"
+                    className={`add_user ${settingOpenOrClose ? 'open' : ''}`}
                     onClick={() =>
                         isloggedin ? setsettingOpenOrClose(prev => !prev) : navigate("/adduser")
                     }
                     >
                     {isloggedin && (
-                        <span className={settingOpenOrClose ? "arrow open" : "arrow"}>{'\u2304'}</span>
+                        <img src='/extend_arrow.png' className='rightArrowTopBar'></img>
                     )}
                     {isloggedin ? "پنل کاربری" : "ورود / ثبت نام"}
                 </h2>

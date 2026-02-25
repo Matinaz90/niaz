@@ -5,7 +5,7 @@ import Top_bar_middle from '../topbar/2_top_bar_middle.jsx'
 import Top_bar_right from '../topbar/3_top_bar_right.jsx'
 import SlideModeChanger from '../topbar/2.5_slideModeChanger.jsx'
 import Product from "../product/product.jsx";
-import HomeRightBar from "../right_bar/main_rightBar/rightBar.jsx"
+import HomeRightBar from "../right_bar/home_rightBar/home_right_bar.jsx"
 // import { useValidatePathHome } from "../validPath.jsx";
 
 function Home() {

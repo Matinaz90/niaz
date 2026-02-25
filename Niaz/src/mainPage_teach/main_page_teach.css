@@ -39,20 +39,27 @@
 .teach_img_right{
   top: -10px;
   right: -135px;
+  filter: var(--items-colors);
 }
 
 .teach_img_middle{
-  top: -36px;
-  right: 50%;
-  left: 50%; 
+  top: -288px;
   rotate: -36deg;  
-  scale: 5;
+  scale: 0.19;
+
+  filter: var(--items-colors);
+  z-index: 10000;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
 }
 
 .teach_img_left{
   top: -10px;
   left: -135px;
   transform: rotate(-127deg) scaleY(1) scale(0.6);
+  filter: var(--items-colors);
 }
 
 .teach_buttons_div button{
@@ -65,4 +72,6 @@
   background-color: var(--text_muded_between);
   border: 2px solid var(--layer2-bg-color);
   cursor: pointer;
+  z-index: 10000;
 }
+

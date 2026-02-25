@@ -17,7 +17,7 @@ const handleClick = () => {
             <img
                 id="hamburgurMenu"
                 className="hamburgurImage"
-                src="/hamburger-menu-light.png"
+                src="/hamburger-menu.svg"
                 onClick={handleClick}
             />
         </div>

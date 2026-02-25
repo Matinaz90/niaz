@@ -29,7 +29,7 @@
 
     --dark-white-sensor: hsl(0, 0%, 88%);
 
-    --items-colors: invert(100%);
+    --items-colors: invert(90%);
 }
 
 * {

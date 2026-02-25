@@ -16,7 +16,7 @@ function Main_page_teach() {
 
         {mode == 'teach_right' && (
           <dev className='teach_buttons_div teach_buttons_div_right'>
-            <img className="teach_img teach_img_right" src="../arrowWhite.png"></img>
+            <img className="teach_img teach_img_right" src="../curved_Arrow.png"></img>
             <p>.فیلترهای قیمت را از اینجا تنظیم کنید</p>
             <button onClick={() => setmode('teach_middle')}>بعدی</button>
           </dev>
@@ -24,7 +24,7 @@ function Main_page_teach() {
 
         {mode == 'teach_middle' && (
           <dev className='teach_buttons_div teach_buttons_div_middle'>
-            <img className="teach_img teach_img_middle" src="../top-arrow-white.png"></img>
+            <img className="teach_img teach_img_middle" src="../right-arrow.svg"></img>
             <p>.اینجا می‌توانید هر محصولی را دقیق جستجو کنید</p>
             <button onClick={() => setmode('teach_left')}>بعدی</button>
           </dev>
@@ -32,7 +32,7 @@ function Main_page_teach() {
 
         {mode == 'teach_left' && (
           <dev className='teach_buttons_div teach_buttons_div_left'>
-            <img className="teach_img teach_img_left" src="../arrowWhite.png"></img>
+            <img className="teach_img teach_img_left" src="../curved_Arrow.png"></img>
             <p>.تنظیمات حساب کاربری شما در این قسمت قرار دارد</p>
             <button onClick={() => {
               setmode(), setTimeout(() => {  
