@@ -44,7 +44,7 @@
 
 
   border-radius: 50%;
-  border: 2px solid var(--layer3-bg-color);
+  border: 2px solid var(--layer-4-bg-color);
   background: var(--layer2-bg-color);
   
   color: var(--text, #fff);
@@ -65,7 +65,7 @@
 }
 
 .exit-btn:hover {
-  background: var(--layer3-bg-color);
+  background: var(--layer-4-bg-color);
   box-shadow: 0 0 12px #0005;
 }
 

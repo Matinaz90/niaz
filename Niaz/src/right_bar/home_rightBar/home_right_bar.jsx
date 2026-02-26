@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import  '../main_rightBar/global_rightBar.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -7,9 +7,25 @@ function HomeRightBar(){
 
     const [mode, setmode] = useState('options')
     const [WhichDivOpen, setWhichDivOpen] = useState('options')
+    const [WhichDivOpenInner, setWhichDivOpenInner] = useState('')
     const [OpenRightVal, setOpenRightVal] = useState(true)
     const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
     const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+    const years = useMemo(() => Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i));
+    const joinbuildpersentoptions = [
+        { key: '70-30', text: 'مالک ۳۰ / ۷۰ سازنده', value: '70-30' },
+        { key: '60-40', text: 'مالک ۴۰ / ۶۰ سازنده', value: '60-40' },
+        { key: '50-50', text: 'مالک ۵۰ / ۵۰ سازنده', value: '50-50' },
+        { key: '40-60', text: 'مالک ۶۰ / ۴۰ سازنده', value: '40-60' },
+        { key: '30-70', text: 'مالک ۷۰ / ۳۰ سازنده', value: '30-70' },
+    ];
+
+    const faces = ['شمالی', 'جنوبی', 'شرقی', 'غربی']
+    const facesSymbols = ['n', 's', 'w', 'e']
+
+    const floorOptions = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
+    const unitOptions = useMemo(() => Array.from({ length: 10 }, (_, i) => i + 1), []);
+    
     const topBarPath = window.location.href
     
     const Pages = ['J'];
@@ -64,8 +80,8 @@ function HomeRightBar(){
         }).join("");
     }
 
-    const cleanEnglishNums = (Num) => {
-        return String(Num).split('').map(v => englishNums.includes(v) ? v : '').join('')
+    const CleanVals = (Num, checkVals) => {
+        return String(Num).split('').map(v => checkVals.includes(v) ? v : '').join('')
     }
 
     const AddLinkBar = (addedLink) => {
@@ -109,6 +125,39 @@ function HomeRightBar(){
         )
     }
 
+    const dropdowns = (dropdownVals, whatChange , id, WhichDivOpenHere) => {
+        return(
+            <>
+                <div className='InputDiv'>
+                    {WhichDivOpenInner != WhichDivOpenHere && (
+                    <input
+                        id={id} className="inputs" type="text"
+                        value={CleanVals(linkBarChange[whatChange], facesSymbols)}
+                        onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner(WhichDivOpenHere)}}
+                        onChange={(e) => {
+                            setLinkBarChange(prev => ({
+                            ...prev,
+                            [whatChange]: 
+                                CleanVals(e.target.value, facesSymbols)
+                            }));
+                        }}
+                        readOnly
+                    />
+                    )}
+                    {WhichDivOpenInner == WhichDivOpenHere && (
+                        <div className='dropDownRightBar'>
+                            {dropdownVals.map(v => (
+                                <p className='dropDownTextRightBar'>{v}</p>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </>
+        )
+    }
+
+    // inputs with no other Changees that submit
+
     const metrage = () => {
         return(
             <div className={`foldingDiv ${WhichDivOpen === 'metrageDiv' ? 'open' : ''}`} 
@@ -116,18 +165,20 @@ function HomeRightBar(){
                 {openButton("متراژ", 'metrageDiv')}
                 {WhichDivOpen === 'metrageDiv' && (
                     <>
-                    <input
-                        id="metrage" className="inputs" type="text"
-                        value={englishToPersianNumber(cleanEnglishNums(linkBarChange.metrage))}
-                        onClick={(e) => e.stopPropagation()}
-                        onChange={(e) => {
-                            setLinkBarChange(prev => ({
-                            ...prev,
-                            metrage: 
-                                cleanEnglishNums(persianToEnglishNumber(e.target.value))
-                            }));
-                        }}
-                    />
+                    <div className='InputDiv'>
+                        <input
+                            id="metrage" className="inputs" type="text"
+                            value={englishToPersianNumber(CleanVals(linkBarChange.metrage, englishNums))}
+                            onClick={(e) => e.stopPropagation()}
+                            onChange={(e) => {
+                                setLinkBarChange(prev => ({
+                                ...prev,
+                                metrage: 
+                                    CleanVals(persianToEnglishNumber(e.target.value), englishNums)
+                                }));
+                            }}
+                        />
+                    </div>
                     {ChangeLinkBar()}
                     </>
                 )}
@@ -135,10 +186,32 @@ function HomeRightBar(){
         )
     }
 
+    // dropdowns
+
+    const face = () => {
+        return(
+            <div className={`foldingDiv ${WhichDivOpen === 'face' ? 'open' : ''}`} 
+            onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner()}}>
+                {openButton("جهت و بحر", 'face')}
+                {WhichDivOpen === 'face' && (
+                    <>
+                    {dropdowns(faces, "face", 'faces', 'faceInner')}
+                    {ChangeLinkBar()}
+                    </>
+                )}
+            </div>
+        )
+    }
+
+    // inputs with other Changees that submit
+
+
+
     const joinbuild = () => {
         return(
             <>
                 {metrage()}
+                {face()}
             </>
         )
     }

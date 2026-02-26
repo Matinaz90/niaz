@@ -4,9 +4,10 @@
 :root{
     --main-webiste-color: hsl(23, 99%, 50%);
     --main-webiste-color-hover: hsl(23, 99%, 50%);
-    --layer3-bg-color: hsl(0, 0%, 0%);
-    --layer2-bg-color: hsl(0, 0%, 5%);
-    --layer1-importan-color: hsl(0, 0%, 10%);
+    --layer-4-bg-color: hsl(0, 0%, 0%);
+    --layer-3-bg-color: hsl(0, 0%, 5%);
+    --layer-2-importan-color: hsl(0, 0%, 10%);
+    --layer12-importan-color: hsl(0, 0%, 15%);
 
 
     --border-color: hsl(0, 0%, 30%);
