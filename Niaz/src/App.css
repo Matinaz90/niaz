@@ -45,7 +45,7 @@
 
   border-radius: 50%;
   border: 2px solid var(--layer-4-bg-color);
-  background: var(--layer2-bg-color);
+  background: var(--layer-3-bg-color);
   
   color: var(--text, #fff);
   font-size: 20px;
@@ -76,7 +76,7 @@
 
 
 .content-box {
-  background-color: var(--layer2-bg-color);
+  background-color: var(--layer-3-bg-color);
   color: white;
   padding: 16px;
   border-radius: 10px;

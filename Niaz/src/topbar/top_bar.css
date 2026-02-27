@@ -11,7 +11,7 @@
   align-items: center;
   padding: 0;
   margin: 0;
-  background-color: var(--layer3-bg-color);
+  background-color: var(--layer-4-bg-color);
   z-index: 10;             
 }
 
@@ -47,7 +47,7 @@
   user-select: none;
   white-space: nowrap;
   margin: 0px 3px;
-  background-color: var(--layer2-bg-color);
+  background-color: var(--layer-3-bg-color);
   transition: 0.3s;
   border: 1px solid transparent;
   box-sizing: border-box;
@@ -55,7 +55,7 @@
   z-index: 2;
 }
 .add_user:hover {
-  background-color: var(--layer1-importan-color);
+  background-color: var(--layer-2-bg-color);
 }
 
 .add_user.open img {
@@ -78,7 +78,7 @@
   user-select: none;
   white-space: nowrap;
   margin: 0px 3px;
-  background-color: var(--layer2-bg-color);
+  background-color: var(--layer-3-bg-color);
   transition: 0.3s;
   border: 1px solid transparent;
   box-sizing: border-box;
@@ -103,7 +103,7 @@
 }
 
 .setting_options:hover {
-  background-color: var(--layer1-importan-color);
+  background-color: var(--layer-2-bg-color);
 }
 
 .rightArrowTopBarDiv{
@@ -139,7 +139,7 @@
 
 .category {
   white-space: nowrap;
-  background-color: var(--layer2-bg-color);
+  background-color: var(--layer-3-bg-color);
   color: var(--text_muded_between);
   padding: 4px 14px;
   border: none;
@@ -150,12 +150,12 @@
 }
 
 .category:hover {
-  background-color: var(--layer1-importan-color);
+  background-color: var(--layer-2-bg-color);
 }
 
 .category.selected {
   background-color: var(--text_muded_between);
-  color: var(--layer3-bg-color);
+  color: var(--layer-4-bg-color);
   font-weight: 500;
 }
 
@@ -172,7 +172,7 @@ max-width: 600px;
   width: 35px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
-  background-color: var(--layer1-importan-color);
+  background-color: var(--layer-2-bg-color);
   position: absolute;
   display: grid;
   margin-left: 1px;
@@ -200,9 +200,9 @@ max-width: 600px;
   padding-right: 2px;
   padding-bottom: 10px;
   padding-top: 10px;
-  background-color: var(--layer2-bg-color);
+  background-color: var(--layer-3-bg-color);
   border-radius: 20px;
-  border: 1px solid var(--layer1-importan-color);
+  border: 1px solid var(--layer-2-bg-color);
   transition: 0.3s;
   color: var(--text_muded_between);
 }
@@ -221,7 +221,7 @@ max-width: 600px;
 .slideModeChanger{
   height: 40px;
   width: 80px;
-  background-color: var(--layer2-bg-color);
+  background-color: var(--layer-3-bg-color);
   display: block;
   position: relative;
   border-radius: 200px;
@@ -286,14 +286,14 @@ max-width: 600px;
   user-select: none;
   white-space: nowrap;
   margin: 0px 3px;
-  background-color: var(--layer2-bg-color);
+  background-color: var(--layer-3-bg-color);
   transition: 0.3s;
   border: 1px solid transparent;
   box-sizing: border-box;
   z-index: 2;
 }
 .city_button:hover {
-  background-color: var(--layer1-importan-color);
+  background-color: var(--layer-2-bg-color);
 }
 
 .cityDropdown{
@@ -302,7 +302,7 @@ max-width: 600px;
   z-index: 13;
   height: 70%;
   min-height: 80px;
-  background-color:var(--layer2-bg-color);
+  background-color:var(--layer-3-bg-color);
   width: 80%;
   top: 38px;
   right: calc(50% - 150px);
@@ -321,7 +321,7 @@ max-width: 600px;
 
 .cityInnerButton{
   background-color: var(--text_muded_between);
-  color: var(--layer2-bg-color);
+  color: var(--layer-3-bg-color);
   font-weight: 800;
   border-radius: 20px;
   border: none;
@@ -344,7 +344,7 @@ max-width: 600px;
 }
 
 .cityInnerCityDiv{
-  background-color: var(--layer1-importan-color);
+  background-color: var(--layer-2-bg-color);
   display: grid;
   color: var(--text_muded_between);
   font-size: var(--text-font-small);

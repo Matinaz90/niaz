@@ -6,8 +6,8 @@
     --main-webiste-color-hover: hsl(23, 99%, 50%);
     --layer-4-bg-color: hsl(0, 0%, 0%);
     --layer-3-bg-color: hsl(0, 0%, 5%);
-    --layer-2-importan-color: hsl(0, 0%, 10%);
-    --layer12-importan-color: hsl(0, 0%, 15%);
+    --layer-2-bg-color: hsl(0, 0%, 10%);
+    --layer-1-bg-color: hsl(0, 0%, 15%);
 
 
     --border-color: hsl(0, 0%, 30%);
@@ -57,14 +57,14 @@
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: var(--layer1-importan-color);
+  background-color: var(--layer-2-bg-color);
 }
 
 body{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: var(--layer3-bg-color);
+  background-color: var(--layer-4-bg-color);
   -webkit-user-select: none; /* Chrome, Safari, Opera */
   -moz-user-select: none;    /* Firefox */
   -ms-user-select: none;     /* Internet Explorer/Edge */

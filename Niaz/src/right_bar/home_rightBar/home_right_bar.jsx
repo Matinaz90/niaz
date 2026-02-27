@@ -9,19 +9,21 @@ function HomeRightBar(){
     const [WhichDivOpen, setWhichDivOpen] = useState('options')
     const [WhichDivOpenInner, setWhichDivOpenInner] = useState('')
     const [OpenRightVal, setOpenRightVal] = useState(true)
+
     const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
     const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+
     const years = useMemo(() => Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i));
-    const joinbuildpersentoptions = [
-        { key: '70-30', text: 'مالک ۳۰ / ۷۰ سازنده', value: '70-30' },
-        { key: '60-40', text: 'مالک ۴۰ / ۶۰ سازنده', value: '60-40' },
-        { key: '50-50', text: 'مالک ۵۰ / ۵۰ سازنده', value: '50-50' },
-        { key: '40-60', text: 'مالک ۶۰ / ۴۰ سازنده', value: '40-60' },
-        { key: '30-70', text: 'مالک ۷۰ / ۳۰ سازنده', value: '30-70' },
-    ];
+    
+    const joinbuildpersentoptions = ['مالک ۳۰ / ۷۰ سازنده', 'مالک ۴۰ / ۶۰ سازنده', 'مالک ۵۰ / ۵۰ سازنده', 'مالک ۶۰ / ۴۰ سازنده', 'مالک ۷۰ / ۳۰ سازنده'];
+    const joinbuildpersentoptionsSymbols =  ['1', '2', '3', '4', '5']
+    const joinbuildpersentoptionsSymbolstoVals = {'1': 'مالک ۳۰ / ۷۰ سازنده', '2': 'مالک ۴۰ / ۶۰ سازنده', '3': 'مالک ۵۰ / ۵۰ سازنده', '4': 'مالک ۶۰ / ۴۰ سازنده', '5': 'مالک ۷۰ / ۳۰ سازنده'}
 
     const faces = ['شمالی', 'جنوبی', 'شرقی', 'غربی']
     const facesSymbols = ['n', 's', 'w', 'e']
+    const facesSymbolsToface = {'n': 'شمالی', 's': 'جنوبی', 'w': 'شرقی', 'e': 'غربی'}
+
+    const bahr = ['1', '2', '3']
 
     const floorOptions = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
     const unitOptions = useMemo(() => Array.from({ length: 10 }, (_, i) => i + 1), []);
@@ -41,8 +43,9 @@ function HomeRightBar(){
             const newLinkBar = {
                 metrage: valOrEmpity(linkBarVal[0]),
                 face: valOrEmpity(linkBarVal[1]),
-                joinbuildpersent: valOrEmpity(linkBarVal[2]),
-                price: valOrEmpity(linkBarVal[3]),
+                bahr:  valOrEmpity(linkBarVal[2]),
+                joinbuildpersent: valOrEmpity(linkBarVal[3]),
+                price: valOrEmpity(linkBarVal[4]),
             };
             setLinkBarChange(newLinkBar);
         } else {
@@ -81,6 +84,9 @@ function HomeRightBar(){
     }
 
     const CleanVals = (Num, checkVals) => {
+        if(Num <= 0){
+            return ''
+        }
         return String(Num).split('').map(v => checkVals.includes(v) ? v : '').join('')
     }
 
@@ -90,15 +96,25 @@ function HomeRightBar(){
     navigate(`${cleanPath}/${addedLink}`);
     };
 
-    const ChangeLinkBar = () => {
-        const val = Object.values(linkBarChange).map(v => v == '' ? 'x' : v)
+    const ConformLinkBar = () => {
         const ChangeUrl = () => {
-            window.history.replaceState({}, '', `${val}`)
+            setWhichDivOpenInner()
+            setWhichDivOpen()
         }
         return (
             <button className='applyButton' onClick={() => ChangeUrl()}>تایید</button>
         )
     };
+
+    const ChangeLinkBar = () => {
+        const ChangeUrl = () => {
+            const val = Object.values(linkBarChange).map(v => v == '' ? 'x' : v)
+            window.history.replaceState({}, '', `${val}`)
+        }
+        return (
+            <button className='applyButton minePage' onClick={() => ChangeUrl()}>تایید</button>
+        )
+    }
 
     const typeOfHome = () => {
         return(
@@ -125,35 +141,68 @@ function HomeRightBar(){
         )
     }
 
-    const dropdowns = (dropdownVals, whatChange , id, WhichDivOpenHere) => {
+    const dropdowns = (dropdownVals, whatChange , id, WhichDivOpenHere, whatsymbol, value) => {
         return(
             <>
                 <div className='InputDiv'>
                     {WhichDivOpenInner != WhichDivOpenHere && (
                     <input
                         id={id} className="inputs" type="text"
-                        value={CleanVals(linkBarChange[whatChange], facesSymbols)}
+                        value={value}
                         onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner(WhichDivOpenHere)}}
-                        onChange={(e) => {
-                            setLinkBarChange(prev => ({
-                            ...prev,
-                            [whatChange]: 
-                                CleanVals(e.target.value, facesSymbols)
-                            }));
-                        }}
                         readOnly
                     />
                     )}
                     {WhichDivOpenInner == WhichDivOpenHere && (
                         <div className='dropDownRightBar'>
-                            {dropdownVals.map(v => (
-                                <p className='dropDownTextRightBar'>{v}</p>
+                            {dropdownVals.map((value, index) => (
+                                <p className='dropDownTextRightBar' key={value}
+                                    onClick={() => {
+                                        setLinkBarChange(prev => ({
+                                        ...prev,
+                                        [whatChange]: 
+                                        CleanVals(whatsymbol[index], whatsymbol)
+                                        }))
+                                    }}
+                                >
+                                    {value}
+                                </p>
                             ))}
                         </div>
                     )}
                 </div>
             </>
         )
+    }
+
+    const input = (id, whatChange, val) => {
+        return(
+            <div className='InputDiv'>
+                <input
+                    id={id} className="inputs cursor" type="text"
+                    value={val}
+                    onClick={(e) => e.stopPropagation()}
+                    onChange={(e) => {
+                        setLinkBarChange(prev => ({
+                        ...prev,
+                        [whatChange]: 
+                            CleanVals(persianToEnglishNumber(e.target.value), englishNums)
+                        }));
+                    }}
+                />
+            </div>
+        )
+    }
+
+    const priceChange = (id, whatChange) => { 
+        return(
+            <div id={id}>
+                <div>  
+                    <div></div><div></div>
+                </div>
+                <p>{formatPrice(CleanVals(linkBarChange[whatChange], englishNums))}</p>
+            </div>
+        )   
     }
 
     // inputs with no other Changees that submit
@@ -165,21 +214,8 @@ function HomeRightBar(){
                 {openButton("متراژ", 'metrageDiv')}
                 {WhichDivOpen === 'metrageDiv' && (
                     <>
-                    <div className='InputDiv'>
-                        <input
-                            id="metrage" className="inputs" type="text"
-                            value={englishToPersianNumber(CleanVals(linkBarChange.metrage, englishNums))}
-                            onClick={(e) => e.stopPropagation()}
-                            onChange={(e) => {
-                                setLinkBarChange(prev => ({
-                                ...prev,
-                                metrage: 
-                                    CleanVals(persianToEnglishNumber(e.target.value), englishNums)
-                                }));
-                            }}
-                        />
-                    </div>
-                    {ChangeLinkBar()}
+                    {input('metrage', 'metrage', englishToPersianNumber(CleanVals(linkBarChange.metrage, englishNums)))}
+                    {ConformLinkBar()}
                     </>
                 )}
             </div>
@@ -195,8 +231,24 @@ function HomeRightBar(){
                 {openButton("جهت و بحر", 'face')}
                 {WhichDivOpen === 'face' && (
                     <>
-                    {dropdowns(faces, "face", 'faces', 'faceInner')}
-                    {ChangeLinkBar()}
+                    {dropdowns(faces, "face", 'faces', 'faceInner', facesSymbols, facesSymbolsToface[CleanVals(linkBarChange.face, facesSymbols)])}
+                    {dropdowns(bahr, "bahr", 'bahr', 'bahrInner', bahr, CleanVals(linkBarChange.bahr, bahr))}
+                    {ConformLinkBar()}
+                    </>
+                )}
+            </div>
+        )
+    }
+
+    const joinbuildpersent = () => {
+        return(
+            <div className={`foldingDiv ${WhichDivOpen === 'joinbuildpersent' ? 'open' : ''}`} 
+            onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner()}}>
+                {openButton("درصد مشارکت ساخت", 'joinbuildpersent')}
+                {WhichDivOpen === 'joinbuildpersent' && (
+                    <>
+                    {dropdowns(joinbuildpersentoptions, "joinbuildpersent", 'joinbuildpersent', 'joinbuildpersentInner', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[CleanVals(linkBarChange.joinbuildpersent, joinbuildpersentoptionsSymbols)])}
+                    {ConformLinkBar()}
                     </>
                 )}
             </div>
@@ -205,13 +257,32 @@ function HomeRightBar(){
 
     // inputs with other Changees that submit
 
+    const price = () => {
+        return(
+            <div className={`foldingDiv ${WhichDivOpen === 'priceDiv' ? 'open' : ''}`} 
+            onClick={(e) => e.stopPropagation()}>
+                {openButton("قیمت", 'priceDiv')}
+                {WhichDivOpen === 'priceDiv' && (
+                    <>
+                    {input('price', 'price', englishToPersianNumber(CleanVals(linkBarChange.price, englishNums)))}
+                    {priceChange('priceShow', 'price', englishToPersianNumber(CleanVals(linkBarChange.price, englishNums)))}
+                    {ConformLinkBar()}
+                    </>
+                )}
+            </div>
+        )
+    }
 
+    // option selecting
 
     const joinbuild = () => {
         return(
             <>
                 {metrage()}
                 {face()}
+                {joinbuildpersent()}
+                {price()}
+                {ChangeLinkBar()}
             </>
         )
     }

@@ -52,8 +52,8 @@
     right: 0;
     background-color: var(--layer-4-bg-color);
     z-index: 120;
-    padding-left: 10px;
-    padding-right: 2px;
+    padding-left: 12px;
+    padding-right: 10px;
     overflow-y: auto;
 }
 
@@ -110,6 +110,9 @@
 
 .inputsDiv {
     margin-top: 10px;
+    position: relative;
+    padding-bottom: 52px;
+    height: 100%;
 }
 
 .foldingDiv{
@@ -190,7 +193,7 @@
 }
 
 .inputs {
-    background-color: var(--layer-2-importan-color);
+    background-color: var(--layer-2-bg-color);
     width: calc(100% - 32px);
     padding-left: 15px;
     padding-right: 15px;
@@ -206,6 +209,7 @@
     transition: 0.2s;
     outline: none;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .inputs:focus {
@@ -213,8 +217,12 @@
     border: 1px solid var(--text_muded_between);
 }
 
+.inputs.cursor{
+    cursor: text;
+}
+
 .dropDownRightBar{
-    background-color: var(--layer-2-importan-color);
+    background-color: var(--layer-2-bg-color);
     padding-left: 15px;
     padding-right: 15px;
     width: calc(100% - 32px);
@@ -244,7 +252,7 @@
 }
 
 .dropDownTextRightBar:hover{
-    background-color: var(--layer12-importan-color);
+    background-color: var(--layer-1-bg-color);
 }
 
 .dropDownTextRightBar:last-child{
@@ -254,7 +262,6 @@
 .applyButton{
     background-color: var(--boeder-blue-color);
     border: none;
-    bottom: 10px;
     border-radius: 5px;
     margin-top: 3px;
     height: 32px;
@@ -263,4 +270,12 @@
     font-size: var(--text-font-small);
     font-weight: bold;
     color: var(--text_muded_between);
+    cursor: pointer;
+}
+
+.applyButton.minePage{
+    position: absolute;
+    bottom: 10px;
+    width: calc(100% - 10px);
+    margin-left: 10px;
 }
