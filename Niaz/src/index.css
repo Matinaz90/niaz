@@ -43,6 +43,7 @@
   scrollbar-gutter: stable;
 }
 
+
 *::-webkit-scrollbar {
   width: 8px; 
 }
@@ -71,11 +72,7 @@ body{
   user-select: none;  
   scroll-behavior: smooth;
   position: relative;
-
-  overflow: hidden;
-
 }
-
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -100,4 +97,8 @@ img {
 
 #hiddle {
   display: none;
+}
+
+.no-scrool{
+  overflow: hidden;
 }

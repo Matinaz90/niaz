@@ -26,6 +26,7 @@ function Top_bar_middle(){
             />
             </div>
             <input
+                autoComplete='new-password'
                 style={{ width: `${width * 0.3}px` }}
                 type="text"
                 id="SearchBar"

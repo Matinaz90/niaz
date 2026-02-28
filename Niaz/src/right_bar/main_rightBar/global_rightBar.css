@@ -1,18 +1,23 @@
 .blur{
     position: fixed;
     display: grid;
-    width: 100%;
-    left: 0;
-    top: 0px;
-    height: 100%;
+    width: 0%;
+    height: 0%;
+    right: 0;
+    top: 0;
     backdrop-filter: var(--blur_color);
     background-color: var(--back_ground_blur);
     z-index: 999;
-    display: none;
+    transition: 0.3s;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .blur.open{
-    display: grid;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    visibility: visible;
 }
 
 .exitButtonDiv{
@@ -278,4 +283,37 @@
     bottom: 10px;
     width: calc(100% - 10px);
     margin-left: 10px;
+}
+
+.priceChangeDiv{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 5px;
+}
+
+.priceChangeDivText{
+    border-radius: 5px;
+    padding-right: 8px;
+    padding-left: 8px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: var(--layer-2-bg-color);
+    cursor: pointer;
+    font-size: var(--text-font-small);
+}
+
+.priceChangeDivText p {
+    display: inline;
+}
+
+.priceFormatDiv{
+    margin-top: 10px;
+    text-align: center;
+    direction: rtl;
+}
+
+.priceFormatDiv p {
+    display: inline;
 }

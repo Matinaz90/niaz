@@ -3,10 +3,18 @@ import { createContext, useContext, useState, useEffect, useRef } from "react";
 const GlobalContext = createContext();
 
 export function GlobalProvider({ children }) {
-  const [openRightBar, setOpenRightBar] = useState(false);
+  const [OpenRightVal, setOpenRightVal] = useState(false)
+
+  useEffect(() => {
+    if(OpenRightVal){
+      document.body.classList.add('no-scrool')
+    } else {
+      document.body.classList.remove('no-scrool')
+    }
+  }, [OpenRightVal])
 
   return (
-    <GlobalContext.Provider value={{ openRightBar, setOpenRightBar }}>
+    <GlobalContext.Provider value={{ OpenRightVal, setOpenRightVal }}>
       {children}
     </GlobalContext.Provider>
   );

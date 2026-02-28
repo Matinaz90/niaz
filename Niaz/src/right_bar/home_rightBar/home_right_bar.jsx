@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import  '../main_rightBar/global_rightBar.css'
 import { useNavigate } from 'react-router-dom';
+import { useGlobal } from '../../GlobalContext';
 
 function HomeRightBar(){
     const navigate = useNavigate();
@@ -8,13 +9,13 @@ function HomeRightBar(){
     const [mode, setmode] = useState('options')
     const [WhichDivOpen, setWhichDivOpen] = useState('options')
     const [WhichDivOpenInner, setWhichDivOpenInner] = useState('')
-    const [OpenRightVal, setOpenRightVal] = useState(true)
+    const { OpenRightVal ,setOpenRightVal } = useGlobal();
 
     const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
     const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
     const years = useMemo(() => Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i));
-    
+
     const joinbuildpersentoptions = ['مالک ۳۰ / ۷۰ سازنده', 'مالک ۴۰ / ۶۰ سازنده', 'مالک ۵۰ / ۵۰ سازنده', 'مالک ۶۰ / ۴۰ سازنده', 'مالک ۷۰ / ۳۰ سازنده'];
     const joinbuildpersentoptionsSymbols =  ['1', '2', '3', '4', '5']
     const joinbuildpersentoptionsSymbolstoVals = {'1': 'مالک ۳۰ / ۷۰ سازنده', '2': 'مالک ۴۰ / ۶۰ سازنده', '3': 'مالک ۵۰ / ۵۰ سازنده', '4': 'مالک ۶۰ / ۴۰ سازنده', '5': 'مالک ۷۰ / ۳۰ سازنده'}
@@ -51,7 +52,7 @@ function HomeRightBar(){
         } else {
             setmode('options')
         }
-    }, [topBarPath])
+    }, [topBarPath, OpenRightVal])
 
 
     const modeShow = (CurrentMode, whichFunc) => {
@@ -63,10 +64,10 @@ function HomeRightBar(){
     const formatPrice = (value) => {
         const num = parseInt(value, 10);
         if (isNaN(num) || num <= 0) return '';
-        if (num >= 1_000_000_000) return englishToPersianNumber((num / 1_000_000_000).toFixed(3).replace(/\.0+$/, '')) + ' میلیارد';
-        if (num >= 1_000_000) return englishToPersianNumber((num / 1_000_000).toFixed(3).replace(/\.0+$/, '')) + ' میلیون';
-        if (num >= 1_000) return englishToPersianNumber((num / 1_000).toFixed(3).replace(/\.0+$/, '')) + ' هزار تومان';
-        return englishToPersianNumber(num) + ' تومان';
+        if (num >= 1_000_000_000) return (<div>{englishToPersianNumber((num / 1_000_000_000).toFixed(3).replace(/\.0+$/, ''))} میلیارد</div>);
+        if (num >= 1_000_000) return (<div>{englishToPersianNumber((num / 1_000_000).toFixed(3).replace(/\.0+$/, ''))} میلیون</div>);
+        if (num >= 1_000) return (<div>{englishToPersianNumber((num / 1_000).toFixed(3).replace(/\.0+$/, ''))} هزار تومان</div>) ;
+        return (<div>{englishToPersianNumber(num)} تومان</div>);
     };
 
     const persianToEnglishNumber = (val) => {
@@ -147,6 +148,7 @@ function HomeRightBar(){
                 <div className='InputDiv'>
                     {WhichDivOpenInner != WhichDivOpenHere && (
                     <input
+                        autoComplete='new-password'
                         id={id} className="inputs" type="text"
                         value={value}
                         onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner(WhichDivOpenHere)}}
@@ -180,6 +182,7 @@ function HomeRightBar(){
             <div className='InputDiv'>
                 <input
                     id={id} className="inputs cursor" type="text"
+                    autoComplete='new-password'
                     value={val}
                     onClick={(e) => e.stopPropagation()}
                     onChange={(e) => {
@@ -194,13 +197,26 @@ function HomeRightBar(){
         )
     }
 
-    const priceChange = (id, whatChange) => { 
+    const priceChange = (id, whatChange) => {
+        const num = linkBarChange[whatChange];
+        const changeVal = (num) => {
+            setLinkBarChange(prev => ({
+                ...prev,
+                [whatChange]: 
+                    CleanVals(persianToEnglishNumber(num), englishNums)
+            }));
+        }
         return(
             <div id={id}>
-                <div>  
-                    <div></div><div></div>
-                </div>
-                <p>{formatPrice(CleanVals(linkBarChange[whatChange], englishNums))}</p>
+                <div className='priceChangeDiv'>
+                    {num <= 999 && num > 0 ? (
+                        <>
+                            <div className='priceChangeDivText' onClick={() => changeVal(num * 1000000)}><p>میلیون </p>{num}</div>
+                            <div className='priceChangeDivText' onClick={() => changeVal(num * 1000000000)}><p>میلیارد </p>{num}</div>
+                        </>
+                    ) : <div></div>}
+                    </div>
+                <div className='priceFormatDiv'>{formatPrice(CleanVals(num, englishNums))}</div>
             </div>
         )   
     }
@@ -289,7 +305,7 @@ function HomeRightBar(){
 
     return(
         <>
-            <div className={`blur ${OpenRightVal ? 'open' : ''}`}>
+            <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => setOpenRightVal(false)}>
             <div className='exitButtonDiv'><p className='exitButtontext'>×</p></div>
                 <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={() => setWhichDivOpen('')}>
                     {modeShow('options', typeOfHome)}
