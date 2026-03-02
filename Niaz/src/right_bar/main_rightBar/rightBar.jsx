@@ -13,7 +13,7 @@ function RightBar(){
 
     return(
         <>
-            <div className={`blur ${OpenRightVal ? 'opne' : ''}`} onClick={() => setOpenRightVal(false)}>
+            <div className={`blur ${OpenRightVal ? 'opne' : ''}`} onClick={() => {setOpenRightVal(false), WhichDivOpen(false), WhichDivOpenInner(false)}}>
                 <div className='exitButtonDiv'><p className='exitButtontext'>×</p></div>
                 <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`}>
                     <div>

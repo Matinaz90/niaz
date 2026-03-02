@@ -243,6 +243,14 @@
     cursor: text;
 }
 
+.inputTag{
+    margin-bottom: -10px;
+}
+
+.inputTag.first{
+    margin-top: 10px;
+}
+
 .dropDownRightBar{
     background-color: var(--layer-2-bg-color);
     padding-left: 15px;
@@ -356,4 +364,27 @@
 
 .priceFormatDiv p {
     display: inline;
+}
+
+.checkBoxDiv{
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.InputDiv.padding{
+    padding-left: 40px;
+    cursor: pointer;
+}
+
+.checkBox{
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 10px;
+    top: calc(50% - 4px);
 }

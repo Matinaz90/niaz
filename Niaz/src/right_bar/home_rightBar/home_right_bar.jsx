@@ -14,7 +14,7 @@ function HomeRightBar(){
     const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
     const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
-    const years = useMemo(() => Array.from({ length: 1404 - 1330 + 1 }, (_, i) => 1404 - i));
+    const years = useMemo(() => Array.from({ length: 1404 - 1330 + 1 }, (_, i) => String(1404 - i)));
 
     const joinbuildpersentoptions = ['مالک ۳۰ / ۷۰ سازنده', 'مالک ۴۰ / ۶۰ سازنده', 'مالک ۵۰ / ۵۰ سازنده', 'مالک ۶۰ / ۴۰ سازنده', 'مالک ۷۰ / ۳۰ سازنده'];
     const joinbuildpersentoptionsSymbols =  ['1', '2', '3', '4', '5']
@@ -55,10 +55,17 @@ function HomeRightBar(){
             const newLinkBar = {
                 metrage: valOrEmpity(linkBarVal[0]),
                 rooms: valOrEmpity(linkBarVal[1]),
-                // face: valOrEmpity(linkBarVal[1]),
-                // bahr:  valOrEmpity(linkBarVal[2]),
-                // joinbuildpersent: valOrEmpity(linkBarVal[3]),
-                // price: valOrEmpity(linkBarVal[4]),
+                year: valOrEmpity(linkBarVal[2]),
+                face: valOrEmpity(linkBarVal[3]),
+                bahr:  valOrEmpity(linkBarVal[4]),
+                floor: valOrEmpity(linkBarVal[5]),
+                floorInfloor: valOrEmpity(linkBarVal[6]),
+                needRepair: valOrEmpity(linkBarVal[7]),
+                balaon: valOrEmpity(linkBarVal[8]),
+                parking: valOrEmpity(linkBarVal[9]),
+                anbary: valOrEmpity(linkBarVal[10]),
+                asansor: valOrEmpity(linkBarVal[11]),
+                price: valOrEmpity(linkBarVal[12]),
             };
             setLinkBarChange(newLinkBar);
         } else {
@@ -164,7 +171,7 @@ function HomeRightBar(){
         )
     }
 
-    const dropdowns = (dropdownVals, whatChange , id, WhichDivOpenHere, whatsymbol, value) => {
+    const dropdowns = (dropdownVals, whatChange , id, WhichDivOpenHere, whatsymbol, value, checkSymbol) => {
         return(
             <>
                 <div className='InputDiv'>
@@ -185,7 +192,7 @@ function HomeRightBar(){
                                         setLinkBarChange(prev => ({
                                         ...prev,
                                         [whatChange]: 
-                                            CleanVals(whatsymbol[index], whatsymbol)
+                                            CleanVals(whatsymbol[index], checkSymbol)
                                         }))
                                     }}
                                 >
@@ -243,6 +250,23 @@ function HomeRightBar(){
         )   
     }
 
+    const condition = (id, text, whatChange) => {
+        return(
+            <div className="InputDiv padding" id={id}>
+                <p className="inputTag" 
+                onClick={() => {
+                    setLinkBarChange(prev => ({
+                    ...prev,
+                    [whatChange]: 
+                        CleanVals(linkBarChange[whatChange] == 't' ? 'f' : 't', ['t', 'f'])
+                    }))
+                }}>:{text} 
+                    <input type='checkbox' checked={linkBarChange[whatChange] == 't'} className='checkBox'></input>
+                </p>
+            </div>
+        )
+    }
+
     // inputs with no other Changees that submit
 
     const metrage = () => {
@@ -260,6 +284,24 @@ function HomeRightBar(){
         )
     }
 
+    const floor = () => {
+        return(
+            <div className={`foldingDiv ${WhichDivOpen === 'floor' ? 'open' : ''}`} 
+            onClick={(e) => e.stopPropagation()}>
+                {openButton("طبقه", 'floor')}
+                {WhichDivOpen === 'floor' && (
+                    <>
+                    <p className='inputTag first'>:طبقه</p>
+                    {input('floor', 'floor', englishToPersianNumber(CleanVals(linkBarChange.floor, englishNums)))}
+                    <p className='inputTag'>:واحد در طبقه</p>
+                    {input('floorInfloor', 'floorInfloor', englishToPersianNumber(CleanVals(linkBarChange.floorInfloor, englishNums)))}
+                    {ConformLinkBar()}
+                    </>
+                )}
+            </div>
+        )
+    }
+
     // dropdowns
 
     const face = () => {
@@ -269,9 +311,10 @@ function HomeRightBar(){
                 {openButton("جهت و بحر", 'face')}
                 {WhichDivOpen === 'face' && (
                     <>
-                    {dropdowns(faces, "face", 'faces', 'faceInner', facesSymbols, facesSymbolsToface[CleanVals(linkBarChange.face, facesSymbols)])}
-                    {dropdowns(bahr, "bahr", 'bahr', 'bahrInner', bahr, CleanVals(linkBarChange.bahr, bahr))}
-                    {console.log(linkBarChange.bahr, bahr)}
+                    <p className='inputTag first'>:جهت خانه</p>
+                    {dropdowns(faces, "face", 'faces', 'faceInner', facesSymbols, facesSymbolsToface[CleanVals(linkBarChange.face, facesSymbols)], facesSymbols)}
+                    <p className='inputTag'>:بحر</p>
+                    {dropdowns(bahr, "bahr", 'bahr', 'bahrInner', bahr, CleanVals(linkBarChange.bahr, bahr), englishNums)}
                     {ConformLinkBar()}
                     </>
                 )}
@@ -286,7 +329,7 @@ function HomeRightBar(){
                 {openButton("درصد مشارکت ساخت", 'joinbuildpersent')}
                 {WhichDivOpen === 'joinbuildpersent' && (
                     <>
-                    {dropdowns(joinbuildpersentoptions, "joinbuildpersent", 'joinbuildpersent', 'joinbuildpersentInner', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[CleanVals(linkBarChange.joinbuildpersent, joinbuildpersentoptionsSymbols)])}
+                    {dropdowns(joinbuildpersentoptions, "joinbuildpersent", 'joinbuildpersent', 'joinbuildpersentInner', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[CleanVals(linkBarChange.joinbuildpersent, joinbuildpersentoptionsSymbols)], englishNums)}
                     {ConformLinkBar()}
                     </>
                 )}
@@ -301,7 +344,22 @@ function HomeRightBar(){
                 {openButton("اتاق ها", 'rooms')}
                 {WhichDivOpen === 'rooms' && (
                     <>
-                    {dropdowns(rooms, "rooms", 'rooms', 'roomInner', rooms, CleanVals(linkBarChange.rooms, rooms))}
+                    {dropdowns(rooms, "rooms", 'rooms', 'roomInner', rooms, CleanVals(linkBarChange.rooms, rooms), englishNums)}
+                    {ConformLinkBar()}
+                    </>
+                )}
+            </div>
+        )
+    }
+
+    const year = () => {
+        return(
+            <div className={`foldingDiv ${WhichDivOpen === 'years' ? 'open' : ''}`} 
+            onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner()}}>
+                {openButton("سال ساخت", 'years')}
+                {WhichDivOpen === 'years' && (
+                    <>
+                    {dropdowns(years, "year", 'year', 'yearsInner', years, CleanVals(linkBarChange.year, englishNums), englishNums)}
                     {ConformLinkBar()}
                     </>
                 )}
@@ -329,6 +387,27 @@ function HomeRightBar(){
 
     // option selecting
 
+    const homeConditions = () => {
+        return(
+            <div className={`foldingDiv ${WhichDivOpen === 'conditionDiv' ? 'open' : ''}`} 
+            onClick={(e) => e.stopPropagation()}>
+                {openButton("وضعیت خانه", 'conditionDiv')}
+                {WhichDivOpen === 'conditionDiv' && (
+                    <>
+                        <div className='checkBoxDiv'>
+                            {condition('needRepair', 'نیاز به باسازی', 'needRepair')}
+                            {condition('balaon', 'بالاکن', 'balaon')}
+                            {condition('parking', 'پارکینگ', 'parking')}
+                            {condition('anbary', 'انباری', 'anbary')}
+                            {condition('asansor', 'اسانسور', 'asansor')}
+                        </div>
+                    {ConformLinkBar()}
+                    </>
+                )}
+            </div>
+        )
+    }
+
     const joinbuild = () => {
         return(
             <div className='inputsDiv'>
@@ -351,6 +430,11 @@ function HomeRightBar(){
                 <div>
                     {metrage()}
                     {room()}
+                    {year()}
+                    {face()}
+                    {floor()}
+                    {homeConditions()}
+                    {price()}
                 </div>
                 <div>
                     {ChangeLinkBar()}
@@ -361,7 +445,7 @@ function HomeRightBar(){
 
     return(
         <>
-            <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => setOpenRightVal(false)}>
+            <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => {setOpenRightVal(false), setWhichDivOpen(''), setWhichDivOpenInner('')}}>
             <div className='exitButtonDiv'><p className='exitButtontext'>×</p></div>
                 <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={(e) => {e.stopPropagation(),setWhichDivOpen('')}}>
                     {modeShow('options', typeOfHome)}
