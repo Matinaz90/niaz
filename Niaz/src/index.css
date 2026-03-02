@@ -31,6 +31,7 @@
     --dark-white-sensor: hsl(0, 0%, 88%);
 
     --items-colors: invert(90%);
+    --items-colors-hover: invert(100%);
 }
 
 * {

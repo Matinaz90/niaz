@@ -25,13 +25,14 @@ function HomeRightBar(){
     const facesSymbolsToface = {'n': 'شمالی', 's': 'جنوبی', 'w': 'شرقی', 'e': 'غربی'}
 
     const bahr = ['1', '2', '3']
+    const rooms = (useMemo(() => Array.from({ length: 12 }, (_, i) => String(i + 1)), []));
 
     const floorOptions = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
     const unitOptions = useMemo(() => Array.from({ length: 10 }, (_, i) => i + 1), []);
     
     const topBarPath = window.location.href
     
-    const Pages = ['J'];
+    const Pages = ['J', 'A'];
     const linkBarVal = topBarPath.split('/').some(a => Pages.includes(a)) ? topBarPath.split('/').pop().split(',') : '';
 
     const [linkBarChange, setLinkBarChange] = useState(null)
@@ -47,6 +48,17 @@ function HomeRightBar(){
                 bahr:  valOrEmpity(linkBarVal[2]),
                 joinbuildpersent: valOrEmpity(linkBarVal[3]),
                 price: valOrEmpity(linkBarVal[4]),
+            };
+            setLinkBarChange(newLinkBar);
+        } else if(topBarPath.includes('A')){
+            setmode('Aparteman')
+            const newLinkBar = {
+                metrage: valOrEmpity(linkBarVal[0]),
+                rooms: valOrEmpity(linkBarVal[1]),
+                // face: valOrEmpity(linkBarVal[1]),
+                // bahr:  valOrEmpity(linkBarVal[2]),
+                // joinbuildpersent: valOrEmpity(linkBarVal[3]),
+                // price: valOrEmpity(linkBarVal[4]),
             };
             setLinkBarChange(newLinkBar);
         } else {
@@ -113,19 +125,29 @@ function HomeRightBar(){
             window.history.replaceState({}, '', `${val}`)
         }
         return (
-            <button className='applyButton minePage' onClick={() => ChangeUrl()}>تایید</button>
+            <>
+                <div className='applyButtonDiv'>
+                    <button className='applyButton backing' onClick={() => {navigate('/home'), setmode('options')}}>بازگشت</button>
+                    <button className='applyButton minePage' onClick={() => ChangeUrl()}>تایید</button>
+                </div>
+            </>
         )
     }
 
     const typeOfHome = () => {
         return(
-            <>
-                <div className='buttons' onClick={() => AddLinkBar('J/x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
-                <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
-                <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
-                <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
-                <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
-            </>
+            <div className='inputsDiv'>
+                <div>
+                    <div className='buttons' onClick={() => AddLinkBar('J/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
+                    <div className='buttons' onClick={() => AddLinkBar('A/x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اپارتمان </div>
+                    <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
+                    <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
+                    <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div> 
+                </div>
+                <div className='applyButtonDiv'>
+                    <button className='applyButton backing' onClick={() => navigate('/home')}>بازگشت</button>
+                </div>
+            </div>
         )
     }
 
@@ -163,7 +185,7 @@ function HomeRightBar(){
                                         setLinkBarChange(prev => ({
                                         ...prev,
                                         [whatChange]: 
-                                        CleanVals(whatsymbol[index], whatsymbol)
+                                            CleanVals(whatsymbol[index], whatsymbol)
                                         }))
                                     }}
                                 >
@@ -249,6 +271,7 @@ function HomeRightBar(){
                     <>
                     {dropdowns(faces, "face", 'faces', 'faceInner', facesSymbols, facesSymbolsToface[CleanVals(linkBarChange.face, facesSymbols)])}
                     {dropdowns(bahr, "bahr", 'bahr', 'bahrInner', bahr, CleanVals(linkBarChange.bahr, bahr))}
+                    {console.log(linkBarChange.bahr, bahr)}
                     {ConformLinkBar()}
                     </>
                 )}
@@ -264,6 +287,21 @@ function HomeRightBar(){
                 {WhichDivOpen === 'joinbuildpersent' && (
                     <>
                     {dropdowns(joinbuildpersentoptions, "joinbuildpersent", 'joinbuildpersent', 'joinbuildpersentInner', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[CleanVals(linkBarChange.joinbuildpersent, joinbuildpersentoptionsSymbols)])}
+                    {ConformLinkBar()}
+                    </>
+                )}
+            </div>
+        )
+    }
+
+    const room = () => {
+        return(
+            <div className={`foldingDiv ${WhichDivOpen === 'rooms' ? 'open' : ''}`} 
+            onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner()}}>
+                {openButton("اتاق ها", 'rooms')}
+                {WhichDivOpen === 'rooms' && (
+                    <>
+                    {dropdowns(rooms, "rooms", 'rooms', 'roomInner', rooms, CleanVals(linkBarChange.rooms, rooms))}
                     {ConformLinkBar()}
                     </>
                 )}
@@ -293,13 +331,31 @@ function HomeRightBar(){
 
     const joinbuild = () => {
         return(
-            <>
-                {metrage()}
-                {face()}
-                {joinbuildpersent()}
-                {price()}
-                {ChangeLinkBar()}
-            </>
+            <div className='inputsDiv'>
+                <div>
+                    {metrage()}
+                    {face()}
+                    {joinbuildpersent()}
+                    {price()}
+                </div>
+                <div>
+                    {ChangeLinkBar()}
+                </div>
+            </div>
+        )
+    }
+
+    const aparteman = () => {
+        return(
+            <div className='inputsDiv'>
+                <div>
+                    {metrage()}
+                    {room()}
+                </div>
+                <div>
+                    {ChangeLinkBar()}
+                </div>
+            </div>
         )
     }
 
@@ -307,11 +363,10 @@ function HomeRightBar(){
         <>
             <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => setOpenRightVal(false)}>
             <div className='exitButtonDiv'><p className='exitButtontext'>×</p></div>
-                <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={() => setWhichDivOpen('')}>
+                <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={(e) => {e.stopPropagation(),setWhichDivOpen('')}}>
                     {modeShow('options', typeOfHome)}
-                    <div className='inputsDiv'>
-                        {modeShow('JoinBild', joinbuild)}
-                    </div>
+                    {modeShow('JoinBild', joinbuild)}
+                    {modeShow('Aparteman', aparteman)}
                 </div>
             </div>
         </>
