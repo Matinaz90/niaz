@@ -41,7 +41,7 @@ function HomeRightBar(){
 
     useEffect(() => {
         if(topBarPath.includes('J')){
-            setmode('JoinBild')
+            setmode('JoinBuild')
             const newLinkBar = {
                 metrage: valOrEmpity(linkBarVal[0]),
                 face: valOrEmpity(linkBarVal[1]),
@@ -66,6 +66,23 @@ function HomeRightBar(){
                 anbary: valOrEmpity(linkBarVal[10]),
                 asansor: valOrEmpity(linkBarVal[11]),
                 price: valOrEmpity(linkBarVal[12]),
+            };
+            setLinkBarChange(newLinkBar);
+        } else if(topBarPath.includes('V')){
+            setmode('Villa')
+            const newLinkBar = {
+                metrage: valOrEmpity(linkBarVal[0]),
+                rooms: valOrEmpity(linkBarVal[1]),
+                year: valOrEmpity(linkBarVal[2]),
+                face: valOrEmpity(linkBarVal[3]),
+                bahr:  valOrEmpity(linkBarVal[4]),
+                floorInfloor: valOrEmpity(linkBarVal[5]),
+                needRepair: valOrEmpity(linkBarVal[6]),
+                balaon: valOrEmpity(linkBarVal[7]),
+                parking: valOrEmpity(linkBarVal[8]),
+                anbary: valOrEmpity(linkBarVal[9]),
+                asansor: valOrEmpity(linkBarVal[10]),
+                price: valOrEmpity(linkBarVal[11]),
             };
             setLinkBarChange(newLinkBar);
         } else {
@@ -145,9 +162,9 @@ function HomeRightBar(){
         return(
             <div className='inputsDiv'>
                 <div>
-                    <div className='buttons' onClick={() => AddLinkBar('J/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
-                    <div className='buttons' onClick={() => AddLinkBar('A/x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اپارتمان </div>
-                    <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
+                    <div className='buttons' onClick={() => AddLinkBar('J/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مشارکت ساخت </div>
+                    <div className='buttons' onClick={() => AddLinkBar('A/x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اپارتمان </div>
+                    <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ویلا </div>
                     <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
                     <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div> 
                 </div>
@@ -408,6 +425,8 @@ function HomeRightBar(){
         )
     }
 
+    // pages
+
     const joinbuild = () => {
         return(
             <div className='inputsDiv'>
@@ -443,14 +462,33 @@ function HomeRightBar(){
         )
     }
 
+    const villa = () => {
+        return(
+            <div className='inputsDiv'>
+                <div>
+                    {metrage()}
+                    {room()}
+                    {year()}
+                    {face()}
+                    {homeConditions()}
+                    {price()}
+                </div>
+                <div>
+                    {ChangeLinkBar()}
+                </div>
+            </div>
+        )
+    }
+
     return(
         <>
             <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => {setOpenRightVal(false), setWhichDivOpen(''), setWhichDivOpenInner('')}}>
             <div className='exitButtonDiv'><p className='exitButtontext'>×</p></div>
                 <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={(e) => {e.stopPropagation(),setWhichDivOpen('')}}>
                     {modeShow('options', typeOfHome)}
-                    {modeShow('JoinBild', joinbuild)}
+                    {modeShow('JoinBuild', joinbuild)}
                     {modeShow('Aparteman', aparteman)}
+                    {modeShow('Villa', villa)}
                 </div>
             </div>
         </>
