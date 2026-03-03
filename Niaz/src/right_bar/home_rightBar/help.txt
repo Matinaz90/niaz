@@ -11,7 +11,7 @@ const rules = {
   aparteman: ['meter', 'rooms', 'year', 'face', 'floor', 'condition', 'options', 'price'],
   villa: ['meter', 'rooms', 'year', 'face', 'condition', 'price'],
   rent: ['meter', 'rooms', 'year', 'face', 'floor', 'condition', 'pricerent'],
-  store: ['meter', 'year', 'face', 'condition', 'categorizestore', 'price'],
+  store: ['meter', 'year', 'face', 'categorizestore', 'price'], store options 
 };
 
 when i click on input some times it bring up the auto fill which is for the google

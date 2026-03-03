@@ -13,18 +13,15 @@ function RightBar(){
 
     return(
         <>
-            <div className={`blur ${OpenRightVal ? 'opne' : ''}`} onClick={() => {setOpenRightVal(false), WhichDivOpen(false), WhichDivOpenInner(false)}}>
+            <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => {setOpenRightVal(false), setWhichDivOpen(''), setWhichDivOpenInner('')}}>
                 <div className='exitButtonDiv'><p className='exitButtontext'>×</p></div>
-                <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`}>
+                <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={(e) => {e.stopPropagation(),setWhichDivOpen('')}}>
                     <div>
                         <div className='buttons' onClick={() => navigate('/home')}><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
                         <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
                         <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
                         <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
                         <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
-                    </div>
-                    <div>
-                        <button className='applyButton backing' onClick={() => navigate('/')}>بازگشت</button>
                     </div>
                 </div>
             </div>  

@@ -24,15 +24,17 @@ function HomeRightBar(){
     const facesSymbols = ['n', 's', 'w', 'e']
     const facesSymbolsToface = {'n': 'شمالی', 's': 'جنوبی', 'w': 'شرقی', 'e': 'غربی'}
 
+
+    const store = ['فروشگاهی', 'کارگاهی', 'اداری','سوله']
+    const storeSymbols = ['f', 'c', 'a', 's']
+    const storeSymbolsTostore = {'f': 'فروشگاهی', 'c': 'کارگاهی', 'a': 'اداری', 's': 'سوله'}
+
     const bahr = ['1', '2', '3']
     const rooms = (useMemo(() => Array.from({ length: 12 }, (_, i) => String(i + 1)), []));
 
-    const floorOptions = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
-    const unitOptions = useMemo(() => Array.from({ length: 10 }, (_, i) => i + 1), []);
-    
     const topBarPath = window.location.href
     
-    const Pages = ['J', 'A'];
+    const Pages = ['J', 'A', 'V', 'R', 'S', 'Q'];
     const linkBarVal = topBarPath.split('/').some(a => Pages.includes(a)) ? topBarPath.split('/').pop().split(',') : '';
 
     const [linkBarChange, setLinkBarChange] = useState(null)
@@ -83,6 +85,58 @@ function HomeRightBar(){
                 anbary: valOrEmpity(linkBarVal[9]),
                 asansor: valOrEmpity(linkBarVal[10]),
                 price: valOrEmpity(linkBarVal[11]),
+            };
+            setLinkBarChange(newLinkBar);
+        } else if(topBarPath.includes('R')){
+            setmode('ApartemanRent')
+            const newLinkBar = {
+                metrage: valOrEmpity(linkBarVal[0]),
+                rooms: valOrEmpity(linkBarVal[1]),
+                year: valOrEmpity(linkBarVal[2]),
+                face: valOrEmpity(linkBarVal[3]),
+                bahr:  valOrEmpity(linkBarVal[4]),
+                floor: valOrEmpity(linkBarVal[5]),
+                floorInfloor: valOrEmpity(linkBarVal[6]),
+                needRepair: valOrEmpity(linkBarVal[7]),
+                balaon: valOrEmpity(linkBarVal[8]),
+                parking: valOrEmpity(linkBarVal[9]),
+                anbary: valOrEmpity(linkBarVal[10]),
+                asansor: valOrEmpity(linkBarVal[11]),
+                beforePrice: valOrEmpity(linkBarVal[12]),
+                monthPrice: valOrEmpity(linkBarVal[13]),
+            };
+            setLinkBarChange(newLinkBar);
+        } else if(topBarPath.includes('S')){
+            setmode('Store')
+            const newLinkBar = {
+                metrage: valOrEmpity(linkBarVal[0]),
+                year: valOrEmpity(linkBarVal[1]),
+                face: valOrEmpity(linkBarVal[2]),
+                bahr:  valOrEmpity(linkBarVal[3]),
+                floorInfloor: valOrEmpity(linkBarVal[4]),
+                store: valOrEmpity(linkBarVal[5]),
+                needRepair: valOrEmpity(linkBarVal[6]),
+                electricity: valOrEmpity(linkBarVal[7]),
+                water: valOrEmpity(linkBarVal[8]),
+                gas: valOrEmpity(linkBarVal[9]),
+                price: valOrEmpity(linkBarVal[10]),
+            };
+            setLinkBarChange(newLinkBar);
+        } else if(topBarPath.includes('Q')){
+            setmode('StoreRent')
+            const newLinkBar = {
+                metrage: valOrEmpity(linkBarVal[0]),
+                year: valOrEmpity(linkBarVal[1]),
+                face: valOrEmpity(linkBarVal[2]),
+                bahr:  valOrEmpity(linkBarVal[3]),
+                floorInfloor: valOrEmpity(linkBarVal[4]),
+                store: valOrEmpity(linkBarVal[5]),
+                needRepair: valOrEmpity(linkBarVal[6]),
+                electricity: valOrEmpity(linkBarVal[7]),
+                water: valOrEmpity(linkBarVal[8]),
+                gas: valOrEmpity(linkBarVal[9]),
+                beforePrice: valOrEmpity(linkBarVal[11]),
+                monthPrice: valOrEmpity(linkBarVal[12]),
             };
             setLinkBarChange(newLinkBar);
         } else {
@@ -147,6 +201,7 @@ function HomeRightBar(){
         const ChangeUrl = () => {
             const val = Object.values(linkBarChange).map(v => v == '' ? 'x' : v)
             window.history.replaceState({}, '', `${val}`)
+            setOpenRightVal(false)
         }
         return (
             <>
@@ -164,12 +219,14 @@ function HomeRightBar(){
                 <div>
                     <div className='buttons' onClick={() => AddLinkBar('J/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مشارکت ساخت </div>
                     <div className='buttons' onClick={() => AddLinkBar('A/x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اپارتمان </div>
+                    <div className='buttons' onClick={() => AddLinkBar('S/x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مغازه </div> 
                     <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ویلا </div>
-                    <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
-                    <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div> 
+                    {/* <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> زمین </div> */}
+                    <div className='buttons' onClick={() => AddLinkBar('R/x,x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره اپارتمان</div>
+                    <div className='buttons' onClick={() => AddLinkBar('Q/x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره مغازه</div>
                 </div>
                 <div className='applyButtonDiv'>
-                    <button className='applyButton backing' onClick={() => navigate('/home')}>بازگشت</button>
+                    <button className='applyButton backing' onClick={() => navigate('/')}>بازگشت</button>
                 </div>
             </div>
         )
@@ -257,8 +314,8 @@ function HomeRightBar(){
                 <div className='priceChangeDiv'>
                     {num <= 999 && num > 0 ? (
                         <>
-                            <div className='priceChangeDivText' onClick={() => changeVal(num * 1000000)}><p>میلیون </p>{num}</div>
                             <div className='priceChangeDivText' onClick={() => changeVal(num * 1000000000)}><p>میلیارد </p>{num}</div>
+                            <div className='priceChangeDivText' onClick={() => changeVal(num * 1000000)}><p>میلیون </p>{num}</div>
                         </>
                     ) : <div></div>}
                     </div>
@@ -284,38 +341,33 @@ function HomeRightBar(){
         )
     }
 
-    // inputs with no other Changees that submit
-
-    const metrage = () => {
+    const innerPageSelection = (WhichDiv,name , valshow) => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'metrageDiv' ? 'open' : ''}`} 
+            <div className={`foldingDiv ${WhichDivOpen === WhichDiv ? 'open' : ''}`} 
             onClick={(e) => e.stopPropagation()}>
-                {openButton("متراژ", 'metrageDiv')}
-                {WhichDivOpen === 'metrageDiv' && (
+                {openButton(name, WhichDiv)}
+                {WhichDivOpen === WhichDiv && (
                     <>
-                    {input('metrage', 'metrage', englishToPersianNumber(CleanVals(linkBarChange.metrage, englishNums)))}
-                    {ConformLinkBar()}
+                        {valshow}
+                        {ConformLinkBar()}
                     </>
                 )}
             </div>
         )
     }
 
+    // inputs with no other Changees that submit
+
     const floor = () => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'floor' ? 'open' : ''}`} 
-            onClick={(e) => e.stopPropagation()}>
-                {openButton("طبقه", 'floor')}
-                {WhichDivOpen === 'floor' && (
-                    <>
+            innerPageSelection('floor', 'طبقه', 
+                <>             
                     <p className='inputTag first'>:طبقه</p>
                     {input('floor', 'floor', englishToPersianNumber(CleanVals(linkBarChange.floor, englishNums)))}
                     <p className='inputTag'>:واحد در طبقه</p>
                     {input('floorInfloor', 'floorInfloor', englishToPersianNumber(CleanVals(linkBarChange.floorInfloor, englishNums)))}
-                    {ConformLinkBar()}
-                    </>
-                )}
-            </div>
+                </>
+            ) 
         )
     }
 
@@ -323,64 +375,38 @@ function HomeRightBar(){
 
     const face = () => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'face' ? 'open' : ''}`} 
-            onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner()}}>
-                {openButton("جهت و بحر", 'face')}
-                {WhichDivOpen === 'face' && (
-                    <>
+            innerPageSelection('face', 'جهت و بحر',
+                <>
                     <p className='inputTag first'>:جهت خانه</p>
                     {dropdowns(faces, "face", 'faces', 'faceInner', facesSymbols, facesSymbolsToface[CleanVals(linkBarChange.face, facesSymbols)], facesSymbols)}
                     <p className='inputTag'>:بحر</p>
                     {dropdowns(bahr, "bahr", 'bahr', 'bahrInner', bahr, CleanVals(linkBarChange.bahr, bahr), englishNums)}
-                    {ConformLinkBar()}
-                    </>
-                )}
-            </div>
+                </>
+            )   
         )
     }
 
     const joinbuildpersent = () => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'joinbuildpersent' ? 'open' : ''}`} 
-            onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner()}}>
-                {openButton("درصد مشارکت ساخت", 'joinbuildpersent')}
-                {WhichDivOpen === 'joinbuildpersent' && (
-                    <>
-                    {dropdowns(joinbuildpersentoptions, "joinbuildpersent", 'joinbuildpersent', 'joinbuildpersentInner', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[CleanVals(linkBarChange.joinbuildpersent, joinbuildpersentoptionsSymbols)], englishNums)}
-                    {ConformLinkBar()}
-                    </>
-                )}
-            </div>
+            innerPageSelection('joinbuildpersent', 'درصد مشارکت ساخت', dropdowns(joinbuildpersentoptions, "joinbuildpersent", 'joinbuildpersent', 'joinbuildpersentInner', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[CleanVals(linkBarChange.joinbuildpersent, joinbuildpersentoptionsSymbols)], englishNums)) 
+        )
+    }
+
+    const storefuncDropdown = () => {
+        return(
+            innerPageSelection('storeInner', 'نوع کاربری مغازه', dropdowns(store, "store", 'store', 'storeInner', storeSymbols, storeSymbolsTostore[CleanVals(linkBarChange.store, storeSymbols)], storeSymbols))   
         )
     }
 
     const room = () => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'rooms' ? 'open' : ''}`} 
-            onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner()}}>
-                {openButton("اتاق ها", 'rooms')}
-                {WhichDivOpen === 'rooms' && (
-                    <>
-                    {dropdowns(rooms, "rooms", 'rooms', 'roomInner', rooms, CleanVals(linkBarChange.rooms, rooms), englishNums)}
-                    {ConformLinkBar()}
-                    </>
-                )}
-            </div>
+            innerPageSelection('rooms', 'اتاق ها', dropdowns(rooms, "rooms", 'rooms', 'roomInner', rooms, CleanVals(linkBarChange.rooms, rooms), englishNums))  
         )
     }
 
     const year = () => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'years' ? 'open' : ''}`} 
-            onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner()}}>
-                {openButton("سال ساخت", 'years')}
-                {WhichDivOpen === 'years' && (
-                    <>
-                    {dropdowns(years, "year", 'year', 'yearsInner', years, CleanVals(linkBarChange.year, englishNums), englishNums)}
-                    {ConformLinkBar()}
-                    </>
-                )}
-            </div>
+            innerPageSelection('years', 'سال ساخت', dropdowns(years, "year", 'year', 'yearsInner', years, CleanVals(linkBarChange.year, englishNums), englishNums))   
         )
     }
 
@@ -395,6 +421,26 @@ function HomeRightBar(){
                     <>
                     {input('price', 'price', englishToPersianNumber(CleanVals(linkBarChange.price, englishNums)))}
                     {priceChange('priceShow', 'price', englishToPersianNumber(CleanVals(linkBarChange.price, englishNums)))}
+                    {ConformLinkBar()}
+                    </>
+                )}
+            </div>
+        )
+    }
+
+    const priceRent = () => {
+        return(
+            <div className={`foldingDiv ${WhichDivOpen === 'RentpriceDiv' ? 'open' : ''}`} 
+            onClick={(e) => e.stopPropagation()}>
+                {openButton("قیمت اجاره", 'RentpriceDiv')}
+                {WhichDivOpen === 'RentpriceDiv' && (
+                    <>
+                    <p className='inputTag first'>:پول پیش</p>
+                    {input('beforePrice', 'beforePrice', englishToPersianNumber(CleanVals(linkBarChange.beforePrice, englishNums)))}
+                    {priceChange('beforePriceShow', 'beforePrice', englishToPersianNumber(CleanVals(linkBarChange.beforePrice, englishNums)))}
+                    <p className='inputTag'>:اجاره ماهانه</p>
+                    {input('monthPrice', 'monthPrice', englishToPersianNumber(CleanVals(linkBarChange.monthPrice, englishNums)))}
+                    {priceChange('monthPriceShow', 'monthPrice', englishToPersianNumber(CleanVals(linkBarChange.monthPrice, englishNums)))}
                     {ConformLinkBar()}
                     </>
                 )}
@@ -425,13 +471,33 @@ function HomeRightBar(){
         )
     }
 
+    const storeConditions = () => {
+        return(
+            <div className={`foldingDiv ${WhichDivOpen === 'conditionDiv' ? 'open' : ''}`} 
+            onClick={(e) => e.stopPropagation()}>
+                {openButton("وضعیت خانه", 'conditionDiv')}
+                {WhichDivOpen === 'conditionDiv' && (
+                    <>
+                        <div className='checkBoxDiv'>
+                            {condition('needRepair', 'نیاز به باسازی', 'needRepair')}
+                            {condition('electricity', 'برق', 'electricity')}
+                            {condition('water', 'آب', 'water')}
+                            {condition('gas', 'گاز', 'gas')}
+                        </div>
+                    {ConformLinkBar()}
+                    </>
+                )}
+            </div>
+        )
+    }
+
     // pages
 
     const joinbuild = () => {
         return(
             <div className='inputsDiv'>
                 <div>
-                    {metrage()}
+                    {innerPageSelection('metrageDiv', 'متراژ', input('metrage', 'metrage', englishToPersianNumber(CleanVals(linkBarChange.metrage, englishNums))))}
                     {face()}
                     {joinbuildpersent()}
                     {price()}
@@ -447,7 +513,7 @@ function HomeRightBar(){
         return(
             <div className='inputsDiv'>
                 <div>
-                    {metrage()}
+                    {innerPageSelection('metrageDiv', 'متراژ', input('metrage', 'metrage', englishToPersianNumber(CleanVals(linkBarChange.metrage, englishNums))))}
                     {room()}
                     {year()}
                     {face()}
@@ -480,6 +546,61 @@ function HomeRightBar(){
         )
     }
 
+    const rentAparteman = () => {
+        return(
+            <div className='inputsDiv'>
+                <div>
+                    {metrage()}
+                    {room()}
+                    {year()}
+                    {face()}
+                    {floor()}
+                    {homeConditions()}
+                    {priceRent()}
+                </div>
+                <div>
+                    {ChangeLinkBar()}
+                </div>
+            </div>
+        )
+    }
+
+    const storeRent = () => {
+        return(
+            <div className='inputsDiv'>
+                <div>
+                    {metrage()}
+                    {year()}
+                    {face()}
+                    {storefuncDropdown()}
+                    {storeConditions()}
+                    {priceRent()}
+                </div>
+                <div>
+                    {ChangeLinkBar()}
+                </div>
+            </div>
+        )
+    }
+
+    const storefunc = () => {
+        return(
+            <div className='inputsDiv'>
+                <div>
+                    {metrage()}
+                    {year()}
+                    {face()}
+                    {storefuncDropdown()}
+                    {storeConditions()}
+                    {price()}
+                </div>
+                <div>
+                    {ChangeLinkBar()}
+                </div>
+            </div>
+        )
+    }
+
     return(
         <>
             <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => {setOpenRightVal(false), setWhichDivOpen(''), setWhichDivOpenInner('')}}>
@@ -489,6 +610,9 @@ function HomeRightBar(){
                     {modeShow('JoinBuild', joinbuild)}
                     {modeShow('Aparteman', aparteman)}
                     {modeShow('Villa', villa)}
+                    {modeShow('ApartemanRent', rentAparteman)}
+                    {modeShow('Store', storefunc)}
+                    {modeShow('StoreRent', storeRent)}
                 </div>
             </div>
         </>
