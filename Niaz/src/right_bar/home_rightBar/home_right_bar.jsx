@@ -25,16 +25,16 @@ function HomeRightBar(){
     const facesSymbolsToface = {'n': 'شمالی', 's': 'جنوبی', 'w': 'شرقی', 'e': 'غربی'}
 
 
-    const store = ['فروشگاهی', 'کارگاهی', 'اداری','سوله']
-    const storeSymbols = ['f', 'c', 'a', 's']
-    const storeSymbolsTostore = {'f': 'فروشگاهی', 'c': 'کارگاهی', 'a': 'اداری', 's': 'سوله'}
+    const ground = ['مسکونی', 'تجاری', 'کشاورزی','باغداری']
+    const groundSymbols = ['m', 't', 'c', 'b']
+    const groundSymbolsToground = {'m': 'مسکونی', 't': 'تجاری', 'c': 'کشاورزی', 'b': 'باغداری'}
 
     const bahr = ['1', '2', '3']
     const rooms = (useMemo(() => Array.from({ length: 12 }, (_, i) => String(i + 1)), []));
 
     const topBarPath = window.location.href
     
-    const Pages = ['J', 'A', 'V', 'R', 'S', 'Q'];
+    const Pages = ['J', 'A', 'V', 'R', 'S', 'Q', 'G'];
     const linkBarVal = topBarPath.split('/').some(a => Pages.includes(a)) ? topBarPath.split('/').pop().split(',') : '';
 
     const [linkBarChange, setLinkBarChange] = useState(null)
@@ -114,12 +114,11 @@ function HomeRightBar(){
                 face: valOrEmpity(linkBarVal[2]),
                 bahr:  valOrEmpity(linkBarVal[3]),
                 floorInfloor: valOrEmpity(linkBarVal[4]),
-                store: valOrEmpity(linkBarVal[5]),
-                needRepair: valOrEmpity(linkBarVal[6]),
-                electricity: valOrEmpity(linkBarVal[7]),
-                water: valOrEmpity(linkBarVal[8]),
-                gas: valOrEmpity(linkBarVal[9]),
-                price: valOrEmpity(linkBarVal[10]),
+                needRepair: valOrEmpity(linkBarVal[5]),
+                electricity: valOrEmpity(linkBarVal[6]),
+                water: valOrEmpity(linkBarVal[7]),
+                gas: valOrEmpity(linkBarVal[8]),
+                price: valOrEmpity(linkBarVal[9]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('Q')){
@@ -137,6 +136,16 @@ function HomeRightBar(){
                 gas: valOrEmpity(linkBarVal[9]),
                 beforePrice: valOrEmpity(linkBarVal[11]),
                 monthPrice: valOrEmpity(linkBarVal[12]),
+            };
+            setLinkBarChange(newLinkBar);
+        } else if(topBarPath.includes('G')){
+            setmode('Ground')
+            const newLinkBar = {
+                metrage: valOrEmpity(linkBarVal[0]),
+                face: valOrEmpity(linkBarVal[1]),
+                bahr:  valOrEmpity(linkBarVal[2]),
+                ground: valOrEmpity(linkBarVal[3]),
+                price: valOrEmpity(linkBarVal[4]),
             };
             setLinkBarChange(newLinkBar);
         } else {
@@ -219,9 +228,9 @@ function HomeRightBar(){
                 <div>
                     <div className='buttons' onClick={() => AddLinkBar('J/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مشارکت ساخت </div>
                     <div className='buttons' onClick={() => AddLinkBar('A/x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اپارتمان </div>
-                    <div className='buttons' onClick={() => AddLinkBar('S/x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مغازه </div> 
+                    <div className='buttons' onClick={() => AddLinkBar('S/x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مغازه </div> 
                     <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ویلا </div>
-                    {/* <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> زمین </div> */}
+                    <div className='buttons' onClick={() => AddLinkBar('G/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> زمین </div>
                     <div className='buttons' onClick={() => AddLinkBar('R/x,x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره اپارتمان</div>
                     <div className='buttons' onClick={() => AddLinkBar('Q/x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره مغازه</div>
                 </div>
@@ -344,7 +353,7 @@ function HomeRightBar(){
     const innerPageSelection = (WhichDiv,name , valshow) => {
         return(
             <div className={`foldingDiv ${WhichDivOpen === WhichDiv ? 'open' : ''}`} 
-            onClick={(e) => e.stopPropagation()}>
+            onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner('')}}>
                 {openButton(name, WhichDiv)}
                 {WhichDivOpen === WhichDiv && (
                     <>
@@ -356,7 +365,24 @@ function HomeRightBar(){
         )
     }
 
+    const pagesStructure = (val) => {
+        return(
+            <div className='inputsDiv'>
+                {val}            
+                <div>
+                    {ChangeLinkBar()}
+                </div>
+            </div>
+        )
+    }
+
     // inputs with no other Changees that submit
+
+    const metrage = () => {
+        return( 
+            innerPageSelection('metrageDiv', 'متراژ', input('metrage', 'metrage', englishToPersianNumber(CleanVals(linkBarChange.metrage, englishNums))))  
+        )
+    }
 
     const floor = () => {
         return(
@@ -392,9 +418,9 @@ function HomeRightBar(){
         )
     }
 
-    const storefuncDropdown = () => {
+    const groundfuncDropdown = () => {
         return(
-            innerPageSelection('storeInner', 'نوع کاربری مغازه', dropdowns(store, "store", 'store', 'storeInner', storeSymbols, storeSymbolsTostore[CleanVals(linkBarChange.store, storeSymbols)], storeSymbols))   
+            innerPageSelection('groundInner', 'نوع کاربری زمین', dropdowns(ground, "ground", 'ground', 'groundInner', groundSymbols, groundSymbolsToground[CleanVals(linkBarChange.ground, groundSymbols)], groundSymbols))   
         )
     }
 
@@ -414,37 +440,27 @@ function HomeRightBar(){
 
     const price = () => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'priceDiv' ? 'open' : ''}`} 
-            onClick={(e) => e.stopPropagation()}>
-                {openButton("قیمت", 'priceDiv')}
-                {WhichDivOpen === 'priceDiv' && (
-                    <>
+            innerPageSelection('priceDiv', 'قیمت',                     
+                <>
                     {input('price', 'price', englishToPersianNumber(CleanVals(linkBarChange.price, englishNums)))}
                     {priceChange('priceShow', 'price', englishToPersianNumber(CleanVals(linkBarChange.price, englishNums)))}
-                    {ConformLinkBar()}
-                    </>
-                )}
-            </div>
+                </>
+            ) 
         )
     }
 
     const priceRent = () => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'RentpriceDiv' ? 'open' : ''}`} 
-            onClick={(e) => e.stopPropagation()}>
-                {openButton("قیمت اجاره", 'RentpriceDiv')}
-                {WhichDivOpen === 'RentpriceDiv' && (
-                    <>
+            innerPageSelection('RentpriceDiv', 'قیمت اجاره',                     
+                <>
                     <p className='inputTag first'>:پول پیش</p>
                     {input('beforePrice', 'beforePrice', englishToPersianNumber(CleanVals(linkBarChange.beforePrice, englishNums)))}
                     {priceChange('beforePriceShow', 'beforePrice', englishToPersianNumber(CleanVals(linkBarChange.beforePrice, englishNums)))}
                     <p className='inputTag'>:اجاره ماهانه</p>
                     {input('monthPrice', 'monthPrice', englishToPersianNumber(CleanVals(linkBarChange.monthPrice, englishNums)))}
                     {priceChange('monthPriceShow', 'monthPrice', englishToPersianNumber(CleanVals(linkBarChange.monthPrice, englishNums)))}
-                    {ConformLinkBar()}
-                    </>
-                )}
-            </div>
+                </>
+            )  
         )
     }
 
@@ -452,42 +468,28 @@ function HomeRightBar(){
 
     const homeConditions = () => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'conditionDiv' ? 'open' : ''}`} 
-            onClick={(e) => e.stopPropagation()}>
-                {openButton("وضعیت خانه", 'conditionDiv')}
-                {WhichDivOpen === 'conditionDiv' && (
-                    <>
-                        <div className='checkBoxDiv'>
-                            {condition('needRepair', 'نیاز به باسازی', 'needRepair')}
-                            {condition('balaon', 'بالاکن', 'balaon')}
-                            {condition('parking', 'پارکینگ', 'parking')}
-                            {condition('anbary', 'انباری', 'anbary')}
-                            {condition('asansor', 'اسانسور', 'asansor')}
-                        </div>
-                    {ConformLinkBar()}
-                    </>
-                )}
-            </div>
+            innerPageSelection('conditionDiv', 'وضعیت خانه',                         
+                <div className='checkBoxDiv'>
+                    {condition('needRepair', 'نیاز به باسازی', 'needRepair')}
+                    {condition('balaon', 'بالاکن', 'balaon')}
+                    {condition('parking', 'پارکینگ', 'parking')}
+                    {condition('anbary', 'انباری', 'anbary')}
+                    {condition('asansor', 'اسانسور', 'asansor')}
+                </div>
+            ) 
         )
     }
 
     const storeConditions = () => {
         return(
-            <div className={`foldingDiv ${WhichDivOpen === 'conditionDiv' ? 'open' : ''}`} 
-            onClick={(e) => e.stopPropagation()}>
-                {openButton("وضعیت خانه", 'conditionDiv')}
-                {WhichDivOpen === 'conditionDiv' && (
-                    <>
-                        <div className='checkBoxDiv'>
-                            {condition('needRepair', 'نیاز به باسازی', 'needRepair')}
-                            {condition('electricity', 'برق', 'electricity')}
-                            {condition('water', 'آب', 'water')}
-                            {condition('gas', 'گاز', 'gas')}
-                        </div>
-                    {ConformLinkBar()}
-                    </>
-                )}
-            </div>
+            innerPageSelection('conditionDiv', 'وضعیت خانه',                         
+                <div className='checkBoxDiv'>
+                    {condition('needRepair', 'نیاز به باسازی', 'needRepair')}
+                    {condition('electricity', 'برق', 'electricity')}
+                    {condition('water', 'آب', 'water')}
+                    {condition('gas', 'گاز', 'gas')}
+                </div>
+            )  
         )
     }
 
@@ -495,109 +497,43 @@ function HomeRightBar(){
 
     const joinbuild = () => {
         return(
-            <div className='inputsDiv'>
-                <div>
-                    {innerPageSelection('metrageDiv', 'متراژ', input('metrage', 'metrage', englishToPersianNumber(CleanVals(linkBarChange.metrage, englishNums))))}
-                    {face()}
-                    {joinbuildpersent()}
-                    {price()}
-                </div>
-                <div>
-                    {ChangeLinkBar()}
-                </div>
-            </div>
+            pagesStructure(<div> {metrage()} {face()} {joinbuildpersent()} {price()}</div>)
         )
     }
 
     const aparteman = () => {
         return(
-            <div className='inputsDiv'>
-                <div>
-                    {innerPageSelection('metrageDiv', 'متراژ', input('metrage', 'metrage', englishToPersianNumber(CleanVals(linkBarChange.metrage, englishNums))))}
-                    {room()}
-                    {year()}
-                    {face()}
-                    {floor()}
-                    {homeConditions()}
-                    {price()}
-                </div>
-                <div>
-                    {ChangeLinkBar()}
-                </div>
-            </div>
+            pagesStructure(<div> {metrage()} {room()} {year()} {face()} {floor()} {homeConditions()} {price()}</div>)
         )
     }
 
     const villa = () => {
         return(
-            <div className='inputsDiv'>
-                <div>
-                    {metrage()}
-                    {room()}
-                    {year()}
-                    {face()}
-                    {homeConditions()}
-                    {price()}
-                </div>
-                <div>
-                    {ChangeLinkBar()}
-                </div>
-            </div>
+            pagesStructure(<div> {metrage()} {room()} {year()} {face()} {homeConditions()} {price()}</div>)
         )
     }
 
     const rentAparteman = () => {
         return(
-            <div className='inputsDiv'>
-                <div>
-                    {metrage()}
-                    {room()}
-                    {year()}
-                    {face()}
-                    {floor()}
-                    {homeConditions()}
-                    {priceRent()}
-                </div>
-                <div>
-                    {ChangeLinkBar()}
-                </div>
-            </div>
+            pagesStructure(<div> {metrage()} {room()} {year()} {face()} {floor()} {homeConditions()} {priceRent()}</div>)
         )
     }
 
     const storeRent = () => {
         return(
-            <div className='inputsDiv'>
-                <div>
-                    {metrage()}
-                    {year()}
-                    {face()}
-                    {storefuncDropdown()}
-                    {storeConditions()}
-                    {priceRent()}
-                </div>
-                <div>
-                    {ChangeLinkBar()}
-                </div>
-            </div>
+            pagesStructure(<div> {metrage()} {year()} {face()} {storeConditions()} {priceRent()}</div>)
         )
     }
 
-    const storefunc = () => {
+    const store = () => {
         return(
-            <div className='inputsDiv'>
-                <div>
-                    {metrage()}
-                    {year()}
-                    {face()}
-                    {storefuncDropdown()}
-                    {storeConditions()}
-                    {price()}
-                </div>
-                <div>
-                    {ChangeLinkBar()}
-                </div>
-            </div>
+            pagesStructure(<div> {metrage()} {year()} {face()} {storeConditions()} {price()}</div>)
+        )
+    }
+
+    const groundfunc = () => {
+        return(
+            pagesStructure(<div> {metrage()} {face()} {groundfuncDropdown()} {price()}</div>)
         )
     }
 
@@ -611,8 +547,9 @@ function HomeRightBar(){
                     {modeShow('Aparteman', aparteman)}
                     {modeShow('Villa', villa)}
                     {modeShow('ApartemanRent', rentAparteman)}
-                    {modeShow('Store', storefunc)}
+                    {modeShow('Store', store)}
                     {modeShow('StoreRent', storeRent)}
+                    {modeShow('Ground', groundfunc)}
                 </div>
             </div>
         </>
