@@ -7,8 +7,6 @@ import { useGlobal } from '../../GlobalContext';
 function RightBar(){
     const navigate = useNavigate();
 
-    const topBarPath = window.location.href
-
     const { OpenRightVal ,setOpenRightVal } = useGlobal();
 
     return(

@@ -78,13 +78,12 @@ function HomeRightBar(){
                 year: valOrEmpity(linkBarVal[2]),
                 face: valOrEmpity(linkBarVal[3]),
                 bahr:  valOrEmpity(linkBarVal[4]),
-                floorInfloor: valOrEmpity(linkBarVal[5]),
-                needRepair: valOrEmpity(linkBarVal[6]),
-                balaon: valOrEmpity(linkBarVal[7]),
-                parking: valOrEmpity(linkBarVal[8]),
-                anbary: valOrEmpity(linkBarVal[9]),
-                asansor: valOrEmpity(linkBarVal[10]),
-                price: valOrEmpity(linkBarVal[11]),
+                needRepair: valOrEmpity(linkBarVal[5]),
+                balaon: valOrEmpity(linkBarVal[6]),
+                parking: valOrEmpity(linkBarVal[7]),
+                anbary: valOrEmpity(linkBarVal[8]),
+                asansor: valOrEmpity(linkBarVal[9]),
+                price: valOrEmpity(linkBarVal[10]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('R')){
@@ -113,12 +112,11 @@ function HomeRightBar(){
                 year: valOrEmpity(linkBarVal[1]),
                 face: valOrEmpity(linkBarVal[2]),
                 bahr:  valOrEmpity(linkBarVal[3]),
-                floorInfloor: valOrEmpity(linkBarVal[4]),
-                needRepair: valOrEmpity(linkBarVal[5]),
-                electricity: valOrEmpity(linkBarVal[6]),
-                water: valOrEmpity(linkBarVal[7]),
-                gas: valOrEmpity(linkBarVal[8]),
-                price: valOrEmpity(linkBarVal[9]),
+                needRepair: valOrEmpity(linkBarVal[4]),
+                electricity: valOrEmpity(linkBarVal[5]),
+                water: valOrEmpity(linkBarVal[6]),
+                gas: valOrEmpity(linkBarVal[7]),
+                price: valOrEmpity(linkBarVal[8]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('Q')){
@@ -344,7 +342,7 @@ function HomeRightBar(){
                         CleanVals(linkBarChange[whatChange] == 't' ? 'f' : 't', ['t', 'f'])
                     }))
                 }}>:{text} 
-                    <input type='checkbox' checked={linkBarChange[whatChange] == 't'} className='checkBox'></input>
+                    <input type='checkbox' checked={linkBarChange[whatChange] == 't'} readOnly className='checkBox'></input>
                 </p>
             </div>
         )

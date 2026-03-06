@@ -5,3 +5,15 @@ when i click on input some times it bring up the auto fill which is for the goog
 
 
 why when i copy some website like it change the format of link the text 
+
+, The character to find.
+
+{ Start of "how many to count".
+
+2 Minimum count required.
+
+, "Or more" (unlimited maximum).
+
+} End of count.
+
+g Do it for the whole string, don't stop at the first one.

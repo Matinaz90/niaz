@@ -6,10 +6,10 @@ import Top_bar_right from '../topbar/3_top_bar_right.jsx'
 import SlideModeChanger from '../topbar/2.5_slideModeChanger.jsx'
 import Product from "../product/product.jsx";
 import HomeRightBar from "../right_bar/home_rightBar/home_right_bar.jsx"
-// import { useValidatePathHome } from "../validPath.jsx";
+import { validPath } from "../validPath.jsx";
 
-function Home() {
-  // useValidatePathHome();
+function Home() { 
+  validPath();
   const [width, setWidth] = useState(window.innerWidth)
 
   useEffect(() => {

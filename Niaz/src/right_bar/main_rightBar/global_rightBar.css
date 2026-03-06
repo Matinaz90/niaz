@@ -90,9 +90,6 @@
     transition: 0.2s;
 }
 
-.buttons:first-child{
-    margin-top: 30px;
-}
 
 .buttons:hover{
     color: var(--text);
@@ -387,4 +384,5 @@
     width: 16px;
     left: 10px;
     top: calc(50% - 4px);
+    cursor: pointer;
 }
