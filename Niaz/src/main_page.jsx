@@ -43,7 +43,7 @@ function Main_page() {
               <img src="/Untitled-1.png" className="image_mainPage"></img>
           </div>
         <div id="products_cointainer" className={`products_cointainer`}>
-        <Product></Product><Product></Product><Product></Product><Product></Product><Product></Product>
+        <Product></Product>
         </div>
         
         <div></div>

@@ -22,9 +22,9 @@
     --back_ground_blur: hsla(0, 0%, 0%, 0.318);
     --blur_color: blur(20px);
 
-    --text-font-small: clamp(10px, 11px + 0.357vw, 16px);
-    --text-font-middle: clamp(13px, 11px + 0.595vw, 22px);
-    --text-font-large: clamp(18px, 13px + 1.19vw, 32px);
+    --text-font-small: clamp(8px, 9px + 0.357vw, 16px);
+    --text-font-middle: clamp(11px, 9px + 0.595vw, 22px);
+    --text-font-large: clamp(15px, 10px + 1.19vw, 32px);
 
     --text-font-family: 'Vazirmatn', sans-serif;
 
@@ -33,7 +33,6 @@
     --items-colors: invert(90%);
     --items-colors-hover: invert(100%);
 }
-
 * {
   margin: 0;
   padding: 0;  

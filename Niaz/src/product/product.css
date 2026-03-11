@@ -1,84 +1,109 @@
 @import url('../index.css');
 
 .products_cointainer{
-    margin-top: 50px;
-    margin-inline: 20px; /* replaces L/R margin */
-    width: calc(100% - 40px);
-
-    display: flex;
-    flex-wrap: wrap;
+    width: calc(100% - 60px);
+    margin-left: 30px;
+    margin-right: 30px;
     gap: 50px;
+    display: flex;
+    flex-flow: row wrap;
+    margin-top: 30px;
+} 
 
-    justify-content: space-around;
-
-    transition: width 0.3s ease; /* good for sidebar animation */
-}
-.product-card {
-    width: 220px;
-    border: 1px solid var(--layer-2-bg-color);
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+.product-card{
     background-color: var(--layer-3-bg-color);
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 400px;
+    max-width: 1000px;
+}
+
+.product-card-inner{
+    display: grid;
+    grid-template-columns: 4fr 5fr;
+    background-color: var(--layer-2-bg-color);
+    padding: 15px;
+    border-radius: 20px;
+    position: relative;
+    width: calc(100% - 30px);
+}
+
+.product-info{
+    width: calc(100% - 10px);
+    text-align: end;
+    color: var(--text_muded_between);
+    font-size: var(--text-font-middle);
+    font-family: var(--text-font-family);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    transition: transform 0.2s ease;
-    cursor: pointer;
-    user-select: none;
+    gap: 8px;
+    font-weight: bold;
+    margin-top: 12px;
+}
 
-    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.product-title{
+    font-size: calc(var(--text-font-middle) + 4px);
     color: var(--text);
-    margin-bottom: 30px;
+    margin-right: 20px;
 }
 
-.product-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+.product-explainDiv{
+    margin-top: 6px;
 }
 
-.product-image {
-    width: 100%;
-    height: 220px;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-bottom: 16px; /* a bit more breathing room */
-}
-
-.product-title {
-    font-size: var(--text-font-middle);
-    font-weight: 600;
-    margin: 0 0 14px 0; /* slightly more margin */
-    text-align: center;
-    line-height: 1.3;
-    letter-spacing: 0.02em;
-}
-
-.product-info {
-    width: 100%;
+.product-explain{
+    font-size: calc(var(--text-font-middle) + 2px);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-size: var(--text-font-middle);
-    font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: 0.01em;
+    align-self: flex-end;
+    font-size: var(--text-font-small);
+    justify-content: center;
+    color: var(--text-muted);
+    margin-top: 5px;
+    margin-top: auto;
+    margin-bottom: 15px;
+    gap: 7px;
 }
 
-.product-price {
-    color: var(--border-blue-color);
-    color: var(--text-muted);
-    font-weight: 400;
+.highlight {
+  color: var(--text);
+  font-size: calc(var(--text-font-small) + 2px);
 }
 
 .product-date {
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    font-size: var(--text-font-small);
+    justify-content: center;
     color: var(--text-muted);
-    font-weight: 400;
+    margin-top: 5px;
+    margin-top: auto;
+    margin-bottom: 15px;
+    gap: 5px;
 }
 
-/* If you use a <p> inside product-date, keep inline and add margin for spacing */
-.product-date p {
-    display: inline;
-    margin: 0;
-    padding: 0;
+.product-image {
+    border-radius: 20px;
+    object-fit: cover;
+    float: right;
+    width: 100%;
+    height: 100%;
+    max-height: 300px;
+}
+
+
+@media (max-width: 1000px) {
+    .products_cointainer{
+        gap: 30px;
+    }
+    .product-card{
+        flex-basis: 190px;
+        max-width: 600px;
+    }
+    .product-card-inner{
+        grid-template-columns: 1fr;
+    }
 }
