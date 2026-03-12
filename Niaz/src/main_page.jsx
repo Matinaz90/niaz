@@ -25,10 +25,8 @@ function Main_page() {
 
   return (
     <>
-    <form autoComplete="off">
-        <div className='tobbar_countainer'   style={{
-        gridTemplateColumns: `250px 1fr ${width * 0.3 + 42}px 100px 1fr 150px`
-        }}>
+      <form autoComplete="off">
+        <div className='tobbar_countainer'>
         <Top_bar_left></Top_bar_left><div></div><Top_bar_middle></Top_bar_middle><SlideModeChanger></SlideModeChanger><div></div><Top_bar_right></Top_bar_right>
         </div>
 
@@ -47,7 +45,7 @@ function Main_page() {
         </div>
         
         <div></div>
-        </form>
+      </form>
     </>
   ) 
 }
