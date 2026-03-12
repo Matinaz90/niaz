@@ -100,7 +100,7 @@
         gap: 30px;
     }
     .product-card{
-        flex-basis: 190px;
+        flex-basis: 176px;
         max-width: 600px;
     }
     .product-card-inner{

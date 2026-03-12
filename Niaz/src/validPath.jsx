@@ -46,7 +46,10 @@ export function validPath () {
         returnIfFirstChick(locationPathName, '//')
         returnIfFirstChick(locationPathName, ',,')
         returnIfFirstChick(locationPathName, 'xx')
-        
+        returnIfFirstChick(encodeURIComponent(locationPathName.replace(/[\/,]/g, '')), '%')
+
+        return
+
         if(locationPathName.split('/')[1] == 'home'){
             if(whichPage == 'J'){
                 arrayLength(linkBarVal, 5)
@@ -136,6 +139,8 @@ export function validPath () {
                 cleanValsText(linkBarVal[3], groundSymbols)
                 cleanValsNum(linkBarVal[4], englishNums, 0, 100000000000000)
                 return
+            }else if(whichPage != undefined){
+                navigate('/')
             }
         }
     }, [locationPathName])

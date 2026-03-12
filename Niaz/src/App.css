@@ -1,7 +1,5 @@
 @import url('./index.css'); 
 
-
-
 .gradient-border {
   margin-top: 10px;
   padding: 3px;
@@ -73,8 +71,6 @@
   position: absolute;
 }
 
-
-
 .content-box {
   background-color: var(--layer-3-bg-color);
   color: white;
@@ -93,18 +89,16 @@
 
 @media (max-width: 1000px) {
   .exit-btn.open {
-    right: calc(25% + 10px); /* change 20% to something else */
+    right: calc(25% + 10px);
   }
 }
 
-/* Example: for very small screens */
 @media (max-width: 850px) {
   .exit-btn.open {
     right: calc(30% + 10px);
   }
 }
 
-/* Example: for very small screens */
 @media (max-width: 700px) {
   .exit-btn.open {
     right: calc(35% + 10px);

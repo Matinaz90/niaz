@@ -233,7 +233,7 @@ function HomeRightBar(){
                     <div className='buttons' onClick={() => AddLinkBar('Q/x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره مغازه</div>
                 </div>
                 <div className='applyButtonDiv'>
-                    <button className='applyButton backing' onClick={() => navigate('/')}>بازگشت</button>
+                    <button type="button" className='applyButton backing' onClick={() => {navigate('/')}}>بازگشت</button>
                 </div>
             </div>
         )
