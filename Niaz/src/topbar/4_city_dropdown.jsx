@@ -187,11 +187,11 @@ function CityDropdown() {
                     ))}
                 </div>
 
-                <button className='city_cancellation' onClick={() => cancleButton()}>لغو</button>
-                <button className='city_conform' onClick={() => saveCity()}>تایید</button>
+                <button type="button" className='city_cancellation' onClick={() => cancleButton()}>لغو</button>
+                <button type="button" className='city_conform' onClick={() => saveCity()}>تایید</button>
             </div>
 
-        <div id="blur_rightBarOpen-city" className={`blur_rightBarOpen ${OpenCity ? 'open' : ''}`}></div>
+        <div id="blur_rightBarOpen-city" onClick={() => cancleButton()} className={`blur_rightBarOpen ${OpenCity ? 'open' : ''}`}></div>
         </>
     );
 }

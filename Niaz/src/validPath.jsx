@@ -40,6 +40,7 @@ export function validPath () {
     }
 
     useEffect(() => {
+        return
         const whichPage = locationPathName.split('/')[2]
         const linkBarVal = (() => Pages.includes(whichPage) ) ? locationPathName.split('/').pop().split(',') : '';
 
@@ -48,7 +49,6 @@ export function validPath () {
         returnIfFirstChick(locationPathName, 'xx')
         returnIfFirstChick(encodeURIComponent(locationPathName.replace(/[\/,]/g, '')), '%')
 
-        return
 
         if(locationPathName.split('/')[1] == 'home'){
             if(whichPage == 'J'){

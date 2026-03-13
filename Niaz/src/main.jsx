@@ -7,9 +7,7 @@ import './index.css'
 
 import Main_page from './main_page.jsx'
 import Main_page_teach from './mainPage_teach/main_page_teach.jsx'
-import Home from './home/home.jsx'
-import Car from './car/car.jsx'
-import Employ from './employ/employ.jsx'
+import Pages from './pages.jsx'
 import Add_User from "./createUser/CreateUser.jsx";
 import AddNiaz from "./addNiaz/AddNiaz.jsx";
 
@@ -20,15 +18,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/home/*',
-    element: <Home />,
+    element: <Pages rightBar="1"/>,
   },
   {
-    path: '/car',
-    element: <Car />,
-  },
-  {
-    path: '/employ',
-    element: <Employ />,
+    path: '/car/*',
+    element: <Pages rightBar="2"/>,
   },
   {
     path: '/adduser',
