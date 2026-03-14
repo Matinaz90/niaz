@@ -55,8 +55,9 @@ function HomeRightBar(){
         } else if(topBarPath.includes('M')){
             setmode('Motorcycle')
             const newLinkBar = {
-                motorEngin: valOrEmpity(linkBarVal[0]),
-                price: valOrEmpity(linkBarVal[1]),
+                year: valOrEmpity(linkBarVal[0]),
+                motorEngin: valOrEmpity(linkBarVal[1]),
+                price: valOrEmpity(linkBarVal[2]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('R')){
@@ -143,7 +144,7 @@ function HomeRightBar(){
             <div className='inputsDiv'>
                 <div>
                     <div className='buttons' onClick={() => AddLinkBar('C/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ماشین </div>
-                    <div className='buttons' onClick={() => AddLinkBar('M/x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> موتور </div>
+                    <div className='buttons' onClick={() => AddLinkBar('M/x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> موتور </div>
                     <div className='buttons' onClick={() => AddLinkBar('R/x')}><img src='/extend_arrow.png' className='rightArrow'></img> قطعات یدکی </div> 
                 </div>
                 <div className='applyButtonDiv'>

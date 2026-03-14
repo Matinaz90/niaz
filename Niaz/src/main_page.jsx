@@ -7,8 +7,10 @@ import Top_bar_right from './topbar/3_top_bar_right.jsx'
 import SlideModeChanger from './topbar/2.5_slideModeChanger.jsx'
 import Right_bar from './right_bar/main_rightBar/rightBar.jsx'
 import Product from "./product/product.jsx";
+import { validPath } from "./validPath.jsx";
 
 function Main_page() {
+  validPath()
 
   const [width, setWidth] = useState(window.innerWidth)
 

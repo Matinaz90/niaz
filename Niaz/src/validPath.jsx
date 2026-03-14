@@ -17,6 +17,14 @@ export function validPath () {
 
     const trueOrFalse = ['f', 't']
 
+    const carColorSymbols = ['c', 'k', 's', 'r', 't', 'y', 'u', 'o', 'p', 'h']
+
+    const carChassiSymbols = ['w', 'a', 'd', 'z', 'a', 'd', 'z', 'j', 'b']
+
+    const carEnginSymbols = ['n', 'v', 'g']
+
+    const motorEnginSymbols = ['f', 'l']
+
     const returnIfFirstChick = (val, anything) => {
         if(val.includes(anything)){navigate('/')}
     }
@@ -40,7 +48,6 @@ export function validPath () {
     }
 
     useEffect(() => {
-        return
         const whichPage = locationPathName.split('/')[2]
         const linkBarVal = (() => Pages.includes(whichPage) ) ? locationPathName.split('/').pop().split(',') : '';
 
@@ -49,8 +56,9 @@ export function validPath () {
         returnIfFirstChick(locationPathName, 'xx')
         returnIfFirstChick(encodeURIComponent(locationPathName.replace(/[\/,]/g, '')), '%')
 
-
-        if(locationPathName.split('/')[1] == 'home'){
+        if(locationPathName.split('/')[1] == 'home') {
+            return
+        } else if(locationPathName.split('/')[1] == 'home'){
             if(whichPage == 'J'){
                 arrayLength(linkBarVal, 5)
                 cleanValsNum(linkBarVal[0], englishNums, -1, 1000000)
@@ -142,6 +150,31 @@ export function validPath () {
             }else if(whichPage != undefined){
                 navigate('/')
             }
+        }else if(locationPathName.split('/')[1] == 'car'){
+            if(whichPage == 'C'){
+                arrayLength(linkBarVal, 5)
+                cleanValsNum(linkBarVal[0], englishNums, 1369, 1405)
+                cleanValsText(linkBarVal[1], carColorSymbols)
+                cleanValsText(linkBarVal[2], carChassiSymbols)
+                cleanValsText(linkBarVal[3], carEnginSymbols)
+                cleanValsNum(linkBarVal[4], englishNums, 0, 100000000000000)
+                return
+            } else if(whichPage == 'M'){
+                arrayLength(linkBarVal, 3)
+                cleanValsNum(linkBarVal[0], englishNums, 1369, 1405)
+                cleanValsText(linkBarVal[1], motorEnginSymbols)
+                cleanValsNum(linkBarVal[2], englishNums, 0, 100000000000000)
+                return
+            } else if(whichPage == 'R'){
+                arrayLength(linkBarVal, 1)
+                cleanValsNum(linkBarVal[0], englishNums, 0, 100000000000000)
+                return
+            } else if(whichPage != undefined){
+                navigate('/')
+            }
+        } else {
+            navigate('/')
         }
+
     }, [locationPathName])
 }

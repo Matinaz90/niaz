@@ -54,7 +54,6 @@
 }
 
 .product-explain{
-    font-size: calc(var(--text-font-middle) + 2px);
     display: flex;
     align-items: center;
     align-self: flex-end;
@@ -65,11 +64,12 @@
     margin-top: auto;
     margin-bottom: 15px;
     gap: 7px;
+    
 }
 
 .highlight {
   color: var(--text);
-  font-size: calc(var(--text-font-small) + 2px);
+  font-size: calc(var(--text-font-middle));
 }
 
 .product-date {
@@ -100,10 +100,16 @@
         gap: 30px;
     }
     .product-card{
-        flex-basis: 176px;
+        flex-basis: 162px;
         max-width: 600px;
     }
     .product-card-inner{
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr;   
+    }
+    .product-explain{
+        gap: 3px;
+    }
+    .highlight{
+    font-size: calc(var(--text-font-small));
     }
 }

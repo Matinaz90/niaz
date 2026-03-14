@@ -6,8 +6,10 @@ import SlideModeChanger from './topbar/2.5_slideModeChanger.jsx'
 import Product from "./product/product.jsx";
 import HomeRightBar from "./right_bar/home_rightBar/home_right_bar.jsx"
 import CarRightBar from "./right_bar/car_rightBar/car_right_bar.jsx"
+import { validPath } from "./validPath.jsx";
 
 function Home(props) {
+  validPath()
   const checkRightBar = () => {
     if(props.rightBar == 1) {
       return <HomeRightBar></HomeRightBar>
