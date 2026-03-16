@@ -59,7 +59,7 @@ function Top_bar_left(){
                 </h2>
 
                 <div className='setting' style={{ display: settingOpenOrClose ? 'inline-block' : 'none' }} >    
-                        <h2 className='setting_options'> افزودن اگهی</h2>
+                        <h2 className='setting_options' onClick={() => navigate('addniaz')}> افزودن اگهی</h2>
                         <h2 className='setting_options'> ویرایش پروفایل</h2>
                         <h2 className='setting_options'> خروج</h2>
                 </div>

@@ -150,7 +150,7 @@ export function validPath () {
             }else if(whichPage != undefined){
                 navigate('/')
             }
-        }else if(locationPathName.split('/')[1] == 'car'){
+        } else if(locationPathName.split('/')[1] == 'car'){
             if(whichPage == 'C'){
                 arrayLength(linkBarVal, 5)
                 cleanValsNum(linkBarVal[0], englishNums, 1369, 1405)
@@ -172,9 +172,12 @@ export function validPath () {
             } else if(whichPage != undefined){
                 navigate('/')
             }
+        } else if(locationPathName.split('/')[1] == 'addniaz') {
+            return
         } else {
             navigate('/')
         }
+        navigate('/')
 
     }, [locationPathName])
 }

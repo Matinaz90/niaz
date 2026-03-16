@@ -18,6 +18,7 @@
     flex-grow: 1;
     flex-basis: 400px;
     max-width: 1000px;
+    cursor: pointer;
 }
 
 .product-card-inner{
@@ -69,7 +70,7 @@
 
 .highlight {
   color: var(--text);
-  font-size: calc(var(--text-font-middle));
+  font-size: calc(var(--text-font-small));
 }
 
 .product-date {
@@ -100,16 +101,20 @@
         gap: 30px;
     }
     .product-card{
-        flex-basis: 162px;
+        flex-basis: 141.5px;
         max-width: 600px;
     }
     .product-card-inner{
         grid-template-columns: 1fr;   
     }
+    .product-title{
+        font-size: calc(var(--text-font-middle));
+    }
     .product-explain{
         gap: 3px;
+        font-size: calc(var(--text-font-small) - 3px);
     }
     .highlight{
-    font-size: calc(var(--text-font-small));
+    font-size: calc(var(--text-font-small) - 3px);
     }
 }

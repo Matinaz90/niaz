@@ -16,7 +16,7 @@ function RightBar(){
                 <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={(e) => {e.stopPropagation(),setWhichDivOpen('')}}>
                     <div>
                         <div className='buttons' onClick={() => navigate('/home')}><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
-                        <div className='buttons' onClick={() => navigate('/car')}><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
+                        <div className='buttons' onClick={() => navigate('/car')}><img src='/extend_arrow.png' className='rightArrow'></img> وسایل نقلیه </div>
                         <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
                         <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
                         <div className='buttons'><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
