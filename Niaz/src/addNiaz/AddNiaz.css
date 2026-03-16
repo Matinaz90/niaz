@@ -151,7 +151,7 @@
   padding-top: 5px;
   padding-bottom: 10px;
   padding-left: 30px;
-  padding-right: 8px;
+  padding-right: 12px;
   border: 1px solid transparent;
   position: relative;
   transition: 0.15s;
@@ -187,6 +187,7 @@
   flex-direction: column;
   gap: 10px;
   cursor: default;
+  z-index: 100;
 }
 
 .dropDownText{

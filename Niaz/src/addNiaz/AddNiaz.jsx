@@ -52,7 +52,7 @@ export default function CreateNiaz(){
 
   const divs = (val, click, clickVal) => {
     return(
-      <div className='choseButtonDiv' onClick={(e) => {setWhichDivOpenInner('')}}>
+      <div className='choseButtonDiv' >
           <div className='choseButton'>
             {val}
           </div>
@@ -115,7 +115,7 @@ export default function CreateNiaz(){
     )
   }
 
-  const drowpdownInput = (whatChange, dropdownVals, WhichDivOpenHere, whatsymbol, whatShow, width) => {
+  const drowpdownInput = (whatChange, dropdownVals, WhichDivOpenHere, whatsymbol, whatShow, width, isNumber) => {
     return(
       <>
         <div className='pagesTextInnerDiv'  style={{ width: width }}  onClick={(e) => {e.stopPropagation(),setWhichDivOpenInner(prev => (prev == '' ? WhichDivOpenHere : ''))}}>{whatShow}
@@ -127,15 +127,15 @@ export default function CreateNiaz(){
                             setproduct(prev => ({
                             ...prev,
                             [whatChange]: 
-                                whatsymbol[index]
+                                isNumber? persianToEnglishNumber(whatsymbol[index]) : whatsymbol[index]
                             }))
                         }}
                     >
-                        {value}
+                        {isNumber ? englishToPersianNumber(value) : value}
                     </p>
                 ))}
             </div>)}
-            <img className={`dropDownProductImg ${WhichDivOpenInner == '' ? '' : 'dropDownProductImg180Deg'}`} src='/extend_arrow.png'/>
+            <img className={`dropDownProductImg ${WhichDivOpenInner == WhichDivOpenHere ? 'dropDownProductImg180Deg' : ''}`} src='/extend_arrow.png'/>
         </div>
       </>
     )
@@ -154,8 +154,8 @@ export default function CreateNiaz(){
   const face = () => {
     return(
       <>
-        <div className='pagesText' >جهت ساختمان: {drowpdownInput("val3", faces, 'faces' ,facesSymbols, valOrEmpity(product.val3), '70px')}<p>.</p></div>
-        <div className='pagesText' >بحر ساختمان: {drowpdownInput("val4", bahr, 'bahr' ,bahr, valOrEmpity(product.val4), '30px')}<p>.</p></div>
+        <div className='pagesText' >جهت ساختمان: {drowpdownInput("val3", faces, 'faces' ,facesSymbols, facesSymbolsToface[valOrEmpity(product.val3)], '60px')}<p>.</p></div>
+        <div className='pagesText' >بحر ساختمان: {drowpdownInput("val4", bahr, 'bahr' ,bahr, englishToPersianNumber(valOrEmpity(product.val4)), '20px', true)}<p>.</p></div>
       </>
     )
   }
@@ -175,7 +175,7 @@ export default function CreateNiaz(){
   }, [product, whatCategory, whatInnerCategory])
 
   return (
-    <div className='addNiaz-countaner'>
+    <div className='addNiaz-countaner' onClick={(e) => {setWhichDivOpenInner('')}}>
       {modeShow('options', typeOfHome)}
       {modeShow('Home', choseHome)}
       {modeShow('undifide', joinbuildText)}
