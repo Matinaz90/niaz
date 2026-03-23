@@ -212,7 +212,7 @@ function HomeRightBar(){
         }
         return (
             <>
-                <div className='applyButtonDiv'>
+                <div className='applyButtonDivRightBar'>
                     <button className='applyButton backing' onClick={() => {navigate('/home'), setmode('options')}}>بازگشت</button>
                     <button className='applyButton minePage' onClick={() => ChangeUrl()}>تایید</button>
                 </div>
@@ -232,7 +232,7 @@ function HomeRightBar(){
                     <div className='buttons' onClick={() => AddLinkBar('R/x,x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره اپارتمان</div>
                     <div className='buttons' onClick={() => AddLinkBar('Q/x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره مغازه</div>
                 </div>
-                <div className='applyButtonDiv'>
+                <div className='applyButtonDivRightBar'>
                     <button type="button" className='applyButton backing' onClick={() => {navigate('/')}}>بازگشت</button>
                 </div>
             </div>

@@ -2,8 +2,8 @@
 
 
 :root{
-    --main-webiste-color: hsl(23, 99%, 50%);
-    --main-webiste-color-hover: hsl(23, 99%, 50%);
+    --main-webiste-color: hsl(212, 100%, 50%);
+    
     --layer-4-bg-color: hsl(0, 0%, 0%);
     --layer-3-bg-color: hsl(0, 0%, 5%);
     --layer-2-bg-color: hsl(0, 0%, 10%);
@@ -12,8 +12,6 @@
 
     --border-color: hsl(0, 0%, 30%);
     --hover-color:hsl(0, 0%, 10%);
-
-    --boeder-blue-color: hsl(212, 100%, 50%);
 
     --text: hsl(0, 0%, 95%);
     --text_muded_between: hsl(0, 0%, 85%);

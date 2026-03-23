@@ -56,9 +56,7 @@ export function validPath () {
         returnIfFirstChick(locationPathName, 'xx')
         returnIfFirstChick(encodeURIComponent(locationPathName.replace(/[\/,]/g, '')), '%')
 
-        if(locationPathName.split('/')[1] == 'home') {
-            return
-        } else if(locationPathName.split('/')[1] == 'home'){
+        if(locationPathName.split('/')[1] == 'home'){
             if(whichPage == 'J'){
                 arrayLength(linkBarVal, 5)
                 cleanValsNum(linkBarVal[0], englishNums, -1, 1000000)
@@ -171,13 +169,13 @@ export function validPath () {
                 return
             } else if(whichPage != undefined){
                 navigate('/')
+                return
             }
         } else if(locationPathName.split('/')[1] == 'addniaz') {
             return
         } else {
             navigate('/')
         }
-        navigate('/')
 
     }, [locationPathName])
 }

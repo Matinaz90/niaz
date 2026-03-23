@@ -286,7 +286,7 @@
     border: none;
 }
 
-.applyButtonDiv{
+.applyButtonDivRightBar{
     margin-left: 10px;
     display: grid;
     grid-template-columns:1fr;
@@ -294,7 +294,7 @@
 }
 
 .applyButton{
-    background-color: var(--boeder-blue-color);
+    background-color: var(--main-webiste-color);
     border: none;
     border-radius: 5px;
     margin-top: 3px;

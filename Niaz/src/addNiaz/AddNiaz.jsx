@@ -5,12 +5,22 @@ import './AddNiaz.css'
 
 export default function CreateNiaz(){
   const navigate = useNavigate();
-  const [mode, setMode] = useState('undifide');
+  const [mode, setMode] = useState('a');
   const [WhichDivOpenInner, setWhichDivOpenInner] = useState('');
+  const [openhelpbar, setopenhelpbar] = useState(false)
+  const [openOrCloseImage, setopenOrCloseImage] = useState(false)
+  const [imageId, setimageId] = useState('')
+  const [productNum, setproductNum] = useState()
+  const [showRelease, setshowRelease] = useState()
 
   const [whatCategory, setwhatCategory] = useState('x');
   const [whatInnerCategory, setwhatInnerCategory] = useState('x');
-  const [product, setproduct] = useState({"price": 'x', "val1": 'x', "val2": 'x', "val3": 'x', "val4": 'x', "val5": 'x', "val6": 'x', "val7": 'x', "val8": 'x', "val9": 'x', "val10": 'x', "val11": 'x', "val12": 'x', "val13": 'x', "val14": 'x'})
+  const [product, setproduct] = useState({"price1": 'x', "price2": 'x', "val1": 'x', "val2": 'x', "val3": 'x', "val4": 'x', "val5": 'x', "val6": 'x', "val7": 'x', "val8": 'x', "val9": 'x', "val10": 'x', "val11": 'x', "val12": 'x', "val13": 'x', "val14": 'x'})
+  const [problemText, setproblemText] = useState('')
+
+  const joinbuildpersentoptions = ['مالک ۳۰ / ۷۰ سازنده', 'مالک ۴۰ / ۶۰ سازنده', 'مالک ۵۰ / ۵۰ سازنده', 'مالک ۶۰ / ۴۰ سازنده', 'مالک ۷۰ / ۳۰ سازنده'];
+  const joinbuildpersentoptionsSymbols =  ['1', '2', '3', '4', '5']
+  const joinbuildpersentoptionsSymbolstoVals = {'1': 'مالک ۳۰ / ۷۰ سازنده', '2': 'مالک ۴۰ / ۶۰ سازنده', '3': 'مالک ۵۰ / ۵۰ سازنده', '4': 'مالک ۶۰ / ۴۰ سازنده', '5': 'مالک ۷۰ / ۳۰ سازنده'}
 
   const pages = ['h', 'v']
   const pagesInnerHome = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
@@ -20,6 +30,54 @@ export default function CreateNiaz(){
   const facesSymbols = ['o' ,'n', 's', 'w', 'e']
   const facesSymbolsToface = {'o': 'فرقی ندارد','n': 'شمالی', 's': 'جنوبی', 'w': 'شرقی', 'e': 'غربی'}
   const bahr = ['1', '2', '3']
+
+  const checkVals = (val1, val2) => {
+    if(val1 > val2){
+      triggerError('در متراژ عدد دوم از عدد اول کوچک تر است')
+      return false
+    } else if(val1 + 40 < val2){
+      triggerError('اختلاف متراژ بیشتر از یک‌ششم عدد اول باشد')
+      return false
+    } else {
+      return true
+    }
+  }
+
+  const triggerError = (text) => {
+    setproblemText(text)
+    setTimeout(() => {
+    setproblemText('')
+    }, 2000);
+  };
+
+  const conformAndSendTest = () => {
+    if(mode == 'a'){
+      if(
+        checkVals(product.val1, product.val2) &&
+        checkVals(product.price1, product.price2)
+      ){console.log('done')}
+    }
+  }
+
+  useEffect(() => {
+    const keys = Object.keys(product);
+    const keysToKeep = keys.slice(0, productNum);
+    
+    const newProduct = keysToKeep.reduce((acc, key) => {
+      acc[key] = product[key];
+      return acc;
+    }, {});
+
+    if(imageId != ''){
+      if(Object.values(newProduct).some(val => val == 'x') || Object.values(newProduct).some(val => val == '')){
+        setshowRelease(false)
+      } else {
+        setshowRelease(true)
+      }
+    } else {
+      setshowRelease(false)
+    }
+  }, [product, imageId])
 
   const modeShow = (CurrentMode, whichFunc) => {
     if (CurrentMode == mode) {
@@ -50,14 +108,32 @@ export default function CreateNiaz(){
     }).join("");
   }
 
-  const divs = (val, click, clickVal) => {
+  const priceChange = (id, whatChange) => {
+    const num = product[whatChange];
     return(
-      <div className='choseButtonDiv' >
+      <div id={id}>
+        <div className='priceFormatDivProduct'>{formatPrice(CleanVals(num, englishNums))}</div>
+      </div>
+    )   
+  }
+
+  const formatPrice = (value) => {
+    const num = parseInt(value, 10);
+    if (isNaN(num) || num <= 0) return '';
+    if (num >= 1_000_000_000) return (<div>{englishToPersianNumber((num / 1_000_000_000).toFixed(3).replace(/\.0+$/, ''))} میلیارد</div>);
+    if (num >= 1_000_000) return (<div>{englishToPersianNumber((num / 1_000_000).toFixed(3).replace(/\.0+$/, ''))} میلیون</div>);
+    if (num >= 1_000) return (<div>{englishToPersianNumber((num / 1_000).toFixed(3).replace(/\.0+$/, ''))} هزار تومان</div>) ;
+    return (<div>{englishToPersianNumber(num)} تومان</div>);
+  };
+
+  const divs = (val, click, clickVal, checkNum) => {
+    return(
+      <div className='choseButtonDiv' onLoad={() => setproductNum(checkNum)}>
           <div className='choseButton'>
             {val}
           </div>
           <div className='applyButtonDiv'>
-            <button type="button" className='backButton' onClick={() => click(clickVal)}>بازگشت</button>
+            <button type="button" className={`backButton ${showRelease ? 'newLoac' : ''}`} onClick={() => click(clickVal)}>بازگشت</button>
           </div>
       </div>
     )
@@ -72,38 +148,49 @@ export default function CreateNiaz(){
 
   const typeOfHome = () => {
     return(
-        divs(<>{button('خانه', setMode, 'Home', 'h', setwhatCategory, true)} {button('وسایل نقلیه', setMode, 'Vehicle', 'v', pages, setwhatCategory, true)} </>, navigate, '/')
+        divs(<>{button('خانه', setMode, 'Home', 'h', setwhatCategory, true)} {button('وسایل نقلیه', setMode, 'Vehicle', 'v', pages, setwhatCategory, true)} </>, navigate, '/', 0)
     )
   }
 
-  // innerPages
+
 
   const choseHome = () => {
     return(
         divs(<>
-          {button('مشارکت ساخت', setMode, 'undifide', 'a', setwhatInnerCategory, true)} 
+          {button('مشارکت ساخت', setMode, 'a', 'a', setwhatInnerCategory, true)} 
           {button('آپارتمان', setMode, 'undifide', 'b', setwhatInnerCategory, true)} 
           {button('مغازه', setMode, 'undifide', 'c', setwhatInnerCategory, true)} 
           {button('ویلا', setMode, 'undifide', 'd', setwhatInnerCategory, true)} 
           {button('زمین', setMode, 'undifide', 'e', setwhatInnerCategory, true)} 
           {button('اجاره اپارتمان', setMode, 'undifide', 'f', setwhatInnerCategory, true)}
           {button('اجاره مغازه', setMode, 'undifide', 'g', setwhatInnerCategory, true)} 
-        </>, setMode, 'options')
+        </>, setMode, 'options', 0)
     )
   }
 
+  const imageSelect = (maxNumImg) => {
+    const images = Array.from({ length: maxNumImg }, (_, i) => i + 1);
+
+    return (
+      <div className='addNiazImageProductDiv'>
+        {images.map((index) => (
+          <img key={index} src={`/product/${index}.png`} onClick={() => {setimageId(index), setopenOrCloseImage(false)}} className='addNiazImageProduct'/>
+        ))}
+      </div>
+    );
+  }
 
   //pattern="^[0-9۰-۹٠-٩]*$"
   //inputs
 
-  const normalInput = (placeholder, whatVal, checkSymbol) => {
+  const normalInput = (whatVal, checkSymbol, width, maxLength, id) => {
     return(
       <>
-        <input className='pagesTextInput' placeholder={placeholder} maxLength={6} value={englishToPersianNumber(valOrEmpity(product[whatVal]))} 
+        <input className='pagesTextInput' id={id} style={{ width: width }} maxLength={maxLength + 1} value={englishToPersianNumber(valOrEmpity(product[whatVal]))} 
         onChange={(e) => {
           let newValue = persianToEnglishNumber(e.target.value);
           newValue = CleanVals(newValue, checkSymbol);
-          if (newValue.length > 5) {
+          if (newValue.length > maxLength) {
             newValue = newValue.slice(1);
           }
           setproduct((prev) => ({
@@ -115,10 +202,10 @@ export default function CreateNiaz(){
     )
   }
 
-  const drowpdownInput = (whatChange, dropdownVals, WhichDivOpenHere, whatsymbol, whatShow, width, isNumber) => {
+  const drowpdownInput = (whatChange, dropdownVals, WhichDivOpenHere, whatsymbol, whatShow, width, isNumber, checkSymbol) => {
     return(
       <>
-        <div className='pagesTextInnerDiv'  style={{ width: width }}  onClick={(e) => {e.stopPropagation(),setWhichDivOpenInner(prev => (prev == '' ? WhichDivOpenHere : ''))}}>{whatShow}
+        <div className='pagesTextInnerDiv' style={{ width: width }} onClick={(e) => {e.stopPropagation(),setWhichDivOpenInner(prev => (prev == '' ? WhichDivOpenHere : ''))}}>{whatShow}
           {WhichDivOpenInner == WhichDivOpenHere && (
             <div className='dropDownProduct'>
                 {dropdownVals.map((value, index) => (
@@ -127,7 +214,7 @@ export default function CreateNiaz(){
                             setproduct(prev => ({
                             ...prev,
                             [whatChange]: 
-                                isNumber? persianToEnglishNumber(whatsymbol[index]) : whatsymbol[index]
+                                CleanVals(isNumber ? persianToEnglishNumber(whatsymbol[index]) : whatsymbol[index], checkSymbol)
                             }))
                         }}
                     >
@@ -146,7 +233,7 @@ export default function CreateNiaz(){
   const metrage = () => {
     return(
       <>
-        <div className='pagesText' >متراژ از {normalInput("۱۰۰", 'val1', englishNums)} تا {normalInput("۱۲۰", 'val2', englishNums)}متر.</div>
+        <div className='pagesText' >متراژ از {normalInput('val1', englishNums, '80px', 5, 'inputMetrage1')} تا {normalInput('val2', englishNums, '80px', 5, 'normalInput2')}متر.</div>
       </>
     )
   }
@@ -154,17 +241,74 @@ export default function CreateNiaz(){
   const face = () => {
     return(
       <>
-        <div className='pagesText' >جهت ساختمان: {drowpdownInput("val3", faces, 'faces' ,facesSymbols, facesSymbolsToface[valOrEmpity(product.val3)], '60px')}<p>.</p></div>
-        <div className='pagesText' >بحر ساختمان: {drowpdownInput("val4", bahr, 'bahr' ,bahr, englishToPersianNumber(valOrEmpity(product.val4)), '20px', true)}<p>.</p></div>
+        <div className='pagesText' >جهت ساختمان: {drowpdownInput("val3", faces, 'faces' ,facesSymbols, facesSymbolsToface[valOrEmpity(product.val3)], '70px', false,facesSymbols)}<p>.</p></div>
+        <div className='pagesText' >بحر ساختمان: {drowpdownInput("val4", bahr, 'bahr' ,bahr, englishToPersianNumber(valOrEmpity(product.val4)), '30px', true,joinbuildpersentoptionsSymbols)}<p>.</p></div>
       </>
     )
   }
 
+  const joinbuild = () => {
+    return(
+      <>
+        <div className='pagesText' >درصد مشارکت ساخت: {drowpdownInput("val5", joinbuildpersentoptions, 'joinbuildpersentoptions', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[valOrEmpity(product.val5)], '40%', true, joinbuildpersentoptionsSymbols)}<p>.</p></div>
+      </>
+    )
+  }
+
+  const price = () => {
+    return(
+      <>
+        <div className='pagesText' >بودجه من:</div>
+        <div className='pagesText marginRight'>از {normalInput('price1', englishNums, '110px', 13, 'priceInput1')}{priceChange('priceShow', 'price1', englishToPersianNumber(CleanVals(product.price1, englishNums)))}</div>
+        <div className='pagesText marginRight'>تا {normalInput('price2', englishNums, '110px', 13, 'priceInput2')}{priceChange('priceShow', 'price2', englishToPersianNumber(CleanVals(product.price2, englishNums)))}</div>
+      </>
+    )
+  }
+
+  const image = (maxNumImg) => {
+    return(
+      <>
+        <div className='pagesText'>عکس:
+          <div className='addNiazImg' onClick={() => setopenOrCloseImage(prev => !prev)}>{
+            imageId == '' ? 
+            <div  className='addNiazImageProduct'></div> : 
+            <img src={`/product/${imageId}.png`} className='addNiazImageProduct'/>}
+            <img className={`AddImageDropDown ${openOrCloseImage ? 'dropDownProductImg180Deg' : ''}`} src='/extend_arrow.png'/>
+          </div>
+        </div>
+          {openOrCloseImage ? imageSelect(maxNumImg) : <></>}
+      </>
+    )
+  }
+
+  const helpText = (Inner) => {
+    const middleText = () => {
+      if(mode == 'a') {
+        return(
+          //<p className='helpText'>دو کادر ورودی عدد برای تعیین بازه (مانند بودجه من)، که اختلاف بین آن‌ها نباید بیشتر از ۴۰ باشد.</p>
+          <>
+            <p className='helpText'>در متراژ اختلاف دو عدد نباید بیشتر ۴۰ باشد.</p>
+            <p className='helpText'>در بودجه من اختاف دو عدد نباید بیشتر از یک ششم عدد اول باشد.</p>
+          </>
+        )
+      }
+    }
+    
+    return(
+      <div className='helpTextDiv'>
+        <p className='helpText'>شما در اینجا نیاز خود را مینویسید.</p>
+        {middleText()}
+        <p className='helpText'>برای ظاهر شدن دکمه انتشار باید همه ی کادر ها را پر کنید.</p>
+      </div>
+    )
+  }
+
+  // bearse
   // homeCategoryes
 
   const joinbuildText = () => {
     return(
-      divs(<> {metrage()} {face()} </>, setMode, 'Home')
+      divs(<> {metrage()} {face()} {joinbuild()} {price()} {image(5)}</>, setMode, 'Home', 7)
     )
   }
 
@@ -175,10 +319,23 @@ export default function CreateNiaz(){
   }, [product, whatCategory, whatInnerCategory])
 
   return (
-    <div className='addNiaz-countaner' onClick={(e) => {setWhichDivOpenInner('')}}>
-      {modeShow('options', typeOfHome)}
-      {modeShow('Home', choseHome)}
-      {modeShow('undifide', joinbuildText)}
+    <div className='addNiaz-countanerx2'>
+      {
+        openhelpbar ? 
+          <div className={`addNiaz-countanerx3 ${openhelpbar ? 'displayBlock' : ''}`} >
+            {helpText()}
+            <button onClick={() => {setopenhelpbar(false)}} className='helpButton'>بازگشت</button>
+          </div>
+        :
+          <div className={`addNiaz-countaner ${showRelease ? 'morePadding' : ''}`} onClick={() => {setWhichDivOpenInner('')}}>
+            {modeShow('options', typeOfHome)}
+            {modeShow('Home', choseHome)}
+            {modeShow('a', joinbuildText)}
+            <button onClick={() => {setopenhelpbar(true)}} className={`helpButton`}>کمک</button>
+            {problemText != '' ? <p className='errText'>{problemText}</p> : <></>}
+            {showRelease ? <button onClick={() => {conformAndSendTest()}} className='conformButton'>انتشار</button>: <></>}
+          </div>
+      }
     </div>
   )
 }

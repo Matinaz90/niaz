@@ -44,7 +44,7 @@
 }
 
 .PlaceHolder button {
-  background-color: var(--boeder-blue-color);
+  background-color: var(--main-webiste-color);
   margin-top: 30px;
   height: 40px;
   position: absolute;
@@ -71,7 +71,7 @@
 }
 
 .PlaceHolder input:focus {
-  border-color: var(--boeder-blue-color);
+  border-color: var(--main-webiste-color);
 }
 
 .sendCodeProblem{
