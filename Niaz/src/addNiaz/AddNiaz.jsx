@@ -12,6 +12,7 @@ export default function CreateNiaz(){
   const [imageId, setimageId] = useState('')
   const [productNum, setproductNum] = useState()
   const [showRelease, setshowRelease] = useState()
+  const [mainPage, setmainPage] = useState(true)
 
   const [whatCategory, setwhatCategory] = useState('x');
   const [whatInnerCategory, setwhatInnerCategory] = useState('x');
@@ -31,12 +32,12 @@ export default function CreateNiaz(){
   const facesSymbolsToface = {'o': 'فرقی ندارد','n': 'شمالی', 's': 'جنوبی', 'w': 'شرقی', 'e': 'غربی'}
   const bahr = ['1', '2', '3']
 
-  const checkVals = (val1, val2) => {
-    if(val1 > val2){
-      triggerError('در متراژ عدد دوم از عدد اول کوچک تر است')
+  const checkVals = (val1, val2, text1, text2, clac) => {
+    if(Number(val1) > Number(val2)){
+      triggerError(`در ${text1} عدد دوم از عدد اول کوچک تر است`)
       return false
-    } else if(val1 + 40 < val2){
-      triggerError('اختلاف متراژ بیشتر از یک‌ششم عدد اول باشد')
+    } else if(clac){
+      triggerError(text2)
       return false
     } else {
       return true
@@ -51,10 +52,11 @@ export default function CreateNiaz(){
   };
 
   const conformAndSendTest = () => {
+    if(!showRelease){triggerError('.لطفا همه کادر ها را پر کنید')}
     if(mode == 'a'){
       if(
-        checkVals(product.val1, product.val2) &&
-        checkVals(product.price1, product.price2)
+        checkVals(product.val1, product.val2, 'متراژ', 'اختلاف متراژ بیشتر از ۳۰ باشد', eval('Number(product.val1) + 30 < product.val2')) &&
+        checkVals(product.price1, product.price2, 'بودجه', 'اختلاف بودجه من بیشتر از یک‌پنجم عدد اول باشد', eval('Number(product.price1) / 5 + Number(product.price1) < product.price2'))
       ){console.log('done')}
     }
   }
@@ -77,7 +79,12 @@ export default function CreateNiaz(){
     } else {
       setshowRelease(false)
     }
+
   }, [product, imageId])
+
+  useEffect(() => {
+    ['a'].includes(mode) ? setmainPage(false) : setmainPage(true)
+  }, [mode])
 
   const modeShow = (CurrentMode, whichFunc) => {
     if (CurrentMode == mode) {
@@ -133,7 +140,7 @@ export default function CreateNiaz(){
             {val}
           </div>
           <div className='applyButtonDiv'>
-            <button type="button" className={`backButton ${showRelease ? 'newLoac' : ''}`} onClick={() => click(clickVal)}>بازگشت</button>
+            <button type="button" className={`backButton ${mainPage ? '' : 'newLoac'}`} onClick={() => click(clickVal)}>بازگشت</button>
           </div>
       </div>
     )
@@ -281,14 +288,41 @@ export default function CreateNiaz(){
     )
   }
 
-  const helpText = (Inner) => {
+  const moreInfo = (whatVal) => {
+    return(
+      <>
+        <div className='pagesText' >توضیحات بیشتر: </div>
+        <div className='pagesText marginRight'>
+          <textarea 
+            className='moreInfo' 
+            id='moreInfo' 
+            minLength='0' 
+            maxLength='500'
+            value={englishToPersianNumber(valOrEmpity(product[whatVal]))}
+            onChange={(e) => {
+              setproduct((prev) => ({
+                ...prev,
+                [whatVal]: e.target.value
+              }));
+            }}  
+            type="text"
+            rows="5" 
+          />
+          <span className='moreInfoNum'>
+            ۵۰۰ / {englishToPersianNumber(String(product[whatVal] || '').length)}
+          </span>
+        </div>
+      </>
+    )
+  }
+
+  const helpText = () => {
     const middleText = () => {
       if(mode == 'a') {
         return(
-          //<p className='helpText'>دو کادر ورودی عدد برای تعیین بازه (مانند بودجه من)، که اختلاف بین آن‌ها نباید بیشتر از ۴۰ باشد.</p>
           <>
-            <p className='helpText'>در متراژ اختلاف دو عدد نباید بیشتر ۴۰ باشد.</p>
-            <p className='helpText'>در بودجه من اختاف دو عدد نباید بیشتر از یک ششم عدد اول باشد.</p>
+            <p className='helpText'>در متراژ اختلاف دو عدد نباید بیشتر ۳۰ باشد.</p>
+            <p className='helpText'>در بودجه من اختاف دو عدد نباید بیشتر از یک‌پنجم عدد اول باشد.</p>
           </>
         )
       }
@@ -298,7 +332,7 @@ export default function CreateNiaz(){
       <div className='helpTextDiv'>
         <p className='helpText'>شما در اینجا نیاز خود را مینویسید.</p>
         {middleText()}
-        <p className='helpText'>برای ظاهر شدن دکمه انتشار باید همه ی کادر ها را پر کنید.</p>
+        <p className='helpText'>برای پر رنگ شدن دکمه انتشار باید همه ی کادر ها را پر کنید.</p>
       </div>
     )
   }
@@ -308,7 +342,7 @@ export default function CreateNiaz(){
 
   const joinbuildText = () => {
     return(
-      divs(<> {metrage()} {face()} {joinbuild()} {price()} {image(5)}</>, setMode, 'Home', 7)
+      divs(<> {metrage()} {face()} {joinbuild()} {price()} {image(5)} {moreInfo('val6')}</>, setMode, 'Home', 8)
     )
   }
 
@@ -321,7 +355,8 @@ export default function CreateNiaz(){
   return (
     <div className='addNiaz-countanerx2'>
       {
-        openhelpbar ? 
+        openhelpbar 
+        ? 
           <div className={`addNiaz-countanerx3 ${openhelpbar ? 'displayBlock' : ''}`} >
             {helpText()}
             <button onClick={() => {setopenhelpbar(false)}} className='helpButton'>بازگشت</button>
@@ -333,7 +368,7 @@ export default function CreateNiaz(){
             {modeShow('a', joinbuildText)}
             <button onClick={() => {setopenhelpbar(true)}} className={`helpButton`}>کمک</button>
             {problemText != '' ? <p className='errText'>{problemText}</p> : <></>}
-            {showRelease ? <button onClick={() => {conformAndSendTest()}} className='conformButton'>انتشار</button>: <></>}
+            {mainPage ? <></> :<button onClick={() => {conformAndSendTest()}} className={`conformButton ${showRelease ? '' : 'showConformButton'}`}>انتشار</button>}
           </div>
       }
     </div>
