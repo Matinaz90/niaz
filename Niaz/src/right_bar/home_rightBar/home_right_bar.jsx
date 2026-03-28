@@ -62,12 +62,11 @@ function HomeRightBar(){
                 bahr:  valOrEmpity(linkBarVal[4]),
                 floor: valOrEmpity(linkBarVal[5]),
                 floorInfloor: valOrEmpity(linkBarVal[6]),
-                needRepair: valOrEmpity(linkBarVal[7]),
-                balaon: valOrEmpity(linkBarVal[8]),
-                parking: valOrEmpity(linkBarVal[9]),
-                anbary: valOrEmpity(linkBarVal[10]),
-                asansor: valOrEmpity(linkBarVal[11]),
-                price: valOrEmpity(linkBarVal[12]),
+                balaon: valOrEmpity(linkBarVal[7]),
+                parking: valOrEmpity(linkBarVal[8]),
+                anbary: valOrEmpity(linkBarVal[9]),
+                asansor: valOrEmpity(linkBarVal[10]),
+                price: valOrEmpity(linkBarVal[11]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('V')){
@@ -78,12 +77,11 @@ function HomeRightBar(){
                 year: valOrEmpity(linkBarVal[2]),
                 face: valOrEmpity(linkBarVal[3]),
                 bahr:  valOrEmpity(linkBarVal[4]),
-                needRepair: valOrEmpity(linkBarVal[5]),
-                balaon: valOrEmpity(linkBarVal[6]),
-                parking: valOrEmpity(linkBarVal[7]),
-                anbary: valOrEmpity(linkBarVal[8]),
-                asansor: valOrEmpity(linkBarVal[9]),
-                price: valOrEmpity(linkBarVal[10]),
+                balaon: valOrEmpity(linkBarVal[5]),
+                parking: valOrEmpity(linkBarVal[6]),
+                anbary: valOrEmpity(linkBarVal[7]),
+                asansor: valOrEmpity(linkBarVal[8]),
+                price: valOrEmpity(linkBarVal[9]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('R')){
@@ -96,13 +94,12 @@ function HomeRightBar(){
                 bahr:  valOrEmpity(linkBarVal[4]),
                 floor: valOrEmpity(linkBarVal[5]),
                 floorInfloor: valOrEmpity(linkBarVal[6]),
-                needRepair: valOrEmpity(linkBarVal[7]),
-                balaon: valOrEmpity(linkBarVal[8]),
-                parking: valOrEmpity(linkBarVal[9]),
-                anbary: valOrEmpity(linkBarVal[10]),
-                asansor: valOrEmpity(linkBarVal[11]),
-                beforePrice: valOrEmpity(linkBarVal[12]),
-                monthPrice: valOrEmpity(linkBarVal[13]),
+                balaon: valOrEmpity(linkBarVal[7]),
+                parking: valOrEmpity(linkBarVal[8]),
+                anbary: valOrEmpity(linkBarVal[9]),
+                asansor: valOrEmpity(linkBarVal[10]),
+                beforePrice: valOrEmpity(linkBarVal[11]),
+                monthPrice: valOrEmpity(linkBarVal[12]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('S')){
@@ -112,11 +109,10 @@ function HomeRightBar(){
                 year: valOrEmpity(linkBarVal[1]),
                 face: valOrEmpity(linkBarVal[2]),
                 bahr:  valOrEmpity(linkBarVal[3]),
-                needRepair: valOrEmpity(linkBarVal[4]),
-                electricity: valOrEmpity(linkBarVal[5]),
-                water: valOrEmpity(linkBarVal[6]),
-                gas: valOrEmpity(linkBarVal[7]),
-                price: valOrEmpity(linkBarVal[8]),
+                electricity: valOrEmpity(linkBarVal[4]),
+                water: valOrEmpity(linkBarVal[5]),
+                gas: valOrEmpity(linkBarVal[6]),
+                price: valOrEmpity(linkBarVal[7]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('Q')){
@@ -128,12 +124,11 @@ function HomeRightBar(){
                 bahr:  valOrEmpity(linkBarVal[3]),
                 floorInfloor: valOrEmpity(linkBarVal[4]),
                 store: valOrEmpity(linkBarVal[5]),
-                needRepair: valOrEmpity(linkBarVal[6]),
-                electricity: valOrEmpity(linkBarVal[7]),
-                water: valOrEmpity(linkBarVal[8]),
-                gas: valOrEmpity(linkBarVal[9]),
-                beforePrice: valOrEmpity(linkBarVal[11]),
-                monthPrice: valOrEmpity(linkBarVal[12]),
+                electricity: valOrEmpity(linkBarVal[6]),
+                water: valOrEmpity(linkBarVal[7]),
+                gas: valOrEmpity(linkBarVal[8]),
+                beforePrice: valOrEmpity(linkBarVal[9]),
+                monthPrice: valOrEmpity(linkBarVal[10]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('G')){
@@ -468,7 +463,6 @@ function HomeRightBar(){
         return(
             innerPageSelection('conditionDiv', 'وضعیت خانه',                         
                 <div className='checkBoxDiv'>
-                    {condition('needRepair', 'نیاز به باسازی', 'needRepair')}
                     {condition('balaon', 'بالاکن', 'balaon')}
                     {condition('parking', 'پارکینگ', 'parking')}
                     {condition('anbary', 'انباری', 'anbary')}
@@ -482,7 +476,6 @@ function HomeRightBar(){
         return(
             innerPageSelection('conditionDiv', 'وضعیت خانه',                         
                 <div className='checkBoxDiv'>
-                    {condition('needRepair', 'نیاز به باسازی', 'needRepair')}
                     {condition('electricity', 'برق', 'electricity')}
                     {condition('water', 'آب', 'water')}
                     {condition('gas', 'گاز', 'gas')}

@@ -33,14 +33,13 @@ export default function CreateNiaz(){
   const bahr = ['فرقی ندارد' ,'۱', '۲', '۳']
   const bahrSymbols = ['a' ,'m', 'q', 'r']
   const bahrSymbolsTobahr = {'a': 'فرقی ندارد','m': '۱', 'q': '۲', 'r': '۳'}
-  const roomVals = (useMemo(() => Array.from({ length: 6 }, (_, i) => String(i + 1)), []));
   const years = useMemo(() => Array.from({ length: 1405 - 1330 + 1 }, (_, i) => String(1405 - i)));
-  const floor = ['فرقی ندارد' ,'۱', '۲', '۳', '۴', '۵', '۶', '+۶']
-  const floorSymbols = ['h' ,'m', 'q', 'r', 't', 'u', 'v', 'p']
-  const floorSymbolsTofloor = { 'h': 'فرقی ندارد', 'm': '۱', 'q': '۲', 'r': '۳', 't': '۴', 'u': '۵', 'v': '۶', 'p': '+۶'};
-  const floorinfloor = ['فرقی ندارد' ,'۱', '۲', '۳', '۴', '۵', '۶', '+۶']
-  const floorinfloorSymbols = ['x' ,'z', 'y', 'b', 'c', 'd', 'f', 'g']
-  const floorinfloorSymbolsTofloor = {'x': 'فرقی ندارد', 'z': '۱', 'y': '۲', 'b': '۳', 'c': '۴', 'd': '۵', 'f': '۶', 'g': '+۶'};
+  const num6palas = ['فرقی ندارد' ,'۱', '۲', '۳', '۴', '۵', '۶', '+۶']
+  const num6palasSymbols = ['x' ,'z', 'y', 'b', 'c', 'd', 'f', 'g']
+  const num6palasSymbolsnum6palas = {'x': 'فرقی ندارد', 'z': '۱', 'y': '۲', 'b': '۳', 'c': '۴', 'd': '۵', 'f': '۶', 'g': '+۶'};
+  const trueOrFalse = ['فرقی ندارد' ,'داشته باشه', 'نداشته باشه']
+  const trueOrFalseSymbols = ['k' ,'g', 'f']
+  const trueOrFalseSymbolsToTrueOrFalse = {'k': 'فرقی ندارد', 'g': 'داشته باشه', 'f': 'نداشته باشه'};
 
   const checkVals = (val1, val2, text1, text2, clac) => {
     if(Number(val1) > Number(val2)){
@@ -233,7 +232,7 @@ export default function CreateNiaz(){
                             }))
                         }}
                     >
-                        {isNumber ? englishToPersianNumber(value) : value}
+                      {isNumber ? englishToPersianNumber(value) : value}
                     </p>
                 ))}
             </div>)}
@@ -248,7 +247,7 @@ export default function CreateNiaz(){
   const metrage = (whatValx1, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >متراژ از {normalInput(whatValx1, englishNums, '80px', 5, 'inputMetrage1')} تا {normalInput(whatValx2, englishNums, '80px', 5, 'normalInput2')}متر</div>
+        <div className='pagesText' >متراژ: از {normalInput(whatValx1, englishNums, '80px', 5, 'inputMetrage1')} تا {normalInput(whatValx2, englishNums, '80px', 5, 'normalInput2')}متر</div>
       </>
     )
   }
@@ -348,16 +347,27 @@ export default function CreateNiaz(){
   const rooms = (whatVal) => {
     return(
       <>
-        <div className='pagesText' >اتاق خواب: {drowpdownInput(whatVal, roomVals, 'roomVals', roomVals, englishToPersianNumber(valOrEmpity(product[whatVal])), '20px', true, roomVals)}</div>
+        <div className='pagesText' >اتاق خواب: {drowpdownInput(whatVal, num6palas, 'roomVals', num6palasSymbols, num6palasSymbolsnum6palas[product[whatVal]], '70px', true, num6palasSymbols)}</div>
       </>
     )
   }
 
-  const floorFunc = (whatValx1, whatValx2) => {
+  const homeConditions = (whatValx1, whatValx2, whatValx3, whatValx4) => {
     return(
       <>
-        <div className='pagesText' >طبقه: {drowpdownInput(whatValx1, floor, 'floor' ,floorSymbols, floorSymbolsTofloor[valOrEmpity(product[whatValx1])], '70px', false, floorSymbols)}</div>
-        <div className='pagesText' >واحد در طبقه: {drowpdownInput(whatValx2, floorinfloor, 'floorinFloor' ,floorinfloorSymbols, floorinfloorSymbolsTofloor[valOrEmpity(product[whatValx2])], '70px', true, floorinfloorSymbols)}</div>
+        <div className='pagesText' >بالاکن: {drowpdownInput(whatValx1, trueOrFalse, 'trueOrFalse1' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx1])], '90px', false, trueOrFalseSymbols)}</div>
+        <div className='pagesText' >پارکینگ: {drowpdownInput(whatValx2, trueOrFalse, 'trueOrFalse2' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx2])], '90px', false, trueOrFalseSymbols)}</div>
+        <div className='pagesText' >انباری: {drowpdownInput(whatValx3, trueOrFalse, 'trueOrFalse3' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx3])], '90px', false, trueOrFalseSymbols)}</div>
+        <div className='pagesText' >اسانسور: {drowpdownInput(whatValx4, trueOrFalse, 'trueOrFalse4' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx4])], '90px', false, trueOrFalseSymbols)}</div>
+      </>
+    )
+  }
+
+  const floor = (whatValx1, whatValx2) => {
+    return(
+      <>
+        <div className='pagesText' >طبقه: {drowpdownInput(whatValx1, num6palas, 'floor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx1]], '70px', false, num6palasSymbols)}</div>
+        <div className='pagesText' >واحد در طبقه: {drowpdownInput(whatValx2, num6palas, 'floorinfloor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx2]], '70px', true, num6palasSymbols)}</div>
       </>
     )
   }
@@ -365,7 +375,7 @@ export default function CreateNiaz(){
   const yearBuild = (whatVal, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >سال ساخت: از {drowpdownInput(whatVal, years, 'yearsx1', years, englishToPersianNumber(valOrEmpity(product[whatVal])), '50px', true, years)} تا {drowpdownInput(whatValx2, years, 'yearsx2', years, englishToPersianNumber(valOrEmpity(product[whatValx2])), '50px', true, years)}</div>
+        <div className='pagesText' >سال ساخت: از {drowpdownInput(whatVal, years, 'yearsx1', years, englishToPersianNumber(valOrEmpity(product[whatVal])), '50px', true, englishNums)} تا {drowpdownInput(whatValx2, years, 'yearsx2', years, englishToPersianNumber(valOrEmpity(product[whatValx2])), '50px', true, englishNums)}</div>
       </>
     )
   }
@@ -379,7 +389,7 @@ export default function CreateNiaz(){
 
   const aparteman = () => {
     return(
-      divs(<> {metrage('val1', 'val2')} {rooms('val3')} {yearBuild('val4', 'val5')} {floorFunc('val6', 'val7')} {price()} {image(5)} {moreInfo('val8')} </>, setMode, 'Home', 10)
+      divs(<> {metrage('val1', 'val2')} {rooms('val3')} {yearBuild('val4', 'val5')} {floor('val6', 'val7')} {homeConditions('val8', 'val9', 'val10', 'val11')} {price()} {image(5)} {moreInfo('val12')} </>, setMode, 'Home', 12)
     )
   }
 
@@ -412,3 +422,10 @@ export default function CreateNiaz(){
     </div>
   )
 }
+
+// when opening dropdown the scrool look wrong on dropdown
+
+// when i scrool dropdown and i am in end of that dropdown scrool i want the under div scrrol first the higher then lower
+
+// relase button ckecks
+
