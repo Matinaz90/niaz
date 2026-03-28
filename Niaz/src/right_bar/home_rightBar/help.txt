@@ -5,3 +5,6 @@ when i click on input some times it bring up the auto fill which is for the goog
 
 
 why when i copy some website like it change the format of link the text 
+
+esc button
+

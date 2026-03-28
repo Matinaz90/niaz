@@ -14,7 +14,7 @@ function HomeRightBar(){
     const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
     const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
-    const years = useMemo(() => Array.from({ length: 1404 - 1330 + 1 }, (_, i) => String(1404 - i)));
+    const years = useMemo(() => Array.from({ length: 1405 - 1330 + 1 }, (_, i) => String(1405 - i)));
 
     const joinbuildpersentoptions = ['مالک ۳۰ / ۷۰ سازنده', 'مالک ۴۰ / ۶۰ سازنده', 'مالک ۵۰ / ۵۰ سازنده', 'مالک ۶۰ / ۴۰ سازنده', 'مالک ۷۰ / ۳۰ سازنده'];
     const joinbuildpersentoptionsSymbols =  ['1', '2', '3', '4', '5']
@@ -30,7 +30,7 @@ function HomeRightBar(){
     const groundSymbolsToground = {'m': 'مسکونی', 't': 'تجاری', 'c': 'کشاورزی', 'b': 'باغداری'}
 
     const bahr = ['1', '2', '3']
-    const rooms = (useMemo(() => Array.from({ length: 12 }, (_, i) => String(i + 1)), []));
+    const rooms = (useMemo(() => Array.from({ length: 6 }, (_, i) => String(i + 1)), []));
 
     const topBarPath = window.location.href
     

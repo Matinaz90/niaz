@@ -68,7 +68,7 @@ export function validPath () {
             } else if(whichPage == 'A'){
                 arrayLength(linkBarVal, 13)
                 cleanValsNum(linkBarVal[0], englishNums, -1, 1000000)
-                cleanValsNum(linkBarVal[1], englishNums, -1, 13)
+                cleanValsNum(linkBarVal[1], englishNums, -1, 7)
                 cleanValsNum(linkBarVal[2], englishNums, 1329, 1405)
                 cleanValsText(linkBarVal[3], facesSymbols)
                 cleanValsNum(linkBarVal[4], englishNums, 0, 4)
@@ -84,7 +84,7 @@ export function validPath () {
             } else if(whichPage == 'V'){
                 arrayLength(linkBarVal, 11)
                 cleanValsNum(linkBarVal[0], englishNums, -1, 1000000)
-                cleanValsNum(linkBarVal[1], englishNums, -1, 13)
+                cleanValsNum(linkBarVal[1], englishNums, -1, 7)
                 cleanValsNum(linkBarVal[2], englishNums, 1329, 1405)
                 cleanValsText(linkBarVal[3], facesSymbols)
                 cleanValsNum(linkBarVal[4], englishNums, 0, 4)
@@ -98,7 +98,7 @@ export function validPath () {
             } else if(whichPage == 'R'){
                 arrayLength(linkBarVal, 14)
                 cleanValsNum(linkBarVal[0], englishNums, -1, 1000000)
-                cleanValsNum(linkBarVal[1], englishNums, -1, 13)
+                cleanValsNum(linkBarVal[1], englishNums, -1, 7)
                 cleanValsNum(linkBarVal[2], englishNums, 1329, 1405)
                 cleanValsText(linkBarVal[3], facesSymbols)
                 cleanValsNum(linkBarVal[4], englishNums, 0, 4)
