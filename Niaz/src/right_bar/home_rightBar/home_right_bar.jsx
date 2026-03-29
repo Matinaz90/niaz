@@ -220,12 +220,12 @@ function HomeRightBar(){
             <div className='inputsDiv'>
                 <div>
                     <div className='buttons' onClick={() => AddLinkBar('J/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مشارکت ساخت </div>
-                    <div className='buttons' onClick={() => AddLinkBar('A/x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> آپارتمان </div>
-                    <div className='buttons' onClick={() => AddLinkBar('S/x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مغازه </div> 
-                    <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ویلا </div>
+                    <div className='buttons' onClick={() => AddLinkBar('A/x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> آپارتمان </div>
+                    <div className='buttons' onClick={() => AddLinkBar('S/x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مغازه </div> 
+                    <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ویلا </div>
                     <div className='buttons' onClick={() => AddLinkBar('G/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> زمین </div>
-                    <div className='buttons' onClick={() => AddLinkBar('R/x,x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره اپارتمان</div>
-                    <div className='buttons' onClick={() => AddLinkBar('Q/x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره مغازه</div>
+                    <div className='buttons' onClick={() => AddLinkBar('R/x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره اپارتمان</div>
+                    <div className='buttons' onClick={() => AddLinkBar('Q/x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره مغازه</div>
                 </div>
                 <div className='applyButtonDivRightBar'>
                     <button type="button" className='applyButton backing' onClick={() => {navigate('/')}}>بازگشت</button>

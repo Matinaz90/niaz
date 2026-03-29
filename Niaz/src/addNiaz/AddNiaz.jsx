@@ -68,6 +68,13 @@ export default function CreateNiaz(){
         checkVals(product.price1, product.price2, 'بودجه', 'اختلاف بودجه من بیشتر از یک‌پنجم عدد اول باشد', eval('Number(product.price1) / 5 + Number(product.price1) < product.price2'))
       ){console.log('done')}
     }
+    if(mode == 'b'){
+      if(
+        checkVals(product.val1, product.val2, 'متراژ', 'اختلاف متراژ بیشتر از ۲۰ باشد', eval('Number(product.val1) + 20 < product.val2')) &&
+        checkVals(product.val4, product.val5, 'متراژ', 'اختلاف سال ساخت بیشتر از ۱۰ باشد', eval('Number(product.val1) + 10 < product.val2')) &&
+        checkVals(product.price1, product.price2, 'بودجه', 'اختلاف بودجه من بیشتر از یک‌پنجم عدد اول باشد', eval('Number(product.price1) / 5 + Number(product.price1) < product.price2'))
+      ){console.log('done')}
+    }
   }
 
   useEffect(() => {
@@ -216,12 +223,12 @@ export default function CreateNiaz(){
     )
   }
 
-  const drowpdownInput = (whatChange, dropdownVals, WhichDivOpenHere, whatsymbol, whatShow, width, isNumber, checkSymbol) => {
+  const drowpdownInput = (whatChange, dropdownVals, WhichDivOpenHere, whatsymbol, whatShow, width, isNumber, checkSymbol, lessRadius) => {
     return(
       <>
         <div className='pagesTextInnerDiv' style={{ width: width }} onClick={(e) => {e.stopPropagation(),setWhichDivOpenInner(prev => (prev == '' ? WhichDivOpenHere : ''))}}>{whatShow}
           {WhichDivOpenInner == WhichDivOpenHere && (
-            <div className='dropDownProduct'>
+            <div id={lessRadius ? 'dropDownProductLessRadius': ''} className='dropDownProduct'>
                 {dropdownVals.map((value, index) => (
                     <p className='dropDownText' key={value}
                         onClick={() => {
@@ -255,8 +262,8 @@ export default function CreateNiaz(){
   const face = (whatValx1, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >جهت ساختمان: {drowpdownInput(whatValx1, faces, 'faces' ,facesSymbols, facesSymbolsToface[valOrEmpity(product[whatValx1])], '70px', false, facesSymbols)}</div>
-        <div className='pagesText' >بحر ساختمان: {drowpdownInput(whatValx2, bahr, 'bahr' ,bahrSymbols, bahrSymbolsTobahr[valOrEmpity(product[whatValx2])], '70px', true, bahrSymbols)}</div>
+        <div className='pagesText' >جهت ساختمان: {drowpdownInput(whatValx1, faces, 'faces' ,facesSymbols, facesSymbolsToface[valOrEmpity(product[whatValx1])], '70px', false, facesSymbols, false)}</div>
+        <div className='pagesText' >بحر ساختمان: {drowpdownInput(whatValx2, bahr, 'bahr' ,bahrSymbols, bahrSymbolsTobahr[valOrEmpity(product[whatValx2])], '70px', true, bahrSymbols, false)}</div>
       </>
     )
   }
@@ -264,7 +271,7 @@ export default function CreateNiaz(){
   const joinbuild = (whatVal) => {
     return(
       <>
-        <div className='pagesText' >درصد مشارکت ساخت: {drowpdownInput(whatVal, joinbuildpersentoptions, 'joinbuildpersentoptions', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[valOrEmpity(product[whatVal])], '200px', true, joinbuildpersentoptionsSymbols)}</div>
+        <div className='pagesText' >درصد مشارکت ساخت: {drowpdownInput(whatVal, joinbuildpersentoptions, 'joinbuildpersentoptions', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[valOrEmpity(product[whatVal])], '200px', true, joinbuildpersentoptionsSymbols, false)}</div>
       </>
     )
   }
@@ -347,7 +354,7 @@ export default function CreateNiaz(){
   const rooms = (whatVal) => {
     return(
       <>
-        <div className='pagesText' >اتاق خواب: {drowpdownInput(whatVal, num6palas, 'roomVals', num6palasSymbols, num6palasSymbolsnum6palas[product[whatVal]], '70px', true, num6palasSymbols)}</div>
+        <div className='pagesText' >اتاق خواب: {drowpdownInput(whatVal, num6palas, 'roomVals', num6palasSymbols, num6palasSymbolsnum6palas[product[whatVal]], '70px', true, num6palasSymbols, true)}</div>
       </>
     )
   }
@@ -355,10 +362,10 @@ export default function CreateNiaz(){
   const homeConditions = (whatValx1, whatValx2, whatValx3, whatValx4) => {
     return(
       <>
-        <div className='pagesText' >بالاکن: {drowpdownInput(whatValx1, trueOrFalse, 'trueOrFalse1' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx1])], '90px', false, trueOrFalseSymbols)}</div>
-        <div className='pagesText' >پارکینگ: {drowpdownInput(whatValx2, trueOrFalse, 'trueOrFalse2' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx2])], '90px', false, trueOrFalseSymbols)}</div>
-        <div className='pagesText' >انباری: {drowpdownInput(whatValx3, trueOrFalse, 'trueOrFalse3' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx3])], '90px', false, trueOrFalseSymbols)}</div>
-        <div className='pagesText' >اسانسور: {drowpdownInput(whatValx4, trueOrFalse, 'trueOrFalse4' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx4])], '90px', false, trueOrFalseSymbols)}</div>
+        <div className='pagesText' >بالاکن: {drowpdownInput(whatValx1, trueOrFalse, 'trueOrFalse1' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx1])], '90px', false, trueOrFalseSymbols, false)}</div>
+        <div className='pagesText' >پارکینگ: {drowpdownInput(whatValx2, trueOrFalse, 'trueOrFalse2' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx2])], '90px', false, trueOrFalseSymbols, false)}</div>
+        <div className='pagesText' >انباری: {drowpdownInput(whatValx3, trueOrFalse, 'trueOrFalse3' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx3])], '90px', false, trueOrFalseSymbols, false)}</div>
+        <div className='pagesText' >اسانسور: {drowpdownInput(whatValx4, trueOrFalse, 'trueOrFalse4' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx4])], '90px', false, trueOrFalseSymbols, false)}</div>
       </>
     )
   }
@@ -366,8 +373,8 @@ export default function CreateNiaz(){
   const floor = (whatValx1, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >طبقه: {drowpdownInput(whatValx1, num6palas, 'floor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx1]], '70px', false, num6palasSymbols)}</div>
-        <div className='pagesText' >واحد در طبقه: {drowpdownInput(whatValx2, num6palas, 'floorinfloor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx2]], '70px', true, num6palasSymbols)}</div>
+        <div className='pagesText' >طبقه: {drowpdownInput(whatValx1, num6palas, 'floor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx1]], '70px', false, num6palasSymbols, true)}</div>
+        <div className='pagesText' >واحد در طبقه: {drowpdownInput(whatValx2, num6palas, 'floorinfloor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx2]], '70px', true, num6palasSymbols, true)}</div>
       </>
     )
   }
@@ -375,7 +382,7 @@ export default function CreateNiaz(){
   const yearBuild = (whatVal, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >سال ساخت: از {drowpdownInput(whatVal, years, 'yearsx1', years, englishToPersianNumber(valOrEmpity(product[whatVal])), '50px', true, englishNums)} تا {drowpdownInput(whatValx2, years, 'yearsx2', years, englishToPersianNumber(valOrEmpity(product[whatValx2])), '50px', true, englishNums)}</div>
+        <div className='pagesText' >سال ساخت: از {drowpdownInput(whatVal, years, 'yearsx1', years, englishToPersianNumber(valOrEmpity(product[whatVal])), '50px', true, englishNums, true)} تا {drowpdownInput(whatValx2, years, 'yearsx2', years, englishToPersianNumber(valOrEmpity(product[whatValx2])), '50px', true, englishNums, true)}</div>
       </>
     )
   }
@@ -423,9 +430,4 @@ export default function CreateNiaz(){
   )
 }
 
-// when opening dropdown the scrool look wrong on dropdown
-
 // when i scrool dropdown and i am in end of that dropdown scrool i want the under div scrrol first the higher then lower
-
-// relase button ckecks
-

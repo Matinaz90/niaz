@@ -245,6 +245,11 @@
   overflow-y: auto;
 }
 
+#dropDownProductLessRadius{
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
 .dropDownText{
   cursor: pointer;
 }
