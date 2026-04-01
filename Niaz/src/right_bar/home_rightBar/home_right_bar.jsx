@@ -34,7 +34,7 @@ function HomeRightBar(){
 
     const topBarPath = window.location.href
     
-    const Pages = ['J', 'A', 'V', 'R', 'S', 'Q', 'G'];
+    const Pages = ['J', 'A', 'V', 'R', 'S', 'Q', 'G', 'Z'];
     const linkBarVal = topBarPath.split('/').some(a => Pages.includes(a)) ? topBarPath.split('/').pop().split(',') : '';
 
     const [linkBarChange, setLinkBarChange] = useState(null)
@@ -73,15 +73,33 @@ function HomeRightBar(){
             setmode('Villa')
             const newLinkBar = {
                 metrage: valOrEmpity(linkBarVal[0]),
-                rooms: valOrEmpity(linkBarVal[1]),
-                year: valOrEmpity(linkBarVal[2]),
-                face: valOrEmpity(linkBarVal[3]),
-                bahr:  valOrEmpity(linkBarVal[4]),
-                balaon: valOrEmpity(linkBarVal[5]),
-                parking: valOrEmpity(linkBarVal[6]),
-                anbary: valOrEmpity(linkBarVal[7]),
-                asansor: valOrEmpity(linkBarVal[8]),
-                price: valOrEmpity(linkBarVal[9]),
+                buildMetrage: valOrEmpity(linkBarVal[1]),
+                rooms: valOrEmpity(linkBarVal[2]),
+                year: valOrEmpity(linkBarVal[3]),
+                face: valOrEmpity(linkBarVal[4]),
+                bahr:  valOrEmpity(linkBarVal[5]),
+                balaon: valOrEmpity(linkBarVal[6]),
+                parking: valOrEmpity(linkBarVal[7]),
+                anbary: valOrEmpity(linkBarVal[8]),
+                asansor: valOrEmpity(linkBarVal[9]),
+                price: valOrEmpity(linkBarVal[10]),
+            };
+            setLinkBarChange(newLinkBar);
+        } else if(topBarPath.includes('Z')){
+            setmode('VillaRent')
+            const newLinkBar = {
+                metrage: valOrEmpity(linkBarVal[0]),
+                buildMetrage: valOrEmpity(linkBarVal[1]),
+                rooms: valOrEmpity(linkBarVal[2]),
+                year: valOrEmpity(linkBarVal[3]),
+                face: valOrEmpity(linkBarVal[4]),
+                bahr:  valOrEmpity(linkBarVal[5]),
+                balaon: valOrEmpity(linkBarVal[6]),
+                parking: valOrEmpity(linkBarVal[7]),
+                anbary: valOrEmpity(linkBarVal[8]),
+                asansor: valOrEmpity(linkBarVal[9]),
+                beforePrice: valOrEmpity(linkBarVal[10]),
+                monthPrice: valOrEmpity(linkBarVal[11]),
             };
             setLinkBarChange(newLinkBar);
         } else if(topBarPath.includes('R')){
@@ -222,10 +240,11 @@ function HomeRightBar(){
                     <div className='buttons' onClick={() => AddLinkBar('J/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مشارکت ساخت </div>
                     <div className='buttons' onClick={() => AddLinkBar('A/x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> آپارتمان </div>
                     <div className='buttons' onClick={() => AddLinkBar('S/x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مغازه </div> 
-                    <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ویلا </div>
+                    <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ویلا </div>
                     <div className='buttons' onClick={() => AddLinkBar('G/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> زمین </div>
                     <div className='buttons' onClick={() => AddLinkBar('R/x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره اپارتمان</div>
                     <div className='buttons' onClick={() => AddLinkBar('Q/x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره مغازه</div>
+                    <div className='buttons' onClick={() => AddLinkBar('Z/x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره ویلا </div>
                 </div>
                 <div className='applyButtonDivRightBar'>
                     <button type="button" className='applyButton backing' onClick={() => {navigate('/')}}>بازگشت</button>
@@ -377,6 +396,12 @@ function HomeRightBar(){
         )
     }
 
+    const buildMetrage = () => {
+        return( 
+            innerPageSelection('metrageDiv', 'زیربنا', input('buildMetrage', 'buildMetrage', englishToPersianNumber(CleanVals(linkBarChange.buildMetrage, englishNums))))  
+        )
+    }
+
     const floor = () => {
         return(
             innerPageSelection('floor', 'طبقه', 
@@ -476,8 +501,8 @@ function HomeRightBar(){
         return(
             innerPageSelection('conditionDiv', 'وضعیت خانه',                         
                 <div className='checkBoxDiv'>
-                    {condition('electricity', 'برق', 'electricity')}
                     {condition('water', 'آب', 'water')}
+                    {condition('electricity', 'برق', 'electricity')}
                     {condition('gas', 'گاز', 'gas')}
                 </div>
             )  
@@ -500,7 +525,7 @@ function HomeRightBar(){
 
     const villa = () => {
         return(
-            pagesStructure(<div> {metrage()} {room()} {year()} {face()} {homeConditions()} {price()}</div>)
+            pagesStructure(<div> {metrage()} {buildMetrage()} {room()} {year()} {face()} {homeConditions()} {price()}</div>)
         )
     }
 
@@ -513,6 +538,12 @@ function HomeRightBar(){
     const storeRent = () => {
         return(
             pagesStructure(<div> {metrage()} {year()} {face()} {storeConditions()} {priceRent()}</div>)
+        )
+    }
+
+    const villaRent = () => {
+        return(
+            pagesStructure(<div> {metrage()} {buildMetrage()} {room()} {year()} {face()} {homeConditions()} {priceRent()}</div>)
         )
     }
 
@@ -541,6 +572,7 @@ function HomeRightBar(){
                     {modeShow('Store', store)}
                     {modeShow('StoreRent', storeRent)}
                     {modeShow('Ground', groundfunc)}
+                    {modeShow('VillaRent', villaRent)}
                 </div>
             </div>
         </>
