@@ -42,8 +42,9 @@
   visibility: visible;
   border-radius: 20px;
   position: relative;
-  height: calc(90vh - 95px);
+  height: calc(90vh - 150px);
   padding-bottom: 105px;
+  padding-top: 45px;
 }
 
 .helpButton{
@@ -189,11 +190,12 @@
   outline: none;
   border: 1px solid var(--text_muded_between);
 }
+
 .pagesTextInnerDiv {
   background-color: var(--layer-2-bg-color);
   color: var(--text_muded_between);
   font-weight: bold;
-  font-size: var(--text-font-small);
+  font-size: calc(var(--text-font-small) + 2px);
   padding: 3px;
   border: none;
   margin-left: 7px;
@@ -208,7 +210,7 @@
   border: 1px solid transparent;
   position: relative;
   transition: 0.15s;
-  height: 18px;
+  height: clamp(20px, 18px + 0.357vw, 47px);
 }
 
 .dropDownProductImg {
@@ -241,13 +243,12 @@
   gap: 15px;
   cursor: default;
   z-index: 500;
-  max-height: 220px;
+  max-height: 33.33vh;
   overflow-y: auto;
 }
 
 #dropDownProductLessRadius{
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
+  border-radius: 8px;
 }
 
 .dropDownText{
@@ -424,5 +425,14 @@
   font-weight: bold;
   color: var(--text_muded_between);
   margin-right: 10px;
-  margin-top: 20px
+  margin-top: 10px;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
+
+.untilToMid{
+  padding-left: clamp(4px, 4px + 0.30vw, 8px);
+  padding-right: clamp(4px, 4px + 0.30vw, 8px);
+  text-align: center;
 }

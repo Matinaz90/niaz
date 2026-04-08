@@ -306,8 +306,9 @@ max-width: 600px;
   background-color:var(--layer-3-bg-color);
   width: 80%;
   top: 38px;
-  right: calc(50% - 150px);
-  max-width: 280px;
+  left: calc(50%);
+  transform: translateX(-50%);
+  max-width: 320px;
 }
 
 .cityDropdown.open{
@@ -338,6 +339,8 @@ max-width: 600px;
   flex-direction: column;
   align-items: flex-end;
   display: flex;
+  margin-bottom: 5px;
+  margin-right: 15px;
 }
 
 .cityUpperCityDiv{
@@ -394,6 +397,70 @@ max-width: 600px;
   font-weight: bold;
   color: var(--text_muded_between);
   width: 40%;
+}
+
+.searchInputCity{
+  background-color: var(--layer-2-bg-color);
+  color: var(--text_muded_between);
+  font-weight: 800;
+  border-radius: 20px;
+  border: none;
+  height: 40px;
+  width: calc(100% - 40px);
+  font-size: var(--text-font-middle);
+  cursor: text;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  outline: none;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: end;
+}
+
+.cityTextDiv{
+  display: block;
+  text-align: end;
+}
+
+.cityText{
+  color: var(--text_muded_between);
+  margin-right: 10px;
+  margin-bottom: 7px;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.upperX2InnerCityText{
+  flex-direction: column;
+  align-items: flex-end;
+  display: flex;
+  margin-bottom: 5px;
+  gap: 10px;
+  
+}
+
+.upperInnerCityText{
+  width: 70%;
+}
+
+.innerCityText{
+  color: blue;
+  color: var(--text-muted);
+  margin-right: 10px;
+  background-color: var(--layer-2-bg-color);
+  border: none;
+  font: var(--text-font-middle);
+  border-radius: 5px;
+  font-weight: bold;
+  padding-bottom: 8.5px;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: grid;
+  font-size: var(--text-font-small);
+  text-align: center;
+  cursor: pointer;
+  position: relative;
 }
 
 @media (max-width: 745px) {

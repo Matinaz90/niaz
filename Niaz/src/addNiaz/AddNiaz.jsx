@@ -1,11 +1,14 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from "react-router-dom";
 import './AddNiaz.css'
+import { useGlobal } from '../GlobalContext';
 
 
 export default function CreateNiaz(){
   const navigate = useNavigate();
+  
   const [mode, setMode] = useState('options');
+  const {locations} = useGlobal();
   const [niazText, setniazText] = useState(':نیاز شما')
   const [WhichDivOpenInner, setWhichDivOpenInner] = useState('');
   const [openhelpbar, setopenhelpbar] = useState(false)
@@ -14,15 +17,12 @@ export default function CreateNiaz(){
   const [productNum, setproductNum] = useState()
   const [showRelease, setshowRelease] = useState()
   const [mainPage, setmainPage] = useState(true)
+  const [problemText, setproblemText] = useState('')
 
   const [whatCategory, setwhatCategory] = useState('x');
   const [whatInnerCategory, setwhatInnerCategory] = useState('x');
-  const [product, setproduct] = useState({"price1": 'x', "price2": 'x', "val1": 'x', "val2": 'x', "val3": 'x', "val4": 'x', "val5": 'x', "val6": 'x', "val7": 'x', "val8": 'x', "val9": 'x', "val10": 'x', "val11": 'x', "val12": 'x', "val13": 'x', "val14": 'x', "val15": 'x', "val16": 'x'})
-  const [problemText, setproblemText] = useState('')
-
-  const joinbuildpersentoptions = ['مالک ۳۰ / ۷۰ سازنده', 'مالک ۴۰ / ۶۰ سازنده', 'مالک ۵۰ / ۵۰ سازنده', 'مالک ۶۰ / ۴۰ سازنده', 'مالک ۷۰ / ۳۰ سازنده'];
-  const joinbuildpersentoptionsSymbols =  ['1', '2', '3', '4', '5']
-  const joinbuildpersentoptionsSymbolstoVals = {'1': 'مالک ۳۰ / ۷۰ سازنده', '2': 'مالک ۴۰ / ۶۰ سازنده', '3': 'مالک ۵۰ / ۵۰ سازنده', '4': 'مالک ۶۰ / ۴۰ سازنده', '5': 'مالک ۷۰ / ۳۰ سازنده'}
+  const [product, setproduct] = useState({"price1": 'x', "price2": 'x', "city": 'x', "innerCity": 'x', "val1": 'x', "val2": 'x', "val3": 'x', "val4": 'x', "val5": 'x', "val6": 'x', "val7": 'x', "val8": 'x', "val9": 'x', "val10": 'x', "val11": 'x', "val12": 'x', "val13": 'x', "val14": 'x', "val15": 'x', "val16": 'x'})
+  const [productLocation, setproductLocation] = useState({"city": 'x', "innerCity": 'x'})
 
   const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
   const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
@@ -39,6 +39,9 @@ export default function CreateNiaz(){
   const trueOrFalse = ['فرقی ندارد' ,'داشته باشه', 'نداشته باشه']
   const trueOrFalseSymbols = ['k' ,'g', 'f']
   const trueOrFalseSymbolsToTrueOrFalse = {'k': 'فرقی ندارد', 'g': 'داشته باشه', 'f': 'نداشته باشه'};
+  const joinbuildpersentoptions = ['مالک ۳۰ / ۷۰ سازنده', 'مالک ۴۰ / ۶۰ سازنده', 'مالک ۵۰ / ۵۰ سازنده', 'مالک ۶۰ / ۴۰ سازنده', 'مالک ۷۰ / ۳۰ سازنده'];
+  const joinbuildpersentoptionsSymbols =  ['1', '2', '3', '4', '5']
+  const joinbuildpersentoptionsSymbolstoVals = {'1': 'مالک ۳۰ / ۷۰ سازنده', '2': 'مالک ۴۰ / ۶۰ سازنده', '3': 'مالک ۵۰ / ۵۰ سازنده', '4': 'مالک ۶۰ / ۴۰ سازنده', '5': 'مالک ۷۰ / ۳۰ سازنده'}
   const ground = ['مسکونی', 'تجاری', 'کشاورزی','باغداری']
   const groundSymbols = ['m', 't', 'c', 'b']
   const groundSymbolsToground = {'m': 'مسکونی', 't': 'تجاری', 'c': 'کشاورزی', 'b': 'باغداری'}
@@ -101,14 +104,13 @@ export default function CreateNiaz(){
   }, [product, imageId])
 
   useEffect(() => {
-    ['a', 'b', 'c', 'd', 'e', 'f', 'g'].includes(mode) ? setmainPage(false) : setmainPage(true)
+    ['a', 'b', 'c', 'd', 'e', 'f', 'g'].includes(mode) ? (setmainPage(false), setniazText(':مشخصات نیاز شما')) : (setmainPage(true),  setniazText(':نیاز شما'))
   }, [mode])
 
-  const modeShow = (CurrentMode, whichFunc, text) => {
+
+
+  const modeShow = (CurrentMode, whichFunc) => {
     if (CurrentMode == mode) {
-      if(text != ''){
-        setniazText('hi')
-      }
       return whichFunc()
     }
   }
@@ -176,7 +178,7 @@ export default function CreateNiaz(){
 
   const typeOfHome = () => {
     return(
-        divs(<>{button('خانه', setMode, 'Home', 'h', setwhatCategory, true)} {button('وسایل نقلیه', setMode, 'Vehicle', 'v', setwhatCategory, true)} </>, navigate, '/', 0)
+        divs(<>{button('خانه', setMode, 'Home','h', setwhatCategory, true)} {button('وسایل نقلیه', setMode, 'Vehicle', 'v', setwhatCategory, true)} </>, navigate, '/', 0)
     )
   }
 
@@ -229,19 +231,20 @@ export default function CreateNiaz(){
     )
   }
 
-  const drowpdownInput = (whatChange, dropdownVals, WhichDivOpenHere, whatsymbol, whatShow, width, isNumber, checkSymbol, lessRadius) => {
+  const drowpdownInput = (whatChange, dropdownVals, WhichDivOpenHere, whatsymbol, whatShow, width, isNumber, checkSymbol, whatset) => {
     return(
       <>
-        <div className='pagesTextInnerDiv' style={{ width: width }} onClick={(e) => {e.stopPropagation(),setWhichDivOpenInner(prev => (prev == '' ? WhichDivOpenHere : ''))}}>{whatShow}
+        <div className='pagesTextInnerDiv' style={{ width: width }} onClick={(e) => {e.stopPropagation(), setWhichDivOpenInner(prev => (prev == '' ? WhichDivOpenHere : ''))}}>{whatShow}
           {WhichDivOpenInner == WhichDivOpenHere && (
-            <div id={lessRadius ? 'dropDownProductLessRadius': ''} className='dropDownProduct'>
+            <div id='dropDownProductLessRadius' className='dropDownProduct'>
                 {dropdownVals.map((value, index) => (
                     <p className='dropDownText' key={value}
                         onClick={() => {
-                            setproduct(prev => ({
+                            whatset(prev => ({
                             ...prev,
                             [whatChange]: 
-                                CleanVals(isNumber ? persianToEnglishNumber(whatsymbol[index]) : whatsymbol[index], checkSymbol)
+                              String(whatset) == 'setproduct' ? CleanVals(isNumber ? persianToEnglishNumber(whatsymbol[index]) : whatsymbol[index], checkSymbol) : 
+                              whatChange == 'city' ? (whatset({"city": whatsymbol[index], "innerCity": 'x'})) : whatsymbol[index] 
                             }))
                         }}
                     >
@@ -260,7 +263,7 @@ export default function CreateNiaz(){
   const metrage = (whatValx1, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >متراژ: از {normalInput(whatValx1, englishNums, '80px', 5, 'inputMetrage1')} تا {normalInput(whatValx2, englishNums, '80px', 5, 'normalInput2')}متر</div>
+        <div className='pagesText' >متراژ: بین {normalInput(whatValx1, englishNums, '80px', 5, 'inputMetrage1')} تا {normalInput(whatValx2, englishNums, '80px', 5, 'normalInput2')}</div>
       </>
     )
   }
@@ -268,7 +271,7 @@ export default function CreateNiaz(){
   const buildMetrage = (whatValx1, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >زیربنا: از {normalInput(whatValx1, englishNums, '80px', 5, 'buildMetrage1')} تا {normalInput(whatValx2, englishNums, '80px', 5, 'buildMetrage2')}متر</div>
+        <div className='pagesText' >زیربنا: بین {normalInput(whatValx1, englishNums, '80px', 5, 'buildMetrage1')} تا {normalInput(whatValx2, englishNums, '80px', 5, 'buildMetrage2')}متر</div>
       </>
     )
   }
@@ -276,8 +279,8 @@ export default function CreateNiaz(){
   const face = (whatValx1, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >جهت ساختمان: {drowpdownInput(whatValx1, faces, 'faces' ,facesSymbols, facesSymbolsToface[valOrEmpity(product[whatValx1])], '70px', false, facesSymbols, false)}</div>
-        <div className='pagesText' >بحر ساختمان: {drowpdownInput(whatValx2, bahr, 'bahr' ,bahrSymbols, bahrSymbolsTobahr[valOrEmpity(product[whatValx2])], '70px', true, bahrSymbols, false)}</div>
+        <div className='pagesText' >جهت ساختمان: {drowpdownInput(whatValx1, faces, 'faces' ,facesSymbols, facesSymbolsToface[valOrEmpity(product[whatValx1])], '70px', false, facesSymbols, setproduct)}</div>
+        <div className='pagesText' >بحر ساختمان: {drowpdownInput(whatValx2, bahr, 'bahr' ,bahrSymbols, bahrSymbolsTobahr[valOrEmpity(product[whatValx2])], '70px', true, bahrSymbols, setproduct)}</div>
       </>
     )
   }
@@ -285,7 +288,7 @@ export default function CreateNiaz(){
   const joinbuild = (whatVal) => {
     return(
       <>
-        <div className='pagesText' >درصد مشارکت ساخت: {drowpdownInput(whatVal, joinbuildpersentoptions, 'joinbuildpersentoptions', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[valOrEmpity(product[whatVal])], '200px', true, joinbuildpersentoptionsSymbols, false)}</div>
+        <div className='pagesText' >درصد مشارکت ساخت: {drowpdownInput(whatVal, joinbuildpersentoptions, 'joinbuildpersentoptions', joinbuildpersentoptionsSymbols, joinbuildpersentoptionsSymbolstoVals[valOrEmpity(product[whatVal])], '200px', true, joinbuildpersentoptionsSymbols, setproduct)}</div>
       </>
     )
   }
@@ -294,8 +297,8 @@ export default function CreateNiaz(){
     return(
       <>
         <div className='pagesText' >بودجه من:</div>
-        <div className='pagesText marginRight'>از {normalInput('price1', englishNums, '110px', 13, 'priceInput1')}{priceChange('priceShow', 'price1', englishToPersianNumber(CleanVals(product.price1, englishNums)))}</div>
-        <div className='pagesText marginRight'>تا {normalInput('price2', englishNums, '110px', 13, 'priceInput2')}{priceChange('priceShow', 'price2', englishToPersianNumber(CleanVals(product.price2, englishNums)))}</div>
+        <div className='pagesText marginRight'>بین {normalInput('price1', englishNums, '110px', 13, 'priceInput1')}{priceChange('priceShow', 'price1', englishToPersianNumber(CleanVals(product.price1, englishNums)))}</div>
+        <div className='pagesText marginRight'><p className='untilToMid'>تا</p> {normalInput('price2', englishNums, '110px', 13, 'priceInput2')}{priceChange('priceShow', 'price2', englishToPersianNumber(CleanVals(product.price2, englishNums)))}</div>
       </>
     )
   }
@@ -304,11 +307,11 @@ export default function CreateNiaz(){
     return(
       <>
         <div className='pagesText'>:پول پیش</div>
-        <div className='pagesText marginRight'>از {normalInput('price1', englishNums, '110px', 13, 'priceAll1')}{priceChange('priceShow', 'price1', englishToPersianNumber(CleanVals(product.price1, englishNums)))}</div>
-        <div className='pagesText marginRight'>تا {normalInput('price2', englishNums, '110px', 13, 'priceAll2')}{priceChange('priceShow', 'price2', englishToPersianNumber(CleanVals(product.price2, englishNums)))}</div>
+        <div className='pagesText marginRight'>بین {normalInput('price1', englishNums, '110px', 13, 'priceAll1')}{priceChange('priceShow', 'price1', englishToPersianNumber(CleanVals(product.price1, englishNums)))}</div>
+        <div className='pagesText marginRight'><p className='untilToMid'>تا</p> {normalInput('price2', englishNums, '110px', 13, 'priceAll2')}{priceChange('priceShow', 'price2', englishToPersianNumber(CleanVals(product.price2, englishNums)))}</div>
         <div className='pagesText'>:اجاره ماهانه</div>
-        <div className='pagesText marginRight'>از {normalInput(whatValx1, englishNums, '110px', 13, 'priceRent1')}{priceChange('priceShow', 'price1', englishToPersianNumber(CleanVals(product.price1, englishNums)))}</div>
-        <div className='pagesText marginRight'>تا {normalInput(whatValx2, englishNums, '110px', 13, 'priceRent2')}{priceChange('priceShow', 'price2', englishToPersianNumber(CleanVals(product.price2, englishNums)))}</div>
+        <div className='pagesText marginRight'>بین {normalInput(whatValx1, englishNums, '110px', 13, 'priceRent1')}{priceChange('priceShow', 'price1', englishToPersianNumber(CleanVals(product.price1, englishNums)))}</div>
+        <div className='pagesText marginRight'><p className='untilToMid'>تا</p> {normalInput(whatValx2, englishNums, '110px', 13, 'priceRent2')}{priceChange('priceShow', 'price2', englishToPersianNumber(CleanVals(product.price2, englishNums)))}</div>
       </>
     )
   }
@@ -381,7 +384,7 @@ export default function CreateNiaz(){
   const rooms = (whatVal) => {
     return(
       <>
-        <div className='pagesText' >اتاق خواب: {drowpdownInput(whatVal, num6palas, 'roomVals', num6palasSymbols, num6palasSymbolsnum6palas[product[whatVal]], '70px', true, num6palasSymbols, true)}</div>
+        <div className='pagesText' >اتاق خواب: {drowpdownInput(whatVal, num6palas, 'roomVals', num6palasSymbols, num6palasSymbolsnum6palas[product[whatVal]], '70px', true, num6palasSymbols, setproduct)}</div>
       </>
     )
   }
@@ -389,10 +392,10 @@ export default function CreateNiaz(){
   const homeConditions = (whatValx1, whatValx2, whatValx3, whatValx4) => {
     return(
       <>
-        <div className='pagesText' >بالاکن: {drowpdownInput(whatValx1, trueOrFalse, 'trueOrFalse1' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx1])], '90px', false, trueOrFalseSymbols, false)}</div>
-        <div className='pagesText' >پارکینگ: {drowpdownInput(whatValx2, trueOrFalse, 'trueOrFalse2' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx2])], '90px', false, trueOrFalseSymbols, false)}</div>
-        <div className='pagesText' >انباری: {drowpdownInput(whatValx3, trueOrFalse, 'trueOrFalse3' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx3])], '90px', false, trueOrFalseSymbols, false)}</div>
-        <div className='pagesText' >اسانسور: {drowpdownInput(whatValx4, trueOrFalse, 'trueOrFalse4' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx4])], '90px', false, trueOrFalseSymbols, false)}</div>
+        <div className='pagesText' >بالاکن: {drowpdownInput(whatValx1, trueOrFalse, 'trueOrFalse1' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx1])], '90px', false, trueOrFalseSymbols, setproduct)}</div>
+        <div className='pagesText' >پارکینگ: {drowpdownInput(whatValx2, trueOrFalse, 'trueOrFalse2' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx2])], '90px', false, trueOrFalseSymbols, setproduct)}</div>
+        <div className='pagesText' >انباری: {drowpdownInput(whatValx3, trueOrFalse, 'trueOrFalse3' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx3])], '90px', false, trueOrFalseSymbols, setproduct)}</div>
+        <div className='pagesText' >اسانسور: {drowpdownInput(whatValx4, trueOrFalse, 'trueOrFalse4' ,trueOrFalseSymbols, trueOrFalseSymbolsToTrueOrFalse[valOrEmpity(product[whatValx4])], '90px', false, trueOrFalseSymbols, setproduct)}</div>
       </>
     )
   }
@@ -410,8 +413,8 @@ export default function CreateNiaz(){
   const floor = (whatValx1, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >طبقه: {drowpdownInput(whatValx1, num6palas, 'floor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx1]], '70px', false, num6palasSymbols, true)}</div>
-        <div className='pagesText' >واحد در طبقه: {drowpdownInput(whatValx2, num6palas, 'floorinfloor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx2]], '70px', true, num6palasSymbols, true)}</div>
+        <div className='pagesText' >طبقه: {drowpdownInput(whatValx1, num6palas, 'floor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx1]], '70px', false, num6palasSymbols, setproduct)}</div>
+        <div className='pagesText' >واحد در طبقه: {drowpdownInput(whatValx2, num6palas, 'floorinfloor' ,num6palasSymbols, num6palasSymbolsnum6palas[product[whatValx2]], '70px', true, num6palasSymbols, setproduct)}</div>
       </>
     )
   }
@@ -419,14 +422,24 @@ export default function CreateNiaz(){
   const yearBuild = (whatVal, whatValx2) => {
     return(
       <>
-        <div className='pagesText' >سال ساخت: از {drowpdownInput(whatVal, years, 'yearsx1', years, englishToPersianNumber(valOrEmpity(product[whatVal])), '50px', true, englishNums, true)} تا {drowpdownInput(whatValx2, years, 'yearsx2', years, englishToPersianNumber(valOrEmpity(product[whatValx2])), '50px', true, englishNums, true)}</div>
+        <div className='pagesText' >سال ساخت: بین {drowpdownInput(whatVal, years, 'yearsx1', years, englishToPersianNumber(valOrEmpity(product[whatVal])), '50px', true, englishNums, setproduct)} تا {drowpdownInput(whatValx2, years, 'yearsx2', years, englishToPersianNumber(valOrEmpity(product[whatValx2])), '50px', true, englishNums, setproduct)}</div>
       </>
     )
   }
 
   const groundfuncDropdown = (whatValx1) => {
     return(
-      <div className='pagesText' >کاربری زمین: {drowpdownInput(whatValx1, ground, 'ground' ,groundSymbols, groundSymbolsToground[valOrEmpity(product[whatValx1])], '70px', false, groundSymbols, false)}</div>
+      <div className='pagesText' >کاربری زمین: {drowpdownInput(whatValx1, ground, 'ground' ,groundSymbols, groundSymbolsToground[valOrEmpity(product[whatValx1])], '70px', false, groundSymbols, setproduct)}</div>
+    )
+  }
+
+  const city = () => {
+    return(
+      <>
+        <div className='pagesText'>منطقه:</div>
+        <div className='pagesText marginRight'> {drowpdownInput('city', Object.keys(locations), 'city', Object.keys(locations), valOrEmpity(productLocation.city), '80px', true, englishNums, setproductLocation)} </div>
+        <div className='pagesText marginRight'> {productLocation.city !== 'x' ? drowpdownInput('innerCity', locations[productLocation.city], 'innerCity', locations[productLocation.city], valOrEmpity(productLocation.innerCity), '180px', true, englishNums, setproductLocation) : ''}</div>
+      </>
     )
   }
 
@@ -434,57 +447,51 @@ export default function CreateNiaz(){
 
   const joinbuildText = () => {
     return(
-      divs(<> {metrage('val1', 'val2')} {face('val3', 'val4')} {joinbuild('val5')} {price()} {image(5)} {moreInfo('val6')}</>, setMode, 'Home', 8)
+      divs(<> {metrage('val1', 'val2')} {face('val3', 'val4')} {joinbuild('val5')} {city()} {price()} {image(5)} {moreInfo('val6')}</>, setMode, 'Home', 8)
     )
   }
 
   const aparteman = () => {
     return(
-      divs(<> {metrage('val1', 'val2')} {rooms('val3')} {face('val4', 'val5')} {yearBuild('val6', 'val7')} {floor('val8', 'val9')} {homeConditions('val10', 'val11', 'val12', 'val13')} {price()} {image(5)} {moreInfo('val14')} </>, setMode, 'Home', 16)
+      divs(<> {metrage('val1', 'val2')} {rooms('val3')} {face('val4', 'val5')} {yearBuild('val6', 'val7')} {floor('val8', 'val9')} {homeConditions('val10', 'val11', 'val12', 'val13')} {city()} {price()} {image(5)} {moreInfo('val14')} </>, setMode, 'Home', 16)
     )
   }
 
   const store = () => {
     return(
-      divs(<> {metrage('val1', 'val2')} {yearBuild('val3', 'val4')} {face('val5', 'val6')} {storeConditions('val7', 'val8', 'val9')} {price()} {image(5)} {moreInfo('val10')} </>, setMode, 'Home', 12)
+      divs(<> {metrage('val1', 'val2')} {yearBuild('val3', 'val4')} {face('val5', 'val6')} {storeConditions('val7', 'val8', 'val9')} {city()} {price()} {image(5)} {moreInfo('val10')} </>, setMode, 'Home', 12)
     )
   }
 
   const villa = () => {
     return(
-      divs(<> {metrage('val1', 'val2')} {buildMetrage('val3', 'val4')} {rooms('val5')} {face('val6', 'val7')} {yearBuild('val8', 'val9')} {homeConditions('val10', 'val11', 'val12', 'val13')} {price()} {image(5)} {moreInfo('val14')} </>, setMode, 'Home', 16)
+      divs(<> {metrage('val1', 'val2')} {buildMetrage('val3', 'val4')} {rooms('val5')} {face('val6', 'val7')} {yearBuild('val8', 'val9')} {homeConditions('val10', 'val11', 'val12', 'val13')} {city()} {price()} {image(5)} {moreInfo('val14')} </>, setMode, 'Home', 16)
     )
   }
 
   const groundFunc = () => {
     return(
-      divs(<> {metrage('val1', 'val2')} {face('val3', 'val4')} {groundfuncDropdown('val5')} {price()} {image(5)} {moreInfo('val6')} </>, setMode, 'Home', 8)
+      divs(<> {metrage('val1', 'val2')} {face('val3', 'val4')} {groundfuncDropdown('val5')} {city()} {price()} {image(5)} {moreInfo('val6')} </>, setMode, 'Home', 8)
     )
   }
 
   const apartemanRent = () => {
     return(
-      divs(<> {metrage('val1', 'val2')} {rooms('val3')} {face('val4', 'val5')} {yearBuild('val6', 'val7')} {floor('val8', 'val9')} {homeConditions('val10', 'val11', 'val12', 'val13')} {priceRent('val14', 'val15')} {image(5)} {moreInfo('val16')} </>, setMode, 'Home', 18)
+      divs(<> {metrage('val1', 'val2')} {rooms('val3')} {face('val4', 'val5')} {yearBuild('val6', 'val7')} {floor('val8', 'val9')} {homeConditions('val10', 'val11', 'val12', 'val13')} {city()} {priceRent('val14', 'val15')} {image(5)} {moreInfo('val16')} </>, setMode, 'Home', 18)
     )
   }
 
   const villaRent = () => {
     return(
-      divs(<> {metrage('val1', 'val2')} {buildMetrage('val3', 'val4')} {rooms('val5')} {face('val6', 'val7')} {yearBuild('val8', 'val9')} {homeConditions('val10', 'val11', 'val12', 'val13')} {priceRent('val14', 'val15')} {image(5)} {moreInfo('val16')} </>, setMode, 'Home', 18)
+      divs(<> {metrage('val1', 'val2')} {buildMetrage('val3', 'val4')} {rooms('val5')} {face('val6', 'val7')} {yearBuild('val8', 'val9')} {homeConditions('val10', 'val11', 'val12', 'val13')} {city()} {priceRent('val14', 'val15')} {image(5)} {moreInfo('val16')} </>, setMode, 'Home', 18)
     )
   }
 
   const storeRent = () => {
     return(
-      divs(<> {metrage('val1', 'val2')} {yearBuild('val3', 'val4')} {face('val5', 'val6')} {storeConditions('val7', 'val8', 'val9')} {priceRent('val10', 'val11')} {image(5)} {moreInfo('val12')} </>, setMode, 'Home', 14)
+      divs(<> {metrage('val1', 'val2')} {yearBuild('val3', 'val4')} {face('val5', 'val6')} {storeConditions('val7', 'val8', 'val9')} {city()} {priceRent('val10', 'val11')} {image(5)} {moreInfo('val12')} </>, setMode, 'Home', 14)
     )
   }
-
-  useEffect(() => {
-    console.log(whatCategory)
-    console.log(whatInnerCategory)
-    console.log(product)
-  }, [product, whatCategory, whatInnerCategory])
 
   return (
     <div className='addNiaz-countanerx2'>
@@ -496,7 +503,7 @@ export default function CreateNiaz(){
             <button onClick={() => {setopenhelpbar(false)}} className='helpButton'>بازگشت</button>
           </div>
         :
-        <div className={`addNiaz-countaner ${showRelease ? 'morePadding' : ''}`} onClick={() => {setWhichDivOpenInner('')}}>
+          <div className={`addNiaz-countaner ${showRelease ? 'morePadding' : ''}`} onClick={() => {setWhichDivOpenInner('')}}>
             <p className='niazText'>{niazText}</p>
             {modeShow('options', typeOfHome)}
             {modeShow('Home', choseHome)}
