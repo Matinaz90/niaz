@@ -3,15 +3,13 @@ import './top_bar.css';
 import { useGlobal } from '../GlobalContext';
 
 export default function CityDropdown() {
-    
+    const { locations, OpenCity, setOpenCity } = useGlobal();    
     const [cityVal, setcityVal] = useState([]);
-    const [OpenCity, setOpenCity] = useState(false);
-    let OpenCityCheck = false
     const [openCities, setOpenCities] = useState([]);
     const [AllCityes, setAllCityes] = useState([]);
     const [searchCitys, setsearchCitys] = useState([]);
+    let OpenCityCheck = false
 
-    const { locations } = useGlobal();
     
     const OpenCityFunc = () => {
         setOpenCity(true)

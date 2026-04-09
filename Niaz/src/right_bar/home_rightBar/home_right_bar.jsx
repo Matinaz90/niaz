@@ -1,15 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import  '../main_rightBar/global_rightBar.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useGlobal } from '../../GlobalContext';
 
 function HomeRightBar(){
     const navigate = useNavigate();
+    const path = useLocation().pathname;
 
+    const { OpenRightVal ,setOpenRightVal } = useGlobal();
+    
     const [mode, setmode] = useState('options')
     const [WhichDivOpen, setWhichDivOpen] = useState('options')
     const [WhichDivOpenInner, setWhichDivOpenInner] = useState('')
-    const { OpenRightVal ,setOpenRightVal } = useGlobal();
 
     const englishNums = ['0','1','2','3','4','5','6','7','8','9'];
     const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
@@ -163,6 +165,34 @@ function HomeRightBar(){
             setmode('options')
         }
     }, [topBarPath, OpenRightVal])
+
+    useEffect(() => {
+        let timeoutId = null;
+
+        const handleKeyUp = (e) => {
+
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+            timeoutId = setTimeout(() => {
+                if (e.key === 'Escape') {
+                    if(Pages.some(page => path.includes(page))){
+                        setmode('options')
+                    } else {
+                        navigate('/home')
+                    }
+                }
+            }, 100);
+        };
+
+        document.addEventListener('keyup', handleKeyUp);
+
+        return () => {
+            document.removeEventListener('keyup', handleKeyUp);
+            if (timeoutId) clearTimeout(timeoutId);
+        };
+    }, []);
+
 
 
     const modeShow = (CurrentMode, whichFunc) => {

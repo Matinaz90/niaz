@@ -6,29 +6,24 @@ import { useGlobal } from '../../GlobalContext';
 
 function RightBar(){
     const navigate = useNavigate();
-    const location = useLocation();
 
-    const PagesV = ['C', 'M', 'I'];
-    const PagesC = ['J', 'A', 'V', 'R', 'S', 'Q', 'G', 'Z'];
-    const Pages = ['home', 'car'];
-
-    const { OpenRightVal ,setOpenRightVal } = useGlobal();
-
+    const { OpenRightVal ,setOpenRightVal, setmodeRightBar } = useGlobal();
+    
+    const pathUpper = useLocation();
+    const path = pathUpper.pathname;
 
 
     useEffect(() => {
+        let timeoutId = null;
+
         const handleKeyUp = (e) => {
-            if (OpenRightVal && e.key === 'Escape') {
-                if(location){
-                    if(Pages.some(item => location.includes(item))){
-                        if(PagesC.some(item => location.includes(item))){
-
-                        } else if(PagesV.some(item => location.includes(item))){
-
-                        }
-
-                    }
+            if (e.key === 'Escape') {
+                setOpenRightVal(false)
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
                 }
+                timeoutId = setTimeout(() => {
+                }, 100);
             }
         };
 
@@ -36,14 +31,15 @@ function RightBar(){
 
         return () => {
             document.removeEventListener('keyup', handleKeyUp);
+            if (timeoutId) clearTimeout(timeoutId);
         };
     }, []);
 
     return(
         <>
-            <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => {setOpenRightVal(false), setWhichDivOpen(''), setWhichDivOpenInner('')}}>
+            <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => {setOpenRightVal(false)}}>
                 <div className='exitButtonDiv'><p className='exitButtontext'>×</p></div>
-                <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={(e) => {e.stopPropagation(),setWhichDivOpen('')}}>
+                <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={(e) => {e.stopPropagation()}}>
                     <div>
                         <div className='buttons' onClick={() => navigate('/home')}><img src='/extend_arrow.png' className='rightArrow'></img> خانه </div>
                         <div className='buttons' onClick={() => navigate('/car')}><img src='/extend_arrow.png' className='rightArrow'></img> وسایل نقلیه </div>

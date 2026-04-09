@@ -4,7 +4,7 @@ import { useGlobal } from "../GlobalContext";
 import { useState } from 'react';
 
 function Top_bar_right() {
-    const { OpenRightVal ,setOpenRightVal } = useGlobal();
+    const { setOpenRightVal } = useGlobal();
 
 const handleClick = () => {
     setOpenRightVal(true);

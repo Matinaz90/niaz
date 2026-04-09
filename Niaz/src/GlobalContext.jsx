@@ -4,6 +4,7 @@ const GlobalContext = createContext();
 
 export function GlobalProvider({ children }) {
   const [OpenRightVal, setOpenRightVal] = useState(false)
+  const [OpenCity, setOpenCity] = useState(false);
   const locations = {
       "همدان": ["همه ی شهرهای همدان", "ملایر", "نهاوند", "لالجین", "تویسرکان", "سرکان", "اسد آباد", "کبودرآهنگ", "فرسفج", "سامن"],
       "قزوین": ["همه ی شهرهای قزوین", "ابگرم قزوین", "تاکستان", "بوئین زهرا"],
@@ -39,15 +40,15 @@ export function GlobalProvider({ children }) {
   };
 
   useEffect(() => {
-    if(OpenRightVal){
+    if(OpenRightVal || OpenCity){
       document.body.classList.add('no-scrool')
     } else {
       document.body.classList.remove('no-scrool')
     }
-  }, [OpenRightVal])
+  }, [OpenRightVal, OpenCity])
 
   return (
-    <GlobalContext.Provider value={{ OpenRightVal, setOpenRightVal, locations }}>
+    <GlobalContext.Provider value={{ OpenRightVal, setOpenRightVal, locations, OpenCity, setOpenCity }}>
       {children}
     </GlobalContext.Provider>
   );
