@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import  '../main_rightBar/global_rightBar.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useGlobal } from '../../GlobalContext';
 
 function HomeRightBar(){
     const navigate = useNavigate();
+    const path = useLocation().pathname
 
     const [mode, setmode] = useState('options')
     const [WhichDivOpen, setWhichDivOpen] = useState('options')
@@ -41,35 +42,73 @@ function HomeRightBar(){
 
     const valOrEmpity = (v) => (v == 'x' ? '' : v)
 
-    useEffect(() => {
-        if(topBarPath.includes('C')){
-            setmode('Car')
-            const newLinkBar = {
-                year: valOrEmpity(linkBarVal[0]),
-                carColor: valOrEmpity(linkBarVal[1]),
-                carChassi: valOrEmpity(linkBarVal[2]),
-                carEngin: valOrEmpity(linkBarVal[3]),
-                price: valOrEmpity(linkBarVal[4]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else if(topBarPath.includes('M')){
-            setmode('Motorcycle')
-            const newLinkBar = {
-                year: valOrEmpity(linkBarVal[0]),
-                motorEngin: valOrEmpity(linkBarVal[1]),
-                price: valOrEmpity(linkBarVal[2]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else if(topBarPath.includes('R')){
-            setmode('RepiarItems')
-            const newLinkBar = {
-                price: valOrEmpity(linkBarVal[0]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else {
-            setmode('options')
+    const letterToName = {'J': 'Car','M': 'Motorcycle', 'D': 'price'}
+
+    const modeConfig = {
+        Car: {
+            prefix: 'C/x,x,x,x,x',
+            fields: ['year', 'carColor', 'carChassi', 'carEngin', 'price']
+        },
+        Motorcycle: {
+            prefix: 'M/x,x,x',
+            fields: ['year', 'motorEngin', 'price']
+        },
+        RepairItems: {
+            prefix: 'D/x',
+            fields: ['price']
         }
-    }, [topBarPath, OpenRightVal])
+    }
+
+    const buildLinkBar = (mode, addOrNot) => {
+        const config = modeConfig[mode];
+        if (!config) return;
+
+        if (addOrNot) AddLinkBar(config.prefix)
+
+        const newLinkBar = config.fields.reduce((obj, field, index) => {
+            obj[field] = valOrEmpity(linkBarVal[index]);
+            return obj;
+        }, {});
+
+        setLinkBarChange(newLinkBar)
+    };
+
+    const useingBuildLinkBar = (x) => {
+        setmode(x)
+        buildLinkBar(x, true);
+    };
+
+    useEffect(() => {
+        buildLinkBar(letterToName[path.split('/')[2]], false);
+        setmode(letterToName[path.split('/')[2]] == null ? 'options' : letterToName[path.split('/')[2]])
+    }, []);
+
+    useEffect(() => {
+        let timeoutId = null;
+
+        const handleKeyUp = (e) => {
+            if (e.key === 'Escape') {
+                if(Pages.some(page => letterToName[page] == mode)){
+                    navigate('/car')
+                    setmode('options')
+                } else {
+                    navigate('/')
+                }
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                }
+                timeoutId = setTimeout(() => {
+                }, 100);
+            }
+        };
+
+        document.addEventListener('keyup', handleKeyUp);
+
+        return () => {
+            document.removeEventListener('keyup', handleKeyUp);
+            if (timeoutId) clearTimeout(timeoutId);
+        };
+    }, [mode]);
 
     const modeShow = (CurrentMode, whichFunc) => {
         if (CurrentMode == mode) {
@@ -139,13 +178,13 @@ function HomeRightBar(){
         )
     }
 
-    const typeOfHome = () => {
+    const typeOfPages = () => {
         return(
             <div className='inputsDiv'>
                 <div>
-                    <div className='buttons' onClick={() => AddLinkBar('C/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ماشین </div>
-                    <div className='buttons' onClick={() => AddLinkBar('M/x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> موتور </div>
-                    <div className='buttons' onClick={() => AddLinkBar('R/x')}><img src='/extend_arrow.png' className='rightArrow'></img> قطعات یدکی </div> 
+                    <div className='buttons' onClick={() => useingBuildLinkBar('Car')}><img src='/extend_arrow.png' className='rightArrow'></img> ماشین </div>
+                    <div className='buttons' onClick={() => useingBuildLinkBar('Motorcycle')}><img src='/extend_arrow.png' className='rightArrow'></img> موتور </div>
+                    <div className='buttons' onClick={() => useingBuildLinkBar('RepiarItems')}><img src='/extend_arrow.png' className='rightArrow'></img> قطعات یدکی </div> 
                 </div>
                 <div className='applyButtonDivRightBar'>
                     <button type="button" className='applyButton backing' onClick={() => {navigate('/')}}>بازگشت</button>
@@ -344,7 +383,7 @@ function HomeRightBar(){
             <div className={`blur ${OpenRightVal ? 'open' : ''}`} onClick={() => {setOpenRightVal(false), setWhichDivOpen(''), setWhichDivOpenInner('')}}>
             <div className='exitButtonDiv'><p className='exitButtontext'>×</p></div>
                 <div className={`Right_Bar_strucher ${OpenRightVal ? 'open' : ''}`} onClick={(e) => {e.stopPropagation(),setWhichDivOpen('')}}>
-                    {modeShow('options', typeOfHome)}
+                    {modeShow('options', typeOfPages)}
                     {modeShow('Car', car)}
                     {modeShow('Motorcycle', motorcycle)}
                     {modeShow('RepiarItems', repiarItems)}

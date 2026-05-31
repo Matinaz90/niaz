@@ -12,18 +12,18 @@ import { validPath } from "./validPath.jsx";
 function Main_page() {
   validPath()
 
-  const [width, setWidth] = useState(window.innerWidth)
+  // const [width, setWidth] = useState(window.innerWidth)
 
-  useEffect(() => {
-    let timeout;
-    const handleResize = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => setWidth(window.innerWidth), 100);
-    };
+  // useEffect(() => {
+  //   let timeout;
+  //   const handleResize = () => {
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(() => setWidth(window.innerWidth), 100);
+  //   };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   return (
     <>

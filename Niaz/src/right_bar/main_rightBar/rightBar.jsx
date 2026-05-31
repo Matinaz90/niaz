@@ -7,18 +7,16 @@ import { useGlobal } from '../../GlobalContext';
 function RightBar(){
     const navigate = useNavigate();
 
-    const { OpenRightVal ,setOpenRightVal, setmodeRightBar } = useGlobal();
-    
-    const pathUpper = useLocation();
-    const path = pathUpper.pathname;
-
+    const { OpenRightVal ,setOpenRightVal } = useGlobal();
 
     useEffect(() => {
         let timeoutId = null;
 
         const handleKeyUp = (e) => {
             if (e.key === 'Escape') {
-                setOpenRightVal(false)
+                if(OpenRightVal){
+                    setOpenRightVal(false)
+                }
                 if (timeoutId) {
                     clearTimeout(timeoutId);
                 }
@@ -33,7 +31,7 @@ function RightBar(){
             document.removeEventListener('keyup', handleKeyUp);
             if (timeoutId) clearTimeout(timeoutId);
         };
-    }, []);
+    }, [OpenRightVal]);
 
     return(
         <>

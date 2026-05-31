@@ -8,12 +8,10 @@ export default function CityDropdown() {
     const [openCities, setOpenCities] = useState([]);
     const [AllCityes, setAllCityes] = useState([]);
     const [searchCitys, setsearchCitys] = useState([]);
-    let OpenCityCheck = false
 
     
     const OpenCityFunc = () => {
         setOpenCity(true)
-        OpenCityCheck = true
 
         const Cityes = localStorage.getItem('SelectedCityes');
         if (Cityes) {
@@ -96,7 +94,6 @@ export default function CityDropdown() {
         }
 
         setcityVal(MiddleUpdate);
-        OpenCityCheck = false
 
         localStorage.setItem('SelectedCityes',JSON.stringify(MiddleUpdate));
         localStorage.setItem('AllSelectedCityes',JSON.stringify(AllCityes));
@@ -119,7 +116,7 @@ export default function CityDropdown() {
 
     useEffect(() => {
         const handleKeyUp = (e) => {
-            if (OpenCityCheck && e.key === 'Escape') {
+            if (cityVal && e.key === 'Escape') {
                 cancleButton()
             }
         };
@@ -129,7 +126,7 @@ export default function CityDropdown() {
         return () => {
             document.removeEventListener('keyup', handleKeyUp);
         };
-    }, []);
+    }, [cityVal]);
 
     return(
         <>

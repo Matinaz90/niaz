@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import  '../main_rightBar/global_rightBar.css'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useResolvedPath } from 'react-router-dom';
 import { useGlobal } from '../../GlobalContext';
 
-function HomeRightBar(){
+export default function HomeRightBar(){
     const navigate = useNavigate();
-    const path = useLocation().pathname;
+    const path = useLocation().pathname
 
     const { OpenRightVal ,setOpenRightVal } = useGlobal();
     
@@ -43,146 +43,84 @@ function HomeRightBar(){
 
     const valOrEmpity = (v) => (v == 'x' ? '' : v)
 
-    useEffect(() => {
-        if(topBarPath.includes('J')){
-            setmode('JoinBuild')
-            const newLinkBar = {
-                metrage: valOrEmpity(linkBarVal[0]),
-                face: valOrEmpity(linkBarVal[1]),
-                bahr:  valOrEmpity(linkBarVal[2]),
-                joinbuildpersent: valOrEmpity(linkBarVal[3]),
-                price: valOrEmpity(linkBarVal[4]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else if(topBarPath.includes('A')){
-            setmode('Aparteman')
-            const newLinkBar = {
-                metrage: valOrEmpity(linkBarVal[0]),
-                rooms: valOrEmpity(linkBarVal[1]),
-                year: valOrEmpity(linkBarVal[2]),
-                face: valOrEmpity(linkBarVal[3]),
-                bahr:  valOrEmpity(linkBarVal[4]),
-                floor: valOrEmpity(linkBarVal[5]),
-                floorInfloor: valOrEmpity(linkBarVal[6]),
-                balaon: valOrEmpity(linkBarVal[7]),
-                parking: valOrEmpity(linkBarVal[8]),
-                anbary: valOrEmpity(linkBarVal[9]),
-                asansor: valOrEmpity(linkBarVal[10]),
-                price: valOrEmpity(linkBarVal[11]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else if(topBarPath.includes('V')){
-            setmode('Villa')
-            const newLinkBar = {
-                metrage: valOrEmpity(linkBarVal[0]),
-                buildMetrage: valOrEmpity(linkBarVal[1]),
-                rooms: valOrEmpity(linkBarVal[2]),
-                year: valOrEmpity(linkBarVal[3]),
-                face: valOrEmpity(linkBarVal[4]),
-                bahr:  valOrEmpity(linkBarVal[5]),
-                balaon: valOrEmpity(linkBarVal[6]),
-                parking: valOrEmpity(linkBarVal[7]),
-                anbary: valOrEmpity(linkBarVal[8]),
-                asansor: valOrEmpity(linkBarVal[9]),
-                price: valOrEmpity(linkBarVal[10]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else if(topBarPath.includes('Z')){
-            setmode('VillaRent')
-            const newLinkBar = {
-                metrage: valOrEmpity(linkBarVal[0]),
-                buildMetrage: valOrEmpity(linkBarVal[1]),
-                rooms: valOrEmpity(linkBarVal[2]),
-                year: valOrEmpity(linkBarVal[3]),
-                face: valOrEmpity(linkBarVal[4]),
-                bahr:  valOrEmpity(linkBarVal[5]),
-                balaon: valOrEmpity(linkBarVal[6]),
-                parking: valOrEmpity(linkBarVal[7]),
-                anbary: valOrEmpity(linkBarVal[8]),
-                asansor: valOrEmpity(linkBarVal[9]),
-                beforePrice: valOrEmpity(linkBarVal[10]),
-                monthPrice: valOrEmpity(linkBarVal[11]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else if(topBarPath.includes('R')){
-            setmode('ApartemanRent')
-            const newLinkBar = {
-                metrage: valOrEmpity(linkBarVal[0]),
-                rooms: valOrEmpity(linkBarVal[1]),
-                year: valOrEmpity(linkBarVal[2]),
-                face: valOrEmpity(linkBarVal[3]),
-                bahr:  valOrEmpity(linkBarVal[4]),
-                floor: valOrEmpity(linkBarVal[5]),
-                floorInfloor: valOrEmpity(linkBarVal[6]),
-                balaon: valOrEmpity(linkBarVal[7]),
-                parking: valOrEmpity(linkBarVal[8]),
-                anbary: valOrEmpity(linkBarVal[9]),
-                asansor: valOrEmpity(linkBarVal[10]),
-                beforePrice: valOrEmpity(linkBarVal[11]),
-                monthPrice: valOrEmpity(linkBarVal[12]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else if(topBarPath.includes('S')){
-            setmode('Store')
-            const newLinkBar = {
-                metrage: valOrEmpity(linkBarVal[0]),
-                year: valOrEmpity(linkBarVal[1]),
-                face: valOrEmpity(linkBarVal[2]),
-                bahr:  valOrEmpity(linkBarVal[3]),
-                electricity: valOrEmpity(linkBarVal[4]),
-                water: valOrEmpity(linkBarVal[5]),
-                gas: valOrEmpity(linkBarVal[6]),
-                price: valOrEmpity(linkBarVal[7]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else if(topBarPath.includes('Q')){
-            setmode('StoreRent')
-            const newLinkBar = {
-                metrage: valOrEmpity(linkBarVal[0]),
-                year: valOrEmpity(linkBarVal[1]),
-                face: valOrEmpity(linkBarVal[2]),
-                bahr:  valOrEmpity(linkBarVal[3]),
-                floorInfloor: valOrEmpity(linkBarVal[4]),
-                store: valOrEmpity(linkBarVal[5]),
-                electricity: valOrEmpity(linkBarVal[6]),
-                water: valOrEmpity(linkBarVal[7]),
-                gas: valOrEmpity(linkBarVal[8]),
-                beforePrice: valOrEmpity(linkBarVal[9]),
-                monthPrice: valOrEmpity(linkBarVal[10]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else if(topBarPath.includes('G')){
-            setmode('Ground')
-            const newLinkBar = {
-                metrage: valOrEmpity(linkBarVal[0]),
-                face: valOrEmpity(linkBarVal[1]),
-                bahr:  valOrEmpity(linkBarVal[2]),
-                ground: valOrEmpity(linkBarVal[3]),
-                price: valOrEmpity(linkBarVal[4]),
-            };
-            setLinkBarChange(newLinkBar);
-        } else {
-            setmode('options')
+    const letterToName = {'J': 'JoinBuild','A': 'Aparteman', 'V': 'Villa', 'Z': 'VillaRent', 'R': 'ApartemanRent', 'S': 'Store', 'Q': 'StoreRent', 'G': 'Ground'}
+
+    const modeConfig = {
+        JoinBuild: {
+            prefix: 'J/x,x,x,x,x',
+            fields: ['metrage', 'face', 'bahr', 'joinbuildpersent', 'price']
+        },
+        Aparteman: {
+            prefix: 'A/x,x,x,x,x,x,x,x,x,x,x,x',
+            fields: ['metrage', 'rooms', 'year', 'face', 'bahr', 'floor', 'floorInfloor', 'balaon', 'parking', 'anbary', 'asansor', 'price']
+        },
+        Villa: {
+            prefix: 'V/x,x,x,x,x,x,x,x,x,x,x',
+            fields: ['metrage', 'buildMetrage', 'rooms', 'year', 'face', 'bahr', 'balaon', 'parking', 'anbary', 'asansor', 'price']
+        },
+        VillaRent: {
+            prefix: 'Z/x,x,x,x,x,x,x,x,x,x,x,x',
+            fields: ['metrage', 'buildMetrage', 'rooms', 'year', 'face', 'bahr', 'balaon', 'parking', 'anbary', 'asansor', 'beforePrice', 'monthPrice']
+        },
+        ApartemanRent: {
+            prefix: 'R/x,x,x,x,x,x,x,x,x,x,x,x,x',
+            fields: ['metrage', 'rooms', 'year', 'face', 'bahr', 'floor', 'floorInfloor', 'balaon', 'parking', 'anbary', 'asansor', 'beforePrice', 'monthPrice']
+        },
+        Store: {
+            prefix: 'S/x,x,x,x,x,x,x,x',
+            fields: ['metrage', 'year', 'face', 'bahr', 'electricity', 'water', 'gas', 'price']
+        },
+        StoreRent: {
+            prefix: 'Q/x,x,x,x,x,x,x,x,x',
+            fields: ['metrage', 'year', 'face', 'bahr', 'floorInfloor', 'store', 'electricity', 'water', 'gas', 'beforePrice', 'monthPrice']
+        },
+        Ground: {
+            prefix: 'G/x,x,x,x,x',
+            fields: ['metrage', 'face', 'bahr', 'ground', 'price']
         }
-    }, [topBarPath, OpenRightVal])
+    };
+
+    const buildLinkBar = (mode, addOrNot) => {
+        const config = modeConfig[mode];
+        if (!config) return;
+
+        if (addOrNot) AddLinkBar(config.prefix)
+
+        const newLinkBar = config.fields.reduce((obj, field, index) => {
+            obj[field] = valOrEmpity(linkBarVal[index]);
+            return obj;
+        }, {});
+
+        setLinkBarChange(newLinkBar)
+    };
+
+    const useingBuildLinkBar = (x) => {
+        setmode(x)
+        buildLinkBar(x, true);
+    };
+
+    useEffect(() => {
+        buildLinkBar(letterToName[path.split('/')[2]], false);
+        setmode(letterToName[path.split('/')[2]] == null ? 'options' : letterToName[path.split('/')[2]])
+    }, []);
 
     useEffect(() => {
         let timeoutId = null;
 
         const handleKeyUp = (e) => {
-
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-            }
-            timeoutId = setTimeout(() => {
-                if (e.key === 'Escape') {
-                    if(Pages.some(page => path.includes(page))){
-                        setmode('options')
-                    } else {
-                        navigate('/home')
-                    }
+            if (e.key === 'Escape') {
+                if(Pages.some(page => letterToName[page] == mode)){
+                    navigate('/home')
+                    setmode('options')
+                } else {
+                    navigate('/')
                 }
-            }, 100);
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                }
+                timeoutId = setTimeout(() => {
+                }, 100);
+            }
         };
 
         document.addEventListener('keyup', handleKeyUp);
@@ -191,9 +129,7 @@ function HomeRightBar(){
             document.removeEventListener('keyup', handleKeyUp);
             if (timeoutId) clearTimeout(timeoutId);
         };
-    }, []);
-
-
+    }, [mode]);
 
     const modeShow = (CurrentMode, whichFunc) => {
         if (CurrentMode == mode) {
@@ -267,14 +203,14 @@ function HomeRightBar(){
         return(
             <div className='inputsDiv'>
                 <div>
-                    <div className='buttons' onClick={() => AddLinkBar('J/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مشارکت ساخت </div>
-                    <div className='buttons' onClick={() => AddLinkBar('A/x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> آپارتمان </div>
-                    <div className='buttons' onClick={() => AddLinkBar('S/x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> مغازه </div> 
-                    <div className='buttons' onClick={() => AddLinkBar('V/x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> ویلا </div>
-                    <div className='buttons' onClick={() => AddLinkBar('G/x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> زمین </div>
-                    <div className='buttons' onClick={() => AddLinkBar('R/x,x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره اپارتمان</div>
-                    <div className='buttons' onClick={() => AddLinkBar('Q/x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره مغازه</div>
-                    <div className='buttons' onClick={() => AddLinkBar('Z/x,x,x,x,x,x,x,x,x,x,x,x')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره ویلا </div>
+                    <div className='buttons' onClick={() => useingBuildLinkBar('JoinBuild')}><img src='/extend_arrow.png' className='rightArrow'></img> مشارکت ساخت </div>
+                    <div className='buttons' onClick={() => useingBuildLinkBar('Aparteman')}><img src='/extend_arrow.png' className='rightArrow'></img> آپارتمان </div>
+                    <div className='buttons' onClick={() => useingBuildLinkBar('Store')}><img src='/extend_arrow.png' className='rightArrow'></img> مغازه </div> 
+                    <div className='buttons' onClick={() => useingBuildLinkBar('Villa')}><img src='/extend_arrow.png' className='rightArrow'></img> ویلا </div>
+                    <div className='buttons' onClick={() => useingBuildLinkBar('Ground')}><img src='/extend_arrow.png' className='rightArrow'></img> زمین </div>
+                    <div className='buttons' onClick={() => useingBuildLinkBar('ApartemanRent')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره اپارتمان</div>
+                    <div className='buttons' onClick={() => useingBuildLinkBar('StoreRent')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره مغازه</div>
+                    <div className='buttons' onClick={() => useingBuildLinkBar('VillaRent')}><img src='/extend_arrow.png' className='rightArrow'></img> اجاره ویلا </div>
                 </div>
                 <div className='applyButtonDivRightBar'>
                     <button type="button" className='applyButton backing' onClick={() => {navigate('/')}}>بازگشت</button>
@@ -609,5 +545,3 @@ function HomeRightBar(){
     )
 
 }
-
-export default HomeRightBar

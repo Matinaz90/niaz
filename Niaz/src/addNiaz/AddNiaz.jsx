@@ -45,6 +45,7 @@ export default function CreateNiaz(){
   const ground = ['مسکونی', 'تجاری', 'کشاورزی','باغداری']
   const groundSymbols = ['m', 't', 'c', 'b']
   const groundSymbolsToground = {'m': 'مسکونی', 't': 'تجاری', 'c': 'کشاورزی', 'b': 'باغداری'}
+  const homePages = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
   const checkVals = (val1, val2, text1, text2, clac) => {
     if(Number(val1) > Number(val2)){
@@ -104,10 +105,36 @@ export default function CreateNiaz(){
   }, [product, imageId])
 
   useEffect(() => {
-    ['a', 'b', 'c', 'd', 'e', 'f', 'g'].includes(mode) ? (setmainPage(false), setniazText(':مشخصات نیاز شما')) : (setmainPage(true),  setniazText(':نیاز شما'))
+    homePages.includes(mode) ? (setmainPage(false), setniazText(':مشخصات نیاز شما')) : (setmainPage(true),  setniazText(':نیاز شما'))
   }, [mode])
 
+  useEffect(() => {
+    let timeoutId = null;
 
+    const handleKeyUp = (e) => {
+      if (e.key === 'Escape') {
+        if(homePages.includes(mode)){
+          setMode('Home')
+        } else if (mode == 'Home'){
+          setMode('options')
+        } else {
+          window.location.href = '/';
+        }
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => {
+        }, 100);
+      }
+    };
+
+    document.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      document.removeEventListener('keyup', handleKeyUp);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [mode]);
 
   const modeShow = (CurrentMode, whichFunc) => {
     if (CurrentMode == mode) {
@@ -341,7 +368,7 @@ export default function CreateNiaz(){
             className='moreInfo' 
             id='moreInfo' 
             minLength='0' 
-            maxLength='200'
+            maxLength='2000'
             value={englishToPersianNumber(valOrEmpity(product[whatVal]))}
             onChange={(e) => {
               setproduct((prev) => ({
